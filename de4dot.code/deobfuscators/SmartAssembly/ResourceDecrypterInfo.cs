@@ -18,9 +18,9 @@
 */
 
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.SmartAssembly {
 	class ResourceDecrypterInfo {
@@ -28,9 +28,9 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 		MethodDef simpleZipTypeDecryptMethod;
 
 		public byte[] DES_Key { get; private set; }
-		public byte[] DES_IV  { get; private set; }
+		public byte[] DES_IV { get; private set; }
 		public byte[] AES_Key { get; private set; }
-		public byte[] AES_IV  { get; private set; }
+		public byte[] AES_IV { get; private set; }
 		public bool CanDecrypt => simpleZipTypeDecryptMethod != null;
 
 		public ResourceDecrypterInfo(ModuleDefMD module) => this.module = module;
@@ -76,11 +76,11 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 
 			if (desList.Count >= 2) {
 				DES_Key = desList[desList.Count - 2];
-				DES_IV  = desList[desList.Count - 1];
+				DES_IV = desList[desList.Count - 1];
 			}
 			if (aesList.Count >= 2) {
 				AES_Key = aesList[aesList.Count - 2];
-				AES_IV  = aesList[aesList.Count - 1];
+				AES_IV = aesList[aesList.Count - 1];
 			}
 		}
 	}

@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.DotNet.Emit;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 	class VersionDetector {
@@ -827,17 +827,17 @@ namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 				}
 
 				if (stringDecrypter.HasRealMethod &&
-				    otherMethods.Count == 5 &&
-				    otherMethod50 != null &&
-				    decryptStringType.NestedTypes.Count == 3 &&
-				    otherMethod50.IsPrivate &&
-				    otherMethod50.IsStatic &&
-				    decryptStringMethod.IsNoInlining &&
-				    decryptStringMethod.IsAssembly &&
-				    !decryptStringMethod.IsSynchronized &&
-				    decryptStringMethod.Body.MaxStack >= 1 &&
-				    decryptStringMethod.Body.MaxStack <= 8 &&
-				    decryptStringMethod.Body.ExceptionHandlers.Count == 1) {
+					otherMethods.Count == 5 &&
+					otherMethod50 != null &&
+					decryptStringType.NestedTypes.Count == 3 &&
+					otherMethod50.IsPrivate &&
+					otherMethod50.IsStatic &&
+					decryptStringMethod.IsNoInlining &&
+					decryptStringMethod.IsAssembly &&
+					!decryptStringMethod.IsSynchronized &&
+					decryptStringMethod.Body.MaxStack >= 1 &&
+					decryptStringMethod.Body.MaxStack <= 8 &&
+					decryptStringMethod.Body.ExceptionHandlers.Count == 1) {
 					return "5.2-5.8";
 				}
 			}

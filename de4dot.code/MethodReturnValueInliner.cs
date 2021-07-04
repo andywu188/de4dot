@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code {
 	// A simple class that statically detects the values of some local variables
@@ -118,8 +118,8 @@ namespace de4dot.code {
 				case Code.Ldc_I4_6: obj = 6; return true;
 				case Code.Ldc_I4_7: obj = 7; return true;
 				case Code.Ldc_I4_8: obj = 8; return true;
-				case Code.Ldc_I4_M1:obj = -1; return true;
-				case Code.Ldnull:	obj = null; return true;
+				case Code.Ldc_I4_M1: obj = -1; return true;
+				case Code.Ldnull: obj = null; return true;
 
 				default:
 					obj = null;
@@ -313,8 +313,8 @@ namespace de4dot.code {
 				case Code.Ldc_I4_6: arg = 6; break;
 				case Code.Ldc_I4_7: arg = 7; break;
 				case Code.Ldc_I4_8: arg = 8; break;
-				case Code.Ldc_I4_M1:arg = -1; break;
-				case Code.Ldnull:	arg = null; break;
+				case Code.Ldc_I4_M1: arg = -1; break;
+				case Code.Ldnull: arg = null; break;
 
 				case Code.Nop:
 					continue;

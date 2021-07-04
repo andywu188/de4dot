@@ -18,9 +18,9 @@
 */
 
 using System.Collections.Generic;
-using dnlib.DotNet;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v3 {
 	class AssemblyResolver {

@@ -18,9 +18,9 @@
 */
 
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.CodeVeil {
 	// Detects the type CV adds to the assembly that gets called from <Module>::.cctor.
@@ -30,7 +30,7 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 		MethodDef initMethod;
 		MethodDef tamperCheckMethod;
 		ObfuscatorVersion obfuscatorVersion = ObfuscatorVersion.Unknown;
-		List<uint> rvas = new List<uint>();	// _stub and _executive
+		List<uint> rvas = new List<uint>(); // _stub and _executive
 		List<MethodDef> otherInitMethods = new List<MethodDef>();
 
 		public bool Detected => theType != null;
@@ -133,7 +133,7 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 			rvas = new List<uint>();
 
 			var fields = GetRvaFields(type);
-			if (fields.Count < 2)	// RVAs for executive and stub are always present if encrypted methods
+			if (fields.Count < 2)   // RVAs for executive and stub are always present if encrypted methods
 				return true;
 
 			foreach (var field in fields)

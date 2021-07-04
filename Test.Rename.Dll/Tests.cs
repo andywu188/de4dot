@@ -916,7 +916,7 @@ namespace Test.Rename.Dll {
 		}
 		interface IFace2 {
 			int prop3 { get; set; }
-			void meth1(int i);			// different return type
+			void meth1(int i);          // different return type
 		}
 		struct d1 : IFace1, IFace2 {
 			public int prop1 { get; set; }

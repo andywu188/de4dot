@@ -19,11 +19,11 @@
 
 using System;
 using System.Runtime.Remoting;
-using dnlib.DotNet;
 using AssemblyData;
-using de4dot.code.AssemblyClient;
 using de4dot.blocks;
+using de4dot.code.AssemblyClient;
 using de4dot.mdecrypt;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators {
 	public static class MethodsDecrypter {

@@ -20,12 +20,12 @@
 namespace AssemblyData.methodsrewriter {
 	class Operand {
 		public enum Type {
-			ThisArg,		// Replace operand with the 'this' arg
-			TempObj,		// Replace operand with temp object local variable
-			TempObjArray,	// Replace operand with temp object[] local variable
-			OurMethod,		// Replace operand with a call to our method. methodName must be unique.
-			NewMethod,		// Replace operand with a call to new method. data is realMethod
-			ReflectionType,	// Replace operand with a .NET type
+			ThisArg,        // Replace operand with the 'this' arg
+			TempObj,        // Replace operand with temp object local variable
+			TempObjArray,   // Replace operand with temp object[] local variable
+			OurMethod,      // Replace operand with a call to our method. methodName must be unique.
+			NewMethod,      // Replace operand with a call to new method. data is realMethod
+			ReflectionType, // Replace operand with a .NET type
 		}
 
 		public Type type;

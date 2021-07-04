@@ -73,7 +73,7 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 				name = name.TrimEnd(new char[] { '%' });
 			}
 			byte[] value = Convert.FromBase64String(name);
-			int methodIndex = BitConverter.ToInt32(value, 0);	// 0-based memberRef index
+			int methodIndex = BitConverter.ToInt32(value, 0);   // 0-based memberRef index
 			var mr = module.ResolveMemberRef((uint)methodIndex + 1);
 			if (mr == null || !mr.IsMethodRef)
 				throw new ApplicationException($"Invalid MemberRef index: {methodIndex}");

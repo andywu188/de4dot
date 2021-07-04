@@ -20,9 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	// From v1.7 r74708 to v1.8 r75349

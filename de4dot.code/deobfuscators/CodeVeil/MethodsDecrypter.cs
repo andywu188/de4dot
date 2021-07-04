@@ -18,8 +18,8 @@
 */
 
 using System;
-using dnlib.IO;
 using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CodeVeil {
 	class MethodsDecrypter {
@@ -38,7 +38,7 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 
 			public virtual bool Decrypt(ref DataReader fileDataReader, DumpedMethod dm) {
 				if (fileDataReader.ReadByte() != 0x2A)
-					return false;	// Not a RET
+					return false;   // Not a RET
 				methodsDataReader.Position = fileDataReader.ReadCompressedUInt32();
 
 				dm.mhCodeSize = methodsDataReader.ReadCompressedUInt32();
@@ -146,7 +146,7 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 				uint codeOffset;
 				if ((b & 3) == 2) {
 					if (b != 2)
-						continue;	// not zero byte code size
+						continue;   // not zero byte code size
 
 					dm.mhFlags = 2;
 					dm.mhMaxStack = 8;
@@ -155,7 +155,7 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 				}
 				else {
 					if (peImage.OffsetReadUInt32(bodyOffset + 4) != 0)
-						continue;	// not zero byte code size
+						continue;   // not zero byte code size
 
 					dm.mhFlags = peImage.OffsetReadUInt16(bodyOffset);
 					dm.mhMaxStack = peImage.OffsetReadUInt16(bodyOffset + 2);
@@ -185,7 +185,7 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 			const int RVA_EXECUTIVE_OFFSET = 1 * 4;
 			const int ENC_CODE_OFFSET = 6 * 4;
 			int lastOffset = Math.Min(fileData.Length, (int)(section.PointerToRawData + section.SizeOfRawData));
-			for (int offset = GetStartOffset(peImage); offset < lastOffset; ) {
+			for (int offset = GetStartOffset(peImage); offset < lastOffset;) {
 				offset = FindSig(fileData, offset, lastOffset, initializeMethodEnd);
 				if (offset < 0)
 					return null;

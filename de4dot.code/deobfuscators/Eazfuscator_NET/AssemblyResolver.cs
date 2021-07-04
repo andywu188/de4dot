@@ -21,9 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 	class AssemblyResolver {
@@ -288,7 +288,7 @@ namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 				return TryCreateAssemblyInfos(s, numElements);
 			}
 			catch (FormatException) {
-				return null;	// Convert.FromBase64String() failed
+				return null;    // Convert.FromBase64String() failed
 			}
 		}
 
@@ -417,14 +417,14 @@ namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 				if (nestedType.Fields.Count != 0)
 					continue;
 
-				var CompileAssemblyFromDom1         = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.CodeDomProvider", "CompileAssemblyFromDom", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.CodeDom.CodeCompileUnit[]");
-				var CompileAssemblyFromFile1        = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.CodeDomProvider", "CompileAssemblyFromFile", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String[]");
-				var CompileAssemblyFromSource1      = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.CodeDomProvider", "CompileAssemblyFromSource", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String[]");
-				var CompileAssemblyFromDom2         = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromDom", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.CodeDom.CodeCompileUnit");
-				var CompileAssemblyFromDomBatch2    = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromDomBatch", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.CodeDom.CodeCompileUnit[]");
-				var CompileAssemblyFromFile2        = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromFile", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String");
-				var CompileAssemblyFromFileBatch2   = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromFileBatch", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String[]");
-				var CompileAssemblyFromSource2      = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromSource", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String");
+				var CompileAssemblyFromDom1 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.CodeDomProvider", "CompileAssemblyFromDom", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.CodeDom.CodeCompileUnit[]");
+				var CompileAssemblyFromFile1 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.CodeDomProvider", "CompileAssemblyFromFile", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String[]");
+				var CompileAssemblyFromSource1 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.CodeDomProvider", "CompileAssemblyFromSource", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String[]");
+				var CompileAssemblyFromDom2 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromDom", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.CodeDom.CodeCompileUnit");
+				var CompileAssemblyFromDomBatch2 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromDomBatch", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.CodeDom.CodeCompileUnit[]");
+				var CompileAssemblyFromFile2 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromFile", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String");
+				var CompileAssemblyFromFileBatch2 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromFileBatch", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String[]");
+				var CompileAssemblyFromSource2 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromSource", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String");
 				var CompileAssemblyFromSourceBatch2 = GetTheOnlyMethod(nestedType, "System.CodeDom.Compiler.ICodeCompiler", "CompileAssemblyFromSourceBatch", "System.CodeDom.Compiler.CompilerResults", "System.CodeDom.Compiler.CompilerParameters,System.String[]");
 
 				if (CompileAssemblyFromDom1 == null && CompileAssemblyFromFile1 == null &&

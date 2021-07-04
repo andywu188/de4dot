@@ -20,9 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 	class DecrypterType {
@@ -223,7 +223,7 @@ namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 			return false;
 		}
 
-		
+
 		static List<MethodDef> GetBinaryIntMethods(TypeDef type) {
 			var list = new List<MethodDef>();
 			foreach (var method in type.Methods) {

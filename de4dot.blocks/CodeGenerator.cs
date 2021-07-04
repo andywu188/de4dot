@@ -156,12 +156,12 @@ namespace de4dot.blocks {
 		void SortExceptions() =>
 			exceptions.Sort((a, b) => {
 				// Make sure nested try blocks are sorted before the outer try block.
-				if (a.tryStart > b.tryStart) return -1;	// a could be nested, but b is not
-				if (a.tryStart < b.tryStart) return 1;	// b could be nested, but a is not
-				// same tryStart
-				if (a.tryEnd < b.tryEnd) return -1;		// a is nested
-				if (a.tryEnd > b.tryEnd) return 1;		// b is nested
-				// same tryEnd (they share try block)
+				if (a.tryStart > b.tryStart) return -1; // a could be nested, but b is not
+				if (a.tryStart < b.tryStart) return 1;  // b could be nested, but a is not
+														// same tryStart
+				if (a.tryEnd < b.tryEnd) return -1;     // a is nested
+				if (a.tryEnd > b.tryEnd) return 1;      // b is nested
+														// same tryEnd (they share try block)
 
 				int ai = a.filterStart == -1 ? a.handlerStart : a.filterStart;
 				int bi = b.filterStart == -1 ? b.handlerStart : b.filterStart;
@@ -237,7 +237,7 @@ namespace de4dot.blocks {
 			var current = stateStack.Peek();
 			var newOne = GetScopeBlock(bb);
 			if (newOne == null)
-				return;		// Not a BaseBlock somewhere inside this ScopeBlock
+				return;     // Not a BaseBlock somewhere inside this ScopeBlock
 			if (newOne != current.scopeBlock)
 				bb = newOne;
 
@@ -302,7 +302,7 @@ namespace de4dot.blocks {
 		void DoFilterHandlerBlock(FilterHandlerBlock filterHandlerBlock) {
 			stateStack.Push(new BlockState(filterHandlerBlock));
 			ProcessBaseBlocks(filterHandlerBlock.BaseBlocks, (block) => {
-				return block.LastInstr.OpCode == OpCodes.Endfilter;	// MUST end with endfilter!
+				return block.LastInstr.OpCode == OpCodes.Endfilter; // MUST end with endfilter!
 			});
 			stateStack.Pop();
 		}

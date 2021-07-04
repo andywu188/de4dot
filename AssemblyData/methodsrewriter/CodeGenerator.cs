@@ -21,9 +21,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using dnlib.DotNet.Emit;
 using dnlib.DotNet;
-
+using dnlib.DotNet.Emit;
 using OpCode = dnlib.DotNet.Emit.OpCode;
 using OpCodes = dnlib.DotNet.Emit.OpCodes;
 using OperandType = dnlib.DotNet.Emit.OperandType;
@@ -313,7 +312,7 @@ namespace AssemblyData.methodsrewriter {
 				ilg.Emit(opcode, checked((byte)((IVariable)instr.Operand).Index));
 				break;
 
-			case OperandType.InlineSig:	//TODO:
+			case OperandType.InlineSig: //TODO:
 			default:
 				throw new ApplicationException($"Unknown OperandType {instr.OpCode.OperandType}");
 			}

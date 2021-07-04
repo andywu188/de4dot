@@ -21,9 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Rummage {
 	class StringDecrypter {
@@ -259,13 +259,13 @@ namespace de4dot.code.deobfuscators.Rummage {
 			}
 
 			long InitializeBaseOffs() {
-				byte[] buf = new byte[0x1000];	// Must be 4096 bytes
+				byte[] buf = new byte[0x1000];  // Must be 4096 bytes
 				reader.BaseStream.Position = reader.BaseStream.Length - buf.Length;
 				while (true) {
 					if (reader.Read(buf, 0, buf.Length) != buf.Length)
 						throw new ApplicationException("Could not read");
 
-					for (int bi = buf.Length - 1; bi > magic.Length; ) {
+					for (int bi = buf.Length - 1; bi > magic.Length;) {
 						int mi = magic.Length - 1;
 						if (buf[bi--] != magic[mi--] ||
 							buf[bi] != magic[mi--])

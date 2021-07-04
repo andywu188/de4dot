@@ -17,8 +17,8 @@
     along with de4dot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using dnlib.DotNet;
 using AssemblyData;
+using dnlib.DotNet;
 
 namespace de4dot.code.AssemblyClient {
 	public interface IAssemblyClientFactory {

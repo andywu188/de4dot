@@ -19,9 +19,9 @@
 
 using System;
 using System.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	class MemoryMethodsDecrypter : MethodsDecrypterBase {
@@ -200,7 +200,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 				if (i < 0)
 					break;
 				if (i >= 2) {
-					if (instrs[i-2].OpCode.Code == Code.Pop)
+					if (instrs[i - 2].OpCode.Code == Code.Pop)
 						continue;
 				}
 				if (i + 4 >= instrs.Count)
@@ -287,7 +287,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 			methodsData = DecryptMethodsData_v14_r57884(peImage, false);
 
 			var reader = new BinaryReader(new MemoryStream(methodsData));
-			reader.ReadInt16();	// sig
+			reader.ReadInt16(); // sig
 			var writer = new BinaryWriter(new MemoryStream(fileData));
 			int numInfos = reader.ReadInt32();
 			for (int i = 0; i < numInfos; i++) {
@@ -308,7 +308,8 @@ namespace de4dot.code.deobfuscators.Confuser {
 
 			int csOffs = (int)peImage.OptionalHeader.StartOffset + 0x40;
 			Array.Clear(md5SumData, csOffs, 4);
-			/*var md5Sum =*/ DeobUtils.Md5Sum(md5SumData);
+			/*var md5Sum =*/
+			DeobUtils.Md5Sum(md5SumData);
 			ulong checkSum = reader.ReadUInt64() ^ lkey0;
 			if (hasStrongNameInfo) {
 				int sn = reader.ReadInt32();
@@ -337,7 +338,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 
 		bool DecryptImage_v14_r58004(MyPEImage peImage, byte[] fileData) {
 			var reader = new BinaryReader(new MemoryStream(methodsData));
-			reader.ReadInt16();	// sig
+			reader.ReadInt16(); // sig
 			var writer = new BinaryWriter(new MemoryStream(fileData));
 			int numInfos = reader.ReadInt32();
 			for (int i = 0; i < numInfos; i++) {
@@ -374,7 +375,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 
 		bool DecryptImage_v16_r71742(MyPEImage peImage, byte[] fileData) {
 			var reader = new BinaryReader(new MemoryStream(methodsData));
-			reader.ReadInt16();	// sig
+			reader.ReadInt16(); // sig
 			int numInfos = reader.ReadInt32();
 			for (int i = 0; i < numInfos; i++) {
 				uint offs = reader.ReadUInt32() ^ key4;

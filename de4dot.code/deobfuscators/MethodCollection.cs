@@ -18,8 +18,8 @@
 */
 
 using System.Collections.Generic;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators {
 	public class MethodCollection {

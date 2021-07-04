@@ -52,8 +52,8 @@ namespace de4dot.code.deobfuscators.CodeWall.randomc {
 			   (ulong)5115 * (ulong)(x[0]) +
 			   (ulong)x[4];
 			x[3] = x[2]; x[2] = x[1]; x[1] = x[0];
-			x[4] = (uint)(sum >> 32);			// Carry
-			x[0] = (uint)sum;					// Low 32 bits of sum
+			x[4] = (uint)(sum >> 32);           // Carry
+			x[0] = (uint)sum;                   // Low 32 bits of sum
 			return x[0];
 		}
 

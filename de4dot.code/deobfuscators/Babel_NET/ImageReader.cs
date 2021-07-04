@@ -20,21 +20,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using dnlib.IO;
-using dnlib.DotNet;
 using de4dot.blocks;
-
+using dnlib.DotNet;
+using dnlib.IO;
 using CR = System.Runtime.InteropServices;
 using DR = dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	class ImageReader {
-		static int METHODS_SIG			= 0x0000BEBA;
-		static int METADATA_SIG			= 0x0100BEBA;
-		static int METHOD_NAMES_SIG		= 0x0200BEBA;
-		static int ASSEMBLY_NAMES_SIG	= 0x0201BEBA;
-		static int TYPEREFS_SIG			= 0x0202BEBA;
-		static int STRINGS_SIG			= 0x0203BEBA;
+		static int METHODS_SIG = 0x0000BEBA;
+		static int METADATA_SIG = 0x0100BEBA;
+		static int METHOD_NAMES_SIG = 0x0200BEBA;
+		static int ASSEMBLY_NAMES_SIG = 0x0201BEBA;
+		static int TYPEREFS_SIG = 0x0202BEBA;
+		static int STRINGS_SIG = 0x0203BEBA;
 
 		enum TypeId : byte {
 			TypeRef = 0,
@@ -67,7 +66,7 @@ namespace de4dot.code.deobfuscators.Babel_NET {
 				return false;
 			uint pos = (uint)metadataOffset + 4;
 			reader.Position = pos;
-			int version = reader.ReadInt16();	// major, minor
+			int version = reader.ReadInt16();   // major, minor
 			if (version == 0x0001) {
 				InitializeV10();
 				return true;
@@ -266,11 +265,11 @@ namespace de4dot.code.deobfuscators.Babel_NET {
 
 		static DR.CallingConvention ConvertCallingConvention(CR.CallingConvention callingConvention) {
 			switch (callingConvention) {
-			case CR.CallingConvention.Winapi:	return DR.CallingConvention.Default;
-			case CR.CallingConvention.Cdecl:	return DR.CallingConvention.C;
-			case CR.CallingConvention.StdCall:	return DR.CallingConvention.StdCall;
-			case CR.CallingConvention.ThisCall:	return DR.CallingConvention.ThisCall;
-			case CR.CallingConvention.FastCall:	return DR.CallingConvention.FastCall;
+			case CR.CallingConvention.Winapi: return DR.CallingConvention.Default;
+			case CR.CallingConvention.Cdecl: return DR.CallingConvention.C;
+			case CR.CallingConvention.StdCall: return DR.CallingConvention.StdCall;
+			case CR.CallingConvention.ThisCall: return DR.CallingConvention.ThisCall;
+			case CR.CallingConvention.FastCall: return DR.CallingConvention.FastCall;
 			default: throw new ApplicationException($"Unknown CallingConvention {callingConvention}");
 			}
 		}

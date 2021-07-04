@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.PE;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
+using dnlib.PE;
 
 namespace de4dot.code.deobfuscators.Agile_NET {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {
@@ -97,7 +97,7 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 
 		// Old CS versions
 		byte[] UnpackNativeFile1(IPEImage peImage) {
-			const int dataDirNum = 6;	// debug dir
+			const int dataDirNum = 6;   // debug dir
 			const int dotNetDirNum = 14;
 
 			var optHeader = peImage.ImageNTHeaders.OptionalHeader;

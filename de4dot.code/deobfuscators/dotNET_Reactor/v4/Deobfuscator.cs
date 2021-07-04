@@ -19,12 +19,12 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using dnlib.PE;
+using de4dot.blocks;
+using de4dot.blocks.cflow;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.DotNet.Writer;
-using de4dot.blocks;
-using de4dot.blocks.cflow;
+using dnlib.PE;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {
@@ -163,8 +163,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 		public override void Initialize(ModuleDefMD module) => base.Initialize(module);
 
 		static Regex isRandomName = new Regex(@"^[A-Z]{30,40}$");
-		static Regex isRandomNameMembers = new Regex(@"^[a-zA-Z0-9]{9,11}$");	// methods, fields, props, events
-		static Regex isRandomNameTypes = new Regex(@"^[a-zA-Z0-9]{18,20}(?:`\d+)?$");	// types, namespaces
+		static Regex isRandomNameMembers = new Regex(@"^[a-zA-Z0-9]{9,11}$");   // methods, fields, props, events
+		static Regex isRandomNameTypes = new Regex(@"^[a-zA-Z0-9]{18,20}(?:`\d+)?$");   // types, namespaces
 
 		bool CheckValidName(string name, Regex regex) {
 			if (isRandomName.IsMatch(name))
@@ -300,7 +300,7 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 					return DeobfuscatorInfo.THE_NAME + " 3.8.4.1 - 3.9.0.1";
 				return DeobfuscatorInfo.THE_NAME + " <= 3.9.0.1";
 			}
-			if (!localTypes.Exists("System.Diagnostics.Process")) {	// If < 4.0
+			if (!localTypes.Exists("System.Diagnostics.Process")) { // If < 4.0
 				if (localTypes.Exists("System.Diagnostics.StackFrame"))
 					return DeobfuscatorInfo.THE_NAME + " 3.9.8.0";
 			}
@@ -313,10 +313,10 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 				return DeobfuscatorInfo.THE_NAME + " 4.5+";
 			}
 			DeobfuscatedFile.Deobfuscate(compileMethod);
-			bool compileMethodHasConstant_0x70000000 = DeobUtils.HasInteger(compileMethod, 0x70000000);	// 4.0-4.1
+			bool compileMethodHasConstant_0x70000000 = DeobUtils.HasInteger(compileMethod, 0x70000000); // 4.0-4.1
 			DeobfuscatedFile.Deobfuscate(methodsDecrypter.Method);
-			bool hasCorEnableProfilingString = FindString(methodsDecrypter.Method, "Cor_Enable_Profiling");	// 4.1-4.4
-			bool hasCatchString = FindString(methodsDecrypter.Method, "catch: ");	// <= 4.7
+			bool hasCorEnableProfilingString = FindString(methodsDecrypter.Method, "Cor_Enable_Profiling"); // 4.1-4.4
+			bool hasCatchString = FindString(methodsDecrypter.Method, "catch: ");   // <= 4.7
 
 			if (compileMethodHasConstant_0x70000000) {
 				if (hasCorEnableProfilingString)
@@ -410,7 +410,7 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 			if (!options.DecryptMethods)
 				return false;
 
-			var tokenToNativeCode = new Dictionary<uint,byte[]>();
+			var tokenToNativeCode = new Dictionary<uint, byte[]>();
 			if (!methodsDecrypter.Decrypt(peImage, DeobfuscatedFile, ref dumpedMethods, tokenToNativeCode, unpackedNativeFile))
 				return false;
 
@@ -490,7 +490,7 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 				AddCctorInitCallToBeRemoved(resourceResolver.InitMethod);
 			}
 			if (resourceResolver.Detected && !removeResourceResolver && !resourceResolver.FoundResource)
-				canRemoveDecrypterType = false;	// There may be calls to its .ctor
+				canRemoveDecrypterType = false; // There may be calls to its .ctor
 
 			if (Operations.DecryptStrings != OpDecryptString.None)
 				AddResourceToBeRemoved(stringDecrypter.Resource, "Encrypted strings");

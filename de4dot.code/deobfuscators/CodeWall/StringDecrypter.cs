@@ -20,10 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CodeWall {
 	class StringDecrypter {
@@ -33,8 +33,8 @@ namespace de4dot.code.deobfuscators.CodeWall {
 
 		public enum Version {
 			Unknown,
-			V30,	// 3.0 - 3.5
-			V36,	// 3.6 - 4.1
+			V30,    // 3.0 - 3.5
+			V36,    // 3.6 - 4.1
 		}
 
 		public class StringEncrypterInfo {

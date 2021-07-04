@@ -20,12 +20,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using dnlib.IO;
-using dnlib.DotNet;
-using dnlib.DotNet.MD;
-using dnlib.DotNet.Emit;
-using dnlib.DotNet.Writer;
 using de4dot.blocks;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
+using dnlib.DotNet.MD;
+using dnlib.DotNet.Writer;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 	class MethodsDecrypter {
@@ -138,7 +138,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 
 				PatchDwords(peImage, ref methodsDataReader, patchCount);
 				while (methodsDataReader.Position < methodsData.Length - 1) {
-					/*uint token =*/ methodsDataReader.ReadUInt32();
+					/*uint token =*/
+					methodsDataReader.ReadUInt32();
 					int numDwords = methodsDataReader.ReadInt32();
 					PatchDwords(peImage, ref methodsDataReader, numDwords / 2);
 				}
@@ -152,7 +153,7 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 					uint rva = methodsDataReader.ReadUInt32();
 					int size;
 					if (oldCode) {
-						methodsDataReader.ReadUInt32();	// token, unknown, or index
+						methodsDataReader.ReadUInt32(); // token, unknown, or index
 						size = methodsDataReader.ReadInt32();
 					}
 					else
@@ -185,7 +186,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 				}
 
 				PatchDwords(peImage, ref methodsDataReader, patchCount);
-				/*int count =*/ methodsDataReader.ReadInt32();
+				/*int count =*/
+				methodsDataReader.ReadInt32();
 				dumpedMethods = new DumpedMethods();
 				while (methodsDataReader.Position < methodsData.Length - 1) {
 					uint rva = methodsDataReader.ReadUInt32();
@@ -313,9 +315,9 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 			int len = 12;
 			foreach (var kv in methodToNativeMethod) {
 				if (kv.Key.DeclaringType == null)
-					continue;	// Method was removed
+					continue;   // Method was removed
 				if (kv.Key.DeclaringType.Module != module)
-					continue;	// method.DeclaringType was removed
+					continue;   // method.DeclaringType was removed
 				validNativeMethods.Add(kv.Key);
 				len += 3 * 4 + kv.Value.Length;
 			}
@@ -334,8 +336,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 
 			var stream = new MemoryStream();
 			var writer = new BinaryWriter(stream);
-			writer.Write((uint)0);	// patch count
-			writer.Write((uint)0);	// mode
+			writer.Write((uint)0);  // patch count
+			writer.Write((uint)0);  // mode
 			writer.Write(validNativeMethods.Count);
 
 			int index = 0;
@@ -379,8 +381,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 
 		enum CompileMethodType {
 			Unknown,
-			V1,	// <= DNR 4.5.0.0 (2012-11-06 <= endDate < 2013-01-31)
-			V2,	// >= DNR 4.5.0.0 (2012-11-06 < startDate <= 2013-01-31)
+			V1, // <= DNR 4.5.0.0 (2012-11-06 <= endDate < 2013-01-31)
+			V2, // >= DNR 4.5.0.0 (2012-11-06 < startDate <= 2013-01-31)
 		}
 
 		public static MethodDef FindDnrCompileMethod(TypeDef type) {

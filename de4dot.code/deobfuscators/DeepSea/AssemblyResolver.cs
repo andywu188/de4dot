@@ -20,9 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.DeepSea {
 	class AssemblyResolver : ResolverBase {
@@ -111,7 +111,7 @@ namespace de4dot.code.deobfuscators.DeepSea {
 				return;
 			}
 			if (IsV3SL(handler)) {
-				version = Version.V3;	// 3.x-4.0.4
+				version = Version.V3;   // 3.x-4.0.4
 				return;
 			}
 			if (IsV41SL(handler)) {

@@ -104,11 +104,11 @@ namespace de4dot.blocks {
 				var block = blocks[blocks.Count - 1];
 				blocks.RemoveAt(blocks.Count - 1);
 				if (block.Sources.Count != 0)
-					continue;	// Not dead
+					continue;   // Not dead
 				if (block == baseBlocks[0])
-					continue;	// It's the start of this block fence so must be present
+					continue;   // It's the start of this block fence so must be present
 				if (!IsOurBaseBlock(block))
-					continue;	// Some other ScopeBlock owns it, eg. first instr of an exception handler
+					continue;   // Some other ScopeBlock owns it, eg. first instr of an exception handler
 
 				// It's a dead block we can delete!
 
@@ -133,11 +133,11 @@ namespace de4dot.blocks {
 				var block = blocks[i];
 				var target = block.GetOnlyTarget();
 				if (!IsOurBaseBlock(target))
-					continue;	// Only merge blocks we own!
+					continue;   // Only merge blocks we own!
 				if (!block.CanMerge(target))
-					continue;	// Can't merge them!
+					continue;   // Can't merge them!
 				if (target == baseBlocks[0])
-					continue;	// The first one has an implicit source (eg. start of method or exception handler)
+					continue;   // The first one has an implicit source (eg. start of method or exception handler)
 
 				var targetIndex = blocks.IndexOf(target);
 				if (targetIndex < 0)
@@ -148,7 +148,7 @@ namespace de4dot.blocks {
 					throw new ApplicationException("Could not remove merged block from baseBlocks");
 				if (targetIndex < i)
 					i--;
-				i--;				// Redo since there may be more blocks we can merge
+				i--;                // Redo since there may be more blocks we can merge
 				mergedBlocks++;
 			}
 

@@ -221,29 +221,29 @@ namespace de4dot.code.deobfuscators.Confuser {
 		Instruction Decode() {
 			byte opc = reader.ReadByte();
 			switch (opc) {
-			case 0x01:	// ADD Ed,Gd
+			case 0x01:  // ADD Ed,Gd
 				ParseModRM();
 				return new Instruction(OpCode.Add_RR, new RegOperand(rm), new RegOperand(reg));
 
-			case 0x29:	// SUB Ed,Gd
+			case 0x29:  // SUB Ed,Gd
 				ParseModRM();
 				return new Instruction(OpCode.Sub_RR, new RegOperand(rm), new RegOperand(reg));
 
-			case 0x31:	// XOR Ed,Gd
+			case 0x31:  // XOR Ed,Gd
 				ParseModRM();
 				return new Instruction(OpCode.Xor_RR, new RegOperand(rm), new RegOperand(reg));
 
-			case 0x58:	// POP EAX
-			case 0x59:	// POP ECX
-			case 0x5A:	// POP EDX
-			case 0x5B:	// POP EBX
-			case 0x5C:	// POP ESP
-			case 0x5D:	// POP EBP
-			case 0x5E:	// POP ESI
-			case 0x5F:	// POP EDI
+			case 0x58:  // POP EAX
+			case 0x59:  // POP ECX
+			case 0x5A:  // POP EDX
+			case 0x5B:  // POP EBX
+			case 0x5C:  // POP ESP
+			case 0x5D:  // POP EBP
+			case 0x5E:  // POP ESI
+			case 0x5F:  // POP EDI
 				return new Instruction(OpCode.Pop_R, new RegOperand(opc - 0x58));
 
-			case 0x81:	// Grp1 Ed,Id
+			case 0x81:  // Grp1 Ed,Id
 				ParseModRM();
 				switch (reg) {
 				case 0: return new Instruction(OpCode.Add_RI, new RegOperand(rm), new ImmOperand(reader.ReadInt32()));
@@ -252,21 +252,21 @@ namespace de4dot.code.deobfuscators.Confuser {
 				default: throw new NotSupportedException();
 				}
 
-			case 0x89:	// MOV Ed,Gd
+			case 0x89:  // MOV Ed,Gd
 				ParseModRM();
 				return new Instruction(OpCode.Mov_RR, new RegOperand(rm), new RegOperand(reg));
 
-			case 0xB8:	// MOV EAX,Id
-			case 0xB9:	// MOV ECX,Id
-			case 0xBA:	// MOV EDX,Id
-			case 0xBB:	// MOV EBX,Id
-			case 0xBC:	// MOV ESP,Id
-			case 0xBD:	// MOV EBP,Id
-			case 0xBE:	// MOV ESI,Id
-			case 0xBF:	// MOV EDI,Id
+			case 0xB8:  // MOV EAX,Id
+			case 0xB9:  // MOV ECX,Id
+			case 0xBA:  // MOV EDX,Id
+			case 0xBB:  // MOV EBX,Id
+			case 0xBC:  // MOV ESP,Id
+			case 0xBD:  // MOV EBP,Id
+			case 0xBE:  // MOV ESI,Id
+			case 0xBF:  // MOV EDI,Id
 				return new Instruction(OpCode.Mov_RI, new RegOperand(opc - 0xB8), new ImmOperand(reader.ReadInt32()));
 
-			case 0xF7:	// Grp3 Ev
+			case 0xF7:  // Grp3 Ev
 				ParseModRM();
 				switch (reg) {
 				case 2: return new Instruction(OpCode.Not_R, new RegOperand(rm));

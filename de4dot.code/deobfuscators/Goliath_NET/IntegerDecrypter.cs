@@ -18,8 +18,8 @@
 */
 
 using System;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Goliath_NET {
 	class IntegerDecrypter : DecrypterBase {

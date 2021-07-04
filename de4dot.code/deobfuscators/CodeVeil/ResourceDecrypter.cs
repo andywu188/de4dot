@@ -18,10 +18,10 @@
 */
 
 using System;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CodeVeil {
 	class ResourceDecrypter {

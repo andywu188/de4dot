@@ -18,9 +18,9 @@
 */
 
 using System.Collections.Generic;
-using dnlib.IO;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {
 	class MethodBodyReader : MethodBodyReaderBase {

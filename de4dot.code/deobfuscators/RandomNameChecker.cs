@@ -154,7 +154,7 @@ namespace de4dot.code.deobfuscators {
 			var words = new List<string>();
 			var sb = new StringBuilder();
 
-			for (int i = 0; i < s.Length; ) {
+			for (int i = 0; i < s.Length;) {
 				if (IsDigit(s[i])) {
 					sb.Length = 0;
 					while (i < s.Length && IsDigit(s[i]))

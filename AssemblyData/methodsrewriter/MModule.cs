@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace AssemblyData.methodsrewriter {
 	class MModule {
@@ -116,7 +116,7 @@ namespace AssemblyData.methodsrewriter {
 			foreach (var m in module.GetMethods(flags))
 				tmpTokenToGlobalMethod[m.MetadataToken] = m;
 			foreach (var m in moduleType.Methods) {
-				if (m.Name == ".cctor")	//TODO: Use module.GetMethod(token) to get .cctor method
+				if (m.Name == ".cctor") //TODO: Use module.GetMethod(token) to get .cctor method
 					continue;
 				var token = (int)m.MDToken.Raw;
 				tokenToGlobalMethod[token] = new MMethod(tmpTokenToGlobalMethod[token], m);

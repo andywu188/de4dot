@@ -126,9 +126,9 @@ namespace de4dot.blocks {
 				blockInfos[state.bb] = blockInfo;
 
 				var block = state.bb as Block;
-				if (block == null) {	// i.e., if try, filter, or handler block
-					// It's not important to know the exact values, so we set them both to 0.
-					// Compilers must make sure the stack is empty when entering a try block.
+				if (block == null) {    // i.e., if try, filter, or handler block
+										// It's not important to know the exact values, so we set them both to 0.
+										// Compilers must make sure the stack is empty when entering a try block.
 					blockInfo.stackStart = blockInfo.stackEnd = 0;
 					continue;
 				}
@@ -165,7 +165,7 @@ namespace de4dot.blocks {
 					if (!scopeBlock.IsOurBaseBlock(source))
 						continue;
 					int oldCount = newList.Count;
-					AddToNewList(source);	// Make sure it's before this block
+					AddToNewList(source);   // Make sure it's before this block
 					if (oldCount != newList.Count)
 						break;
 				}

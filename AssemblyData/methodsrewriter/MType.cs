@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace AssemblyData.methodsrewriter {
 	class MType {

@@ -26,7 +26,7 @@ namespace de4dot.blocks {
 	public enum FrameworkType {
 		Unknown,
 		Desktop,
-		Silverlight,		// and WindowsPhone, XNA Xbox360
+		Silverlight,        // and WindowsPhone, XNA Xbox360
 		CompactFramework,
 		XNA,
 		Zune,
@@ -111,7 +111,7 @@ namespace de4dot.blocks {
 						goto next;
 				}
 				yield return method;
-			next: ;
+next:;
 			}
 		}
 

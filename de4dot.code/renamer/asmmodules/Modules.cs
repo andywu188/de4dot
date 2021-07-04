@@ -256,7 +256,7 @@ namespace de4dot.code.renamer.asmmodules {
 					if (!PublicKeyBase.TokenEquals(typeAsmName.PublicKeyOrToken, otherAsmName.PublicKeyOrToken))
 						continue;
 					if (typeAsmName.Version > otherAsmName.Version)
-						continue;	// old version
+						continue;   // old version
 
 					if (foundType == null) {
 						foundAsmName = otherAsmName;
@@ -303,7 +303,7 @@ namespace de4dot.code.renamer.asmmodules {
 				return typeDef;
 			}
 
-			typeToTypeDefDict[type] = null;	// In case of a circular reference
+			typeToTypeDefDict[type] = null; // In case of a circular reference
 			typeToTypeDefDict[typeDef2] = null;
 
 			typeDef = new MTypeDef(typeDef2, null, 0);

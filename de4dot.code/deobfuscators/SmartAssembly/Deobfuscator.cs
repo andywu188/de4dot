@@ -19,8 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.SmartAssembly {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {
@@ -202,9 +202,9 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 
 			var fields = type.Fields;
 			if (fields.Count == 1)
-				return 1;	// 1.x: int ID
+				return 1;   // 1.x: int ID
 			if (fields.Count == 2)
-				return 2;	// 2.x: int ID, static int AssemblyID
+				return 2;   // 2.x: int ID, static int AssemblyID
 			return -1;
 		}
 

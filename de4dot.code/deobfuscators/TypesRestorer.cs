@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators {
 	// Restore the type of all fields / parameters that have had their type turned into object.
@@ -611,7 +611,7 @@ namespace de4dot.code.deobfuscators {
 				return b;
 			if (DotNetUtils.IsDelegate(b) && DotNetUtils.DerivesFromDelegate(module.Find(a.ToTypeDefOrRef())))
 				return a;
-			return null;	//TODO:
+			return null;    //TODO:
 		}
 	}
 

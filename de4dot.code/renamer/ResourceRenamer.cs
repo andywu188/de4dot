@@ -20,10 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
 using de4dot.code.renamer.asmmodules;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.renamer {
 	public class ResourceRenamer {

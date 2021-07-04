@@ -18,9 +18,9 @@
 */
 
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators {
 	public abstract class ProxyCallFixerBase {
@@ -32,8 +32,8 @@ namespace de4dot.code.deobfuscators {
 		public int Errors => errors;
 
 		protected class DelegateInfo {
-			public IMethod methodRef;	// Method we should call
-			public FieldDef field;		// Field holding the Delegate instance
+			public IMethod methodRef;   // Method we should call
+			public FieldDef field;      // Field holding the Delegate instance
 			public OpCode callOpcode;
 			public DelegateInfo(FieldDef field, IMethod methodRef, OpCode callOpcode) {
 				this.field = field;

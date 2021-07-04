@@ -19,10 +19,10 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
 using de4dot.code.renamer;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {
@@ -92,7 +92,7 @@ namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 				return;
 
 			detectedVersion = true;
-			obfuscatorName = DeobfuscatorInfo.THE_NAME + " " +  version;
+			obfuscatorName = DeobfuscatorInfo.THE_NAME + " " + version;
 		}
 
 		public override void DeobfuscateBegin() {

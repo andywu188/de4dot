@@ -18,8 +18,8 @@
 */
 
 using System;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 	class BooleanDecrypter {

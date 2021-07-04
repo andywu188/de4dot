@@ -21,10 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.IO;
 using dnlib.PE;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.MaxtoCode {
 	// Decrypts methods, resources and strings (#US heap)
@@ -283,7 +283,8 @@ namespace de4dot.code.deobfuscators.MaxtoCode {
 				for (int i = 0; i < numMethods; i++, offset += structSize) {
 					uint methodBodyRva = ReadEncryptedUInt32(offset);
 					uint totalSize = ReadEncryptedUInt32(offset + 4);
-					/*uint methodInstructionRva =*/ ReadEncryptedUInt32(offset + 8);
+					/*uint methodInstructionRva =*/
+					ReadEncryptedUInt32(offset + 8);
 
 					// Read the method body header and method body (instrs + exception handlers).
 					// The method body header is always in the first one. The instrs + ex handlers
@@ -525,7 +526,7 @@ namespace de4dot.code.deobfuscators.MaxtoCode {
 			byte[] Decrypt9(byte[] encrypted, int keyStart, int keyReset, int keyEnd) {
 				var decrypted = new byte[encrypted.Length];
 				int ki = keyStart;
-				for (int i = 0; ; ) {
+				for (int i = 0; ;) {
 					byte b, k;
 
 					if (i >= encrypted.Length) break;
@@ -714,7 +715,7 @@ namespace de4dot.code.deobfuscators.MaxtoCode {
 			if (usHeapRva == 0 || usHeapSize == 0)
 				return;
 			var usHeap = peImage.Metadata.USStream;
-			if (usHeap.StartOffset == 0 ||	// Start offset is 0 if it's not present in the file
+			if (usHeap.StartOffset == 0 ||  // Start offset is 0 if it's not present in the file
 				peImage.RvaToOffset(usHeapRva) != (uint)usHeap.StartOffset ||
 				usHeapSize != (uint)(usHeap.EndOffset - usHeap.StartOffset)) {
 				Logger.w("Invalid #US heap RVA and size found");

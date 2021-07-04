@@ -39,8 +39,7 @@ using System;
 using System.Runtime.Serialization;
 #endif
 
-namespace ICSharpCode.SharpZipLib
-{
+namespace ICSharpCode.SharpZipLib {
 	/// <summary>
 	/// SharpZipBaseException is the base exception class for the SharpZipLibrary.
 	/// All library exceptions are derived from this.
@@ -50,34 +49,30 @@ namespace ICSharpCode.SharpZipLib
 #if !NETCF_1_0 && !NETCF_2_0
 	[Serializable]
 #endif
-	public class SharpZipBaseException : ApplicationException
-	{
+	public class SharpZipBaseException : ApplicationException {
 #if !NETCF_1_0 && !NETCF_2_0
 		/// <summary>
 		/// Deserialization constructor 
 		/// </summary>
 		/// <param name="info"><see cref="System.Runtime.Serialization.SerializationInfo"/> for this constructor</param>
 		/// <param name="context"><see cref="StreamingContext"/> for this constructor</param>
-		protected SharpZipBaseException(SerializationInfo info, StreamingContext context )
-			: base( info, context )
-		{
+		protected SharpZipBaseException(SerializationInfo info, StreamingContext context)
+			: base(info, context) {
 		}
 #endif
-		
+
 		/// <summary>
 		/// Initializes a new instance of the SharpZipBaseException class.
 		/// </summary>
-		public SharpZipBaseException()
-		{
+		public SharpZipBaseException() {
 		}
-		
+
 		/// <summary>
 		/// Initializes a new instance of the SharpZipBaseException class with a specified error message.
 		/// </summary>
 		/// <param name="message">A message describing the exception.</param>
 		public SharpZipBaseException(string message)
-			: base(message)
-		{
+			: base(message) {
 		}
 
 		/// <summary>
@@ -87,8 +82,7 @@ namespace ICSharpCode.SharpZipLib
 		/// <param name="message">A message describing the exception.</param>
 		/// <param name="innerException">The inner exception</param>
 		public SharpZipBaseException(string message, Exception innerException)
-			: base(message, innerException)
-		{
+			: base(message, innerException) {
 		}
 	}
 }

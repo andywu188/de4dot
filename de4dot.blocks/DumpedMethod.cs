@@ -22,19 +22,19 @@ using System;
 namespace de4dot.blocks {
 	[Serializable]
 	public class DumpedMethod {
-		public ushort mhFlags;			// method header Flags
-		public ushort mhMaxStack;		// method header MaxStack
-		public uint mhCodeSize;			// method header CodeSize
-		public uint mhLocalVarSigTok;	// method header LocalVarSigTok
+		public ushort mhFlags;          // method header Flags
+		public ushort mhMaxStack;       // method header MaxStack
+		public uint mhCodeSize;         // method header CodeSize
+		public uint mhLocalVarSigTok;   // method header LocalVarSigTok
 
-		public uint mdRVA;				// methodDef RVA
-		public ushort mdImplFlags;		// methodDef ImplFlags
-		public ushort mdFlags;			// methodDef Flags
-		public uint mdName;				// methodDef Name (index into #String)
-		public uint mdSignature;		// methodDef Signature (index into #Blob)
-		public uint mdParamList;		// methodDef ParamList (index into Param table)
+		public uint mdRVA;              // methodDef RVA
+		public ushort mdImplFlags;      // methodDef ImplFlags
+		public ushort mdFlags;          // methodDef Flags
+		public uint mdName;             // methodDef Name (index into #String)
+		public uint mdSignature;        // methodDef Signature (index into #Blob)
+		public uint mdParamList;        // methodDef ParamList (index into Param table)
 
-		public uint token;				// metadata token
+		public uint token;              // metadata token
 
 		public byte[] code;
 		public byte[] extraSections;

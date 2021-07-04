@@ -19,12 +19,12 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.code;
+using de4dot.code.AssemblyClient;
+using de4dot.code.deobfuscators;
+using de4dot.code.renamer;
 using dnlib.DotNet;
 using dnlib.DotNet.Writer;
-using de4dot.code;
-using de4dot.code.deobfuscators;
-using de4dot.code.AssemblyClient;
-using de4dot.code.renamer;
 
 namespace de4dot.cui {
 	class CommandLineParser {

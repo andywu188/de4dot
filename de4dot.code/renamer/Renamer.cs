@@ -20,10 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using dnlib.DotNet;
-using de4dot.code.renamer.asmmodules;
-using dnlib.DotNet.Resources;
 using de4dot.blocks;
+using de4dot.code.renamer.asmmodules;
+using dnlib.DotNet;
+using dnlib.DotNet.Resources;
 
 namespace de4dot.code.renamer {
 	[Flags]
@@ -684,7 +684,7 @@ namespace de4dot.code.renamer {
 					prop = method.Property;
 			}
 			if (prop == null)
-				return;	// Should never happen
+				return; // Should never happen
 			if (missingProps == null)
 				return;
 
@@ -733,7 +733,7 @@ namespace de4dot.code.renamer {
 			foreach (var type in modules.AllTypes) {
 				foreach (var method in type.AllMethodsSorted) {
 					if (method.IsVirtual())
-						continue;	// Virtual methods are in allGroups, so already fixed above
+						continue;   // Virtual methods are in allGroups, so already fixed above
 					if (method.Property != null)
 						continue;
 					var methodName = method.MethodDef.Name.String;
@@ -896,7 +896,7 @@ namespace de4dot.code.renamer {
 				}
 			}
 			if (evt == null)
-				return;	// Should never happen
+				return; // Should never happen
 			if (missingEvents == null)
 				return;
 
@@ -962,7 +962,7 @@ namespace de4dot.code.renamer {
 			foreach (var type in modules.AllTypes) {
 				foreach (var method in type.AllMethodsSorted) {
 					if (method.IsVirtual())
-						continue;	// Virtual methods are in allGroups, so already fixed above
+						continue;   // Virtual methods are in allGroups, so already fixed above
 					if (method.Event != null)
 						continue;
 					var methodName = method.MethodDef.Name.String;
@@ -1629,7 +1629,8 @@ namespace de4dot.code.renamer {
 
 			string newMethodName;
 			if (overridePrefix != "") {
-				/*var overrideInfo =*/ memberInfos.Method(overrideMethod);
+				/*var overrideInfo =*/
+				memberInfos.Method(overrideMethod);
 				var overriddenMethod = GetOverriddenMethod(overrideMethod);
 				if (overriddenMethod == null)
 					newMethodName = GetRealName(overrideMethod.MethodDef.Overrides[0].MethodDeclaration.Name.String);

@@ -25,7 +25,7 @@ namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 		void Initialize() => FindConstants();
 
 		void FindConstants() {
-			for (int index = 0; index < instructions.Count; ) {
+			for (int index = 0; index < instructions.Count;) {
 				if (!GetInt32(ref index, out int value))
 					break;
 				var stloc = instructions[index];

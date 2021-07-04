@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using dnlib.IO;
 using dnlib.DotNet;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.ILProtector {
 	class StaticMethodsDecrypter : MethodsDecrypterBase {
@@ -171,9 +171,9 @@ namespace de4dot.code.deobfuscators.ILProtector {
 					if (crc32 != origCrc32)
 						return null;
 
-					var key0 = DeobUtils.Sha1Sum(sha1Data);				// 1.0.6.0
-					var key6 = GetKey(ref reader, key0, keyXorOffs6);	// 1.0.6.6
-					var key7 = GetKey(ref reader, key0, keyXorOffs7);	// 1.0.6.7
+					var key0 = DeobUtils.Sha1Sum(sha1Data);             // 1.0.6.0
+					var key6 = GetKey(ref reader, key0, keyXorOffs6);   // 1.0.6.6
+					var key7 = GetKey(ref reader, key0, keyXorOffs7);   // 1.0.6.7
 					return new DecrypterV106(key0, key6, key7, encryptedOffs);
 				}
 				catch (Exception ex) when (ex is IOException || ex is ArgumentException) {
@@ -268,7 +268,8 @@ namespace de4dot.code.deobfuscators.ILProtector {
 			var toOffset = new Dictionary<DecryptedMethodInfo, int>();
 			var reader = ByteArrayDataReaderFactory.CreateReader(data);
 			int numMethods = (int)reader.Read7BitEncodedUInt32();
-			/*int totalCodeSize = (int)*/reader.Read7BitEncodedUInt32();
+			/*int totalCodeSize = (int)*/
+			reader.Read7BitEncodedUInt32();
 			var methodInfos = new DecryptedMethodInfo[numMethods];
 			int offset = 0;
 			for (int i = 0; i < numMethods; i++) {

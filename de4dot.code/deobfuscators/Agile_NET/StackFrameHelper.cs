@@ -17,8 +17,8 @@
     along with de4dot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Agile_NET {
 	class StackFrameHelper {
@@ -40,9 +40,9 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 				MethodDef errorMethod = null;
 				foreach (var method in type.Methods) {
 					if (method.Name == ".ctor")
-						continue;	// .ctor is allowed
+						continue;   // .ctor is allowed
 					if (method.Name == ".cctor")
-						continue;	// .cctor is allowed
+						continue;   // .cctor is allowed
 					var sig = method.MethodSig;
 					if (sig != null && method.IsStatic && method.HasBody &&
 						sig.Params.Count == 2 && !method.HasGenericParameters &&

@@ -18,8 +18,8 @@
 */
 
 using System.Collections.Generic;
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.DeepSea {
 	class DsConstantsReader : ConstantsReader {

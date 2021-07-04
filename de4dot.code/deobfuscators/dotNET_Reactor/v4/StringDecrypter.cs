@@ -18,11 +18,11 @@
 */
 
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 	class StringDecrypter {
@@ -37,8 +37,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 
 		enum StringDecrypterVersion {
 			UNKNOWN = 0,
-			VER_37,		// 3.7-
-			VER_38,		// 3.8+
+			VER_37,     // 3.7-
+			VER_38,     // 3.8+
 		}
 
 		public class DecrypterInfo {

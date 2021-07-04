@@ -18,8 +18,8 @@
 */
 
 using System;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	// Converts type references/definitions in one module to this module

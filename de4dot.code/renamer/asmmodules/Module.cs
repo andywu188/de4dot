@@ -90,7 +90,7 @@ namespace de4dot.code.renamer.asmmodules {
 					int index = typeToIndex[nestedTypeDef2];
 					var nestedTypeDef = allTypesCopy[index];
 					allTypesCopy[index] = null;
-					if (nestedTypeDef == null)	// Impossible
+					if (nestedTypeDef == null)  // Impossible
 						throw new ApplicationException("Nested type belongs to two or more types");
 					typeDef.Add(nestedTypeDef);
 					nestedTypeDef.NestingType = typeDef;

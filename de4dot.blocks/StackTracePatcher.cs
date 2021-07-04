@@ -18,8 +18,8 @@
 */
 
 using System;
-using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace de4dot.blocks {
 	public class StackTracePatcher {

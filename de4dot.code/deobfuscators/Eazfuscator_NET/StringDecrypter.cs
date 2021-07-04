@@ -21,10 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 	class StringDecrypter : IDisposable {
@@ -225,7 +225,7 @@ namespace de4dot.code.deobfuscators.Eazfuscator_NET {
 				if (method.MDToken != helper.MDToken &&
 					method.IsAssembly &&
 					method.Parameters.Count >= 1 &&
-					method.Parameters[0].Type == helper.Parameters[0].Type)	//checking first type, which should be string
+					method.Parameters[0].Type == helper.Parameters[0].Type) //checking first type, which should be string
 					return method;
 			}
 
@@ -955,7 +955,7 @@ done:
 				else
 					continue;
 
-				return i + 2;	//+2 or else we would land on the call method
+				return i + 2;   //+2 or else we would land on the call method
 			}
 
 			return -1;

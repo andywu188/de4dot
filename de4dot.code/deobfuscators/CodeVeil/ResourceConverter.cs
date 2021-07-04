@@ -64,91 +64,91 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 			IResourceData resourceData;
 			int type = (info.flags & 0x7F);
 			switch (type) {
-			case 1:		// bool
+			case 1:     // bool
 				resourceData = dataCreator.Create(reader.ReadBoolean());
 				break;
 
-			case 2:		// byte
+			case 2:     // byte
 				resourceData = dataCreator.Create(reader.ReadByte());
 				break;
 
-			case 3:		// byte[]
+			case 3:     // byte[]
 				resourceData = dataCreator.Create(reader.ReadBytes(info.length));
 				break;
 
-			case 4:		// char[]
+			case 4:     // char[]
 				resourceData = new CharArrayResourceData(dataCreator.CreateUserResourceType(CharArrayResourceData.ReflectionTypeName), DataReaderUtils.ReadChars(ref reader, info.length));
 				break;
 
-			case 5:		// sbyte
+			case 5:     // sbyte
 				resourceData = dataCreator.Create(reader.ReadSByte());
 				break;
 
-			case 6:		// char
+			case 6:     // char
 				resourceData = dataCreator.Create(DataReaderUtils.ReadChar(ref reader));
 				break;
 
-			case 7:		// decimal
+			case 7:     // decimal
 				resourceData = dataCreator.Create(reader.ReadDecimal());
 				break;
 
-			case 8:		// double
+			case 8:     // double
 				resourceData = dataCreator.Create(reader.ReadDouble());
 				break;
 
-			case 9:		// short
+			case 9:     // short
 				resourceData = dataCreator.Create(reader.ReadInt16());
 				break;
 
-			case 10:	// int
+			case 10:    // int
 				resourceData = dataCreator.Create(reader.ReadInt32());
 				break;
 
-			case 11:	// long
+			case 11:    // long
 				resourceData = dataCreator.Create(reader.ReadInt64());
 				break;
 
-			case 12:	// float
+			case 12:    // float
 				resourceData = dataCreator.Create(reader.ReadSingle());
 				break;
 
-			case 13:	// string
+			case 13:    // string
 				resourceData = dataCreator.Create(reader.ReadSerializedString());
 				break;
 
-			case 14:	// ushort
+			case 14:    // ushort
 				resourceData = dataCreator.Create(reader.ReadUInt16());
 				break;
 
-			case 15:	// uint
+			case 15:    // uint
 				resourceData = dataCreator.Create(reader.ReadUInt32());
 				break;
 
-			case 16:	// ulong
+			case 16:    // ulong
 				resourceData = dataCreator.Create(reader.ReadUInt64());
 				break;
 
-			case 17:	// DateTime
+			case 17:    // DateTime
 				resourceData = dataCreator.Create(DateTime.FromBinary(reader.ReadInt64()));
 				break;
 
-			case 18:	// TimeSpan
+			case 18:    // TimeSpan
 				resourceData = dataCreator.Create(TimeSpan.FromTicks(reader.ReadInt64()));
 				break;
 
-			case 19:	// Icon
+			case 19:    // Icon
 				resourceData = new IconResourceData(dataCreator.CreateUserResourceType(IconResourceData.ReflectionTypeName), reader.ReadBytes(info.length));
 				break;
 
-			case 20:	// Image
+			case 20:    // Image
 				resourceData = new ImageResourceData(dataCreator.CreateUserResourceType(ImageResourceData.ReflectionTypeName), reader.ReadBytes(info.length));
 				break;
 
-			case 31:	// binary
+			case 31:    // binary
 				resourceData = dataCreator.CreateSerialized(reader.ReadBytes(info.length));
 				break;
 
-			case 21:	// Point (CV doesn't restore this type)
+			case 21:    // Point (CV doesn't restore this type)
 			default:
 				throw new Exception("Unknown type");
 			}

@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Agile_NET.vm.v2 {
 	class Csvm {

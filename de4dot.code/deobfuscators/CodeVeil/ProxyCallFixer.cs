@@ -19,10 +19,10 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CodeVeil {
 	class ProxyCallFixer : ProxyCallFixer1 {
@@ -86,7 +86,7 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 				uint rid = reader.ReadCompressedUInt32();
 				if (rid != type.Rid)
 					throw new ApplicationException("Invalid RID");
-				return string.Empty;	// It's non-null
+				return string.Empty;    // It's non-null
 			}
 			return null;
 		}

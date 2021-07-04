@@ -17,8 +17,8 @@
     along with de4dot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using dnlib.DotNet.Writer;
 using de4dot.code.renamer;
+using dnlib.DotNet.Writer;
 
 namespace de4dot.code.deobfuscators {
 	public enum OpDecryptString {

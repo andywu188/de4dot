@@ -25,8 +25,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Security;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.ILProtector {
 	sealed class DynamicMethodsDecrypter : IDisposable {
@@ -121,17 +121,17 @@ namespace de4dot.code.deobfuscators.ILProtector {
 			static readonly byte[] nops2 = new byte[] { 0x90, 0x90 };
 			static readonly byte[] nops6 = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
 			static readonly Dictionary<Version, PatchInfo> patchInfos32 = new Dictionary<Version, PatchInfo> {
-				{ new Version(2, 0, 8, 0),	new PatchInfo(0x00020B20, new PatchData(0x00005733, nops2)) },
-				{ new Version(2, 0, 8, 5),	new PatchInfo(0x000221A0, new PatchData(0x00005742, nops2)) },
-				{ new Version(2, 0, 9, 0),	new PatchInfo(0x00023360, new PatchData(0x000056F2, nops6)) },
+				{ new Version(2, 0, 8, 0),  new PatchInfo(0x00020B20, new PatchData(0x00005733, nops2)) },
+				{ new Version(2, 0, 8, 5),  new PatchInfo(0x000221A0, new PatchData(0x00005742, nops2)) },
+				{ new Version(2, 0, 9, 0),  new PatchInfo(0x00023360, new PatchData(0x000056F2, nops6)) },
 				{ new Version(2, 0, 10, 0), new PatchInfo(0x00023B30, new PatchData(0x00005B12, nops6)) },
 				{ new Version(2, 0, 11, 0), new PatchInfo(0x000207C0, new PatchData(0x00018432, nops6)) },
 				{ new Version(2, 0, 11, 1), new PatchInfo(0x000207C0, new PatchData(0x00018432, nops6)) },
 			};
 			static readonly Dictionary<Version, PatchInfo> patchInfos64 = new Dictionary<Version, PatchInfo> {
-				{ new Version(2, 0, 8, 0),	new PatchInfo(0x00026090, new PatchData(0x00005E0C, nops6)) },
-				{ new Version(2, 0, 8, 5),	new PatchInfo(0x000273D0, new PatchData(0x000060CA, nops6)) },
-				{ new Version(2, 0, 9, 0),	new PatchInfo(0x00028B00, new PatchData(0x00005F70, nops6)) },
+				{ new Version(2, 0, 8, 0),  new PatchInfo(0x00026090, new PatchData(0x00005E0C, nops6)) },
+				{ new Version(2, 0, 8, 5),  new PatchInfo(0x000273D0, new PatchData(0x000060CA, nops6)) },
+				{ new Version(2, 0, 9, 0),  new PatchInfo(0x00028B00, new PatchData(0x00005F70, nops6)) },
 				{ new Version(2, 0, 10, 0), new PatchInfo(0x00029630, new PatchData(0x00006510, nops6)) },
 				{ new Version(2, 0, 11, 0), new PatchInfo(0x000257C0, new PatchData(0x0001C9A0, nops6)) },
 				{ new Version(2, 0, 11, 1), new PatchInfo(0x000257C0, new PatchData(0x0001C9A0, nops6)) },
@@ -174,7 +174,7 @@ namespace de4dot.code.deobfuscators.ILProtector {
 				return PatchRuntime(decryptAddr, info);
 			}
 
-			[HandleProcessCorruptedStateExceptions, SecurityCritical]	// Req'd on .NET 4.0
+			[HandleProcessCorruptedStateExceptions, SecurityCritical]   // Req'd on .NET 4.0
 			static bool PatchRuntime(IntPtr decryptAddr, PatchInfo info) {
 				try {
 					var baseAddr = new IntPtr(decryptAddr.ToInt64() - info.RvaDecryptMethod);
@@ -618,7 +618,8 @@ namespace de4dot.code.deobfuscators.ILProtector {
 				throw new ApplicationException("Could not find Protect.MainType");
 			var invokerField = FindInvokerField(module);
 
-			/*reflectionProtectMainType =*/ reflectionProtectModule.ResolveType(0x02000000 + (int)protectMainType.Rid);
+			/*reflectionProtectMainType =*/
+			reflectionProtectModule.ResolveType(0x02000000 + (int)protectMainType.Rid);
 			invokerFieldInfo = reflectionModule.ResolveField(0x04000000 + (int)invokerField.Rid);
 
 			decrypter = CreateDecrypter();

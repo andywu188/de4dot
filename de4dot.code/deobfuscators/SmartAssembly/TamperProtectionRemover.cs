@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.SmartAssembly {
 	class TamperProtectionRemover {
@@ -170,7 +170,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 			29	0061	throw
 			30	0062	ret
 			*/
-			
+
 			var instrs = block.Instructions;
 			int end = instrs.Count - 1;
 			Instr instr;
@@ -409,7 +409,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 
 		void RemoveDeadBlock(Block block) {
 			var parent = block.Parent;
-			if (parent != null)	// null if already dead
+			if (parent != null) // null if already dead
 				parent.RemoveDeadBlock(block);
 		}
 	}

@@ -20,11 +20,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using dnlib.IO;
-using dnlib.PE;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.MD;
-using de4dot.blocks;
+using dnlib.IO;
+using dnlib.PE;
 
 namespace de4dot.code.deobfuscators.Agile_NET {
 	class CodeHeader {
@@ -32,7 +32,7 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 		public byte[] decryptionKey;
 		public uint totalCodeSize;
 		public uint numMethods;
-		public uint methodDefTableOffset;	// Relative to start of metadata
+		public uint methodDefTableOffset;   // Relative to start of metadata
 		public uint methodDefElemSize;
 	}
 
@@ -50,9 +50,9 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 	}
 
 	class MethodsDecrypter {
-		static readonly byte[] oldSignature    = new byte[16] { 0x1F, 0x68, 0x9D, 0x2B, 0x07, 0x4A, 0xA6, 0x4A, 0x92, 0xBB, 0x31, 0x7E, 0x60, 0x7F, 0xD7, 0xCD };
+		static readonly byte[] oldSignature = new byte[16] { 0x1F, 0x68, 0x9D, 0x2B, 0x07, 0x4A, 0xA6, 0x4A, 0x92, 0xBB, 0x31, 0x7E, 0x60, 0x7F, 0xD7, 0xCD };
 		static readonly byte[] normalSignature = new byte[16] { 0x08, 0x44, 0x65, 0xE1, 0x8C, 0x82, 0x13, 0x4C, 0x9C, 0x85, 0xB4, 0x17, 0xDA, 0x51, 0xAD, 0x25 };
-		static readonly byte[] proSignature    = new byte[16] { 0x68, 0xA0, 0xBB, 0x60, 0x13, 0x65, 0x5F, 0x41, 0xAE, 0x42, 0xAB, 0x42, 0x9B, 0x6B, 0x4E, 0xC1 };
+		static readonly byte[] proSignature = new byte[16] { 0x68, 0xA0, 0xBB, 0x60, 0x13, 0x65, 0x5F, 0x41, 0xAE, 0x42, 0xAB, 0x42, 0x9B, 0x6B, 0x4E, 0xC1 };
 
 		enum SigType {
 			Unknown,
@@ -190,7 +190,7 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 					uint q1 = ReadUInt32_be(data, offset + 4);
 
 					const uint magic = 0x9E3779B8;
-					uint val = 0xC6EF3700;	// magic * 0x20
+					uint val = 0xC6EF3700;  // magic * 0x20
 					for (int j = 0; j < 32; j++) {
 						q1 -= ((q0 << 4) + key[2]) ^ (val + q0) ^ ((q0 >> 5) + key[3]);
 						q0 -= ((q1 << 4) + key[0]) ^ (val + q1) ^ ((q1 >> 5) + key[1]);
@@ -350,8 +350,8 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 			V30,
 			V40,
 			V45,
-			V50,	// 5.0, possibly also 5.1
-			V52,	// 5.2+ (or maybe 5.1+)
+			V50,    // 5.0, possibly also 5.1
+			V52,    // 5.2+ (or maybe 5.1+)
 		}
 
 		List<CsHeaderVersion> GetCsHeaderVersions(uint codeHeaderOffset, MDTable methodDefTable) {
@@ -444,12 +444,12 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 				return null;
 			uint initToken = initMethod.MDToken.ToUInt32();
 			var moduleCctorBytes = new byte[6];
-			moduleCctorBytes[0] = 0x28;	// call
+			moduleCctorBytes[0] = 0x28; // call
 			moduleCctorBytes[1] = (byte)initToken;
 			moduleCctorBytes[2] = (byte)(initToken >> 8);
 			moduleCctorBytes[3] = (byte)(initToken >> 16);
 			moduleCctorBytes[4] = (byte)(initToken >> 24);
-			moduleCctorBytes[5] = 0x2A;	// ret
+			moduleCctorBytes[5] = 0x2A; // ret
 			return moduleCctorBytes;
 		}
 

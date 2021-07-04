@@ -345,10 +345,10 @@ namespace de4dot.blocks.cflow {
 
 					CalculateStackUsage(instr.Instruction, methodHasReturnValue, out int pushes, out int pops);
 					if (pops < 0)
-						break;	// eg. leave
+						break;  // eg. leave
 					index--;
 
-					if (pops > 0) {	// if instr uses any args
+					if (pops > 0) { // if instr uses any args
 						bool otherExpr = pops > 0 && pushes == 0;
 						if (!Find(ref index, addIt && !otherExpr))
 							break;

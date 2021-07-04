@@ -18,8 +18,8 @@
 */
 
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
 namespace de4dot.blocks.cflow {
 	class ValueStack {

@@ -18,9 +18,9 @@
 */
 
 using System;
-using ICSharpCode.SharpZipLib.Zip.Compression;
-using dnlib.PE;
 using dnlib.DotNet;
+using dnlib.PE;
+using ICSharpCode.SharpZipLib.Zip.Compression;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 	class NativeImageUnpacker {

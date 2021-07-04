@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {

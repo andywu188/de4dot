@@ -19,7 +19,6 @@
 
 using System.Collections.Generic;
 using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 
 namespace de4dot.blocks.cflow {
 	// Only deobfuscates a method once. A copy of the method (now deobfuscated) is returned.

@@ -19,8 +19,8 @@
 
 using System.Collections.Generic;
 using System.Text;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.MaxtoCode {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {

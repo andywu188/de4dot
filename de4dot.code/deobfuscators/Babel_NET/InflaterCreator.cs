@@ -17,10 +17,10 @@
     along with de4dot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using ICSharpCode.SharpZipLib.Zip.Compression;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using ICSharpCode.SharpZipLib.Zip.Compression;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	class InflaterCreator {

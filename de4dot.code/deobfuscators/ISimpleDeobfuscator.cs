@@ -23,11 +23,11 @@ using dnlib.DotNet;
 namespace de4dot.code.deobfuscators {
 	[Flags]
 	public enum SimpleDeobfuscatorFlags : uint {
-		Force											= 0x00000001,
+		Force = 0x00000001,
 
 		// Hack for Confuser deobfuscator code. That code was written before the
 		// constants folder was updated and it now breaks the old Confuser code.
-		DisableConstantsFolderExtraInstrs				= 0x00000002,
+		DisableConstantsFolderExtraInstrs = 0x00000002,
 	}
 
 	public interface ISimpleDeobfuscator {

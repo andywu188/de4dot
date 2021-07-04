@@ -18,11 +18,11 @@
 */
 
 using System.Collections.Generic;
-using dnlib.PE;
-using dnlib.DotNet.MD;
-using dnlib.DotNet.Emit;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
+using dnlib.DotNet.MD;
+using dnlib.PE;
 
 namespace de4dot.code {
 	public class DumpedMethodsRestorer : IRowReader<RawMethodRow>, IColumnReader, IMethodDecrypter {

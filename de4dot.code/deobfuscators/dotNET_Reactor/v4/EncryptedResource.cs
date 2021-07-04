@@ -20,10 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
@@ -119,7 +119,7 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 			if (iv == null)
 				throw new ApplicationException("Could not find resource decrypter IV");
 			if (NeedReverse())
-				Array.Reverse(iv);	// DNR 4.5.0.0
+				Array.Reverse(iv);  // DNR 4.5.0.0
 			if (UsesPublicKeyToken()) {
 				var publicKeyToken = module.Assembly.PublicKeyToken;
 				if (publicKeyToken != null && publicKeyToken.Data.Length > 0) {

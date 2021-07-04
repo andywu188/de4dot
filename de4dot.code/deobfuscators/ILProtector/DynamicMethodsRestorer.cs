@@ -20,9 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using dnlib.DotNet;
 using AssemblyData;
 using de4dot.code.AssemblyClient;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.ILProtector {
 	// Calls class to dynamically decrypt methods, then restores them.

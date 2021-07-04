@@ -18,9 +18,7 @@
 */
 
 using System;
-using System.Collections.Generic;
 using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 
 namespace de4dot.blocks.cflow {
 	public class CflowDeobfuscator : ICflowDeobfuscator {

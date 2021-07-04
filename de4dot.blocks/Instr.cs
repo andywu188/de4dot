@@ -114,30 +114,30 @@ namespace de4dot.blocks {
 
 		public bool GetFlippedBranchOpCode(out OpCode opcode) {
 			switch (OpCode.Code) {
-			case Code.Bge:		opcode = OpCodes.Blt; return true;
-			case Code.Bge_S:	opcode = OpCodes.Blt_S; return true;
-			case Code.Bge_Un:	opcode = OpCodes.Blt_Un; return true;
+			case Code.Bge: opcode = OpCodes.Blt; return true;
+			case Code.Bge_S: opcode = OpCodes.Blt_S; return true;
+			case Code.Bge_Un: opcode = OpCodes.Blt_Un; return true;
 			case Code.Bge_Un_S: opcode = OpCodes.Blt_Un_S; return true;
 
-			case Code.Blt:		opcode = OpCodes.Bge; return true;
-			case Code.Blt_S:	opcode = OpCodes.Bge_S; return true;
-			case Code.Blt_Un:	opcode = OpCodes.Bge_Un; return true;
+			case Code.Blt: opcode = OpCodes.Bge; return true;
+			case Code.Blt_S: opcode = OpCodes.Bge_S; return true;
+			case Code.Blt_Un: opcode = OpCodes.Bge_Un; return true;
 			case Code.Blt_Un_S: opcode = OpCodes.Bge_Un_S; return true;
 
-			case Code.Bgt:		opcode = OpCodes.Ble; return true;
-			case Code.Bgt_S:	opcode = OpCodes.Ble_S; return true;
-			case Code.Bgt_Un:	opcode = OpCodes.Ble_Un; return true;
+			case Code.Bgt: opcode = OpCodes.Ble; return true;
+			case Code.Bgt_S: opcode = OpCodes.Ble_S; return true;
+			case Code.Bgt_Un: opcode = OpCodes.Ble_Un; return true;
 			case Code.Bgt_Un_S: opcode = OpCodes.Ble_Un_S; return true;
 
-			case Code.Ble:		opcode = OpCodes.Bgt; return true;
-			case Code.Ble_S:	opcode = OpCodes.Bgt_S; return true;
-			case Code.Ble_Un:	opcode = OpCodes.Bgt_Un; return true;
+			case Code.Ble: opcode = OpCodes.Bgt; return true;
+			case Code.Ble_S: opcode = OpCodes.Bgt_S; return true;
+			case Code.Ble_Un: opcode = OpCodes.Bgt_Un; return true;
 			case Code.Ble_Un_S: opcode = OpCodes.Bgt_Un_S; return true;
 
-			case Code.Brfalse:	opcode = OpCodes.Brtrue; return true;
-			case Code.Brfalse_S:opcode = OpCodes.Brtrue_S; return true;
+			case Code.Brfalse: opcode = OpCodes.Brtrue; return true;
+			case Code.Brfalse_S: opcode = OpCodes.Brtrue_S; return true;
 
-			case Code.Brtrue:	opcode = OpCodes.Brfalse; return true;
+			case Code.Brtrue: opcode = OpCodes.Brfalse; return true;
 			case Code.Brtrue_S: opcode = OpCodes.Brfalse_S; return true;
 
 			// Can't flip beq and bne.un since it's object vs uint/float
@@ -146,7 +146,7 @@ namespace de4dot.blocks {
 			case Code.Bne_Un:
 			case Code.Bne_Un_S:
 			default:
-				opcode = OpCodes.Nop;	// Whatever...
+				opcode = OpCodes.Nop;   // Whatever...
 				return false;
 			}
 		}

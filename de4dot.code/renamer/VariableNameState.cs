@@ -25,7 +25,7 @@ namespace de4dot.code.renamer {
 		ExistingNames existingMethodNames;
 		ExistingNames existingPropertyNames;
 		ExistingNames existingEventNames;
-		TypeNames variableNameCreator;				// For fields and method args
+		TypeNames variableNameCreator;              // For fields and method args
 		TypeNames propertyNameCreator;
 		NameCreator eventNameCreator;
 		NameCreator genericPropertyNameCreator;

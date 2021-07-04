@@ -22,8 +22,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using dnlib.PE;
 using dnlib.DotNet;
+using dnlib.PE;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v3 {
 	class IniFile {

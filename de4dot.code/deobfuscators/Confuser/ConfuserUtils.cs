@@ -20,11 +20,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using SevenZip.Compression.LZMA;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
+using SevenZip.Compression.LZMA;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	static class ConfuserUtils {

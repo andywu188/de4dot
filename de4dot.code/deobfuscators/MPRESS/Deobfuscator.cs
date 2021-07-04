@@ -21,9 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using dnlib.PE;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
+using dnlib.PE;
 
 namespace de4dot.code.deobfuscators.MPRESS {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {
@@ -53,9 +53,9 @@ namespace de4dot.code.deobfuscators.MPRESS {
 
 		enum Version {
 			Unknown,
-			V0x,		// 0.71 - 0.99
-			V1x_217,	// 1.x - 2.17
-			V218,		// 2.18+
+			V0x,        // 0.71 - 0.99
+			V1x_217,    // 1.x - 2.17
+			V218,       // 2.18+
 		}
 
 		internal class Options : OptionsBase {

@@ -21,10 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	class StringDecrypter {
@@ -400,7 +400,7 @@ namespace de4dot.code.deobfuscators.Babel_NET {
 					if (calledMethod.MethodSig.GetParamCount() == 2)
 						operand = emulator.Pop();
 					var opcode = ReflectionToOpCode((IField)((UserValue)emulator.Pop()).obj);
-					emulator.Pop();	// the this ptr
+					emulator.Pop(); // the this ptr
 					AddInstruction(new Instruction {
 						OpCode = opcode,
 						Operand = CreateDNLibOperand(opcode, operand),

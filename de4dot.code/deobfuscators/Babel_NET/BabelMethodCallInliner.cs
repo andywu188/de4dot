@@ -18,10 +18,10 @@
 */
 
 using System.Collections.Generic;
-using dnlib.DotNet;
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	class BabelMethodCallInliner : MethodCallInlinerBase, IBranchHandler {

@@ -17,12 +17,12 @@
     along with de4dot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
-using System;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	static class BabelUtils {

@@ -18,10 +18,10 @@
 */
 
 using System;
-using System.Reflection;
 using System.Collections.Generic;
-using dnlib.DotNet;
+using System.Reflection;
 using AssemblyData;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.ILProtector {
 	sealed class DynamicMethodsDecrypterService : IUserGenericService {

@@ -19,9 +19,9 @@
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using dnlib.DotNet;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {

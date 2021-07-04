@@ -20,9 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Agile_NET.vm {
 	abstract class CsvmToCilMethodConverterBase {
@@ -45,7 +45,8 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm {
 			vmIndexToCil.Clear();
 
 			var newInstructions = ReadInstructions(cilMethod, csvmMethod);
-			/*var newLocals =*/ ReadLocals(cilMethod, csvmMethod);
+			/*var newLocals =*/
+			ReadLocals(cilMethod, csvmMethod);
 			var newExceptions = ReadExceptions(cilMethod, csvmMethod);
 
 			FixInstructionOperands(newInstructions);
@@ -208,7 +209,7 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm {
 		protected static int GetInstructionSize(Instruction instr) {
 			var opcode = instr.OpCode;
 			if (opcode == null)
-				return 5;	// Load store/field
+				return 5;   // Load store/field
 			var op = instr.Operand as SwitchTargetDisplOperand;
 			if (op == null)
 				return instr.GetSize();

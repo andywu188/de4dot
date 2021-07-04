@@ -377,7 +377,7 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v1 {
 				return new Instruction(OpCodes.Ldftn, resolver.ResolveToken(token, gpContext));
 
 			case 1:
-				reader.ReadInt32();	// token of newobj .ctor
+				reader.ReadInt32(); // token of newobj .ctor
 				return new Instruction(OpCodes.Ldvirtftn, resolver.ResolveToken(token, gpContext));
 
 			default:
@@ -416,7 +416,7 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v1 {
 			DotNetUtils.CallsMethod(info.ExecuteMethod, "System.Reflection.MethodBase System.Reflection.Module::ResolveMethod(System.Int32)");
 
 		static Instruction ret_read(BinaryReader reader, IInstructionOperandResolver resolver, GenericParamContext gpContext) {
-			reader.ReadInt32();	// token of current method
+			reader.ReadInt32(); // token of current method
 			return OpCodes.Ret.ToInstruction();
 		}
 
@@ -436,7 +436,7 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v1 {
 			else {
 				instr.OpCode = OpCodes.Stloc;
 				instr.Operand = new LocalOperand(index);
-				reader.ReadInt32();	// ElementType of local
+				reader.ReadInt32(); // ElementType of local
 			}
 
 			return instr;

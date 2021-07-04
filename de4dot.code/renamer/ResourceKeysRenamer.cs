@@ -22,9 +22,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 using dnlib.DotNet.Resources;
 
 namespace de4dot.code.renamer {

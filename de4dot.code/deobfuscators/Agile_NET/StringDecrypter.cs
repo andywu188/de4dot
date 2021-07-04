@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Agile_NET {
 	class StringDecrypter {
@@ -158,7 +158,7 @@ namespace de4dot.code.deobfuscators.Agile_NET {
 				return method;
 			}
 
-exit: ;
+exit:;
 			field = null;
 			return null;
 		}

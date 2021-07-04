@@ -54,20 +54,20 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm {
 						switch (operandTypeTmp.ElementType) {
 						case ElementType.Boolean: newOpCode = OpCodes.Ldelem_I1; break;
 						case ElementType.Char: newOpCode = OpCodes.Ldelem_U2; break;
-						case ElementType.I:  newOpCode = OpCodes.Ldelem_I; break;
+						case ElementType.I: newOpCode = OpCodes.Ldelem_I; break;
 						case ElementType.I1: newOpCode = OpCodes.Ldelem_I1; break;
 						case ElementType.I2: newOpCode = OpCodes.Ldelem_I2; break;
 						case ElementType.I4: newOpCode = OpCodes.Ldelem_I4; break;
 						case ElementType.I8: newOpCode = OpCodes.Ldelem_I8; break;
-						case ElementType.U:  newOpCode = OpCodes.Ldelem_I; break;
+						case ElementType.U: newOpCode = OpCodes.Ldelem_I; break;
 						case ElementType.U1: newOpCode = OpCodes.Ldelem_U1; break;
 						case ElementType.U2: newOpCode = OpCodes.Ldelem_U2; break;
 						case ElementType.U4: newOpCode = OpCodes.Ldelem_U4; break;
 						case ElementType.U8: newOpCode = OpCodes.Ldelem_I8; break;
 						case ElementType.R4: newOpCode = OpCodes.Ldelem_R4; break;
 						case ElementType.R8: newOpCode = OpCodes.Ldelem_R8; break;
-						default:             newOpCode = OpCodes.Ldelem_Ref; break;
-						//TODO: Ldelem
+						default: newOpCode = OpCodes.Ldelem_Ref; break;
+							//TODO: Ldelem
 						}
 					}
 					break;
@@ -82,7 +82,7 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm {
 					else {
 						switch (operandTypeTmp.ElementType) {
 						case ElementType.U:
-						case ElementType.I:  newOpCode = OpCodes.Stelem_I; break;
+						case ElementType.I: newOpCode = OpCodes.Stelem_I; break;
 						case ElementType.Boolean:
 						case ElementType.U1:
 						case ElementType.I1: newOpCode = OpCodes.Stelem_I1; break;
@@ -96,7 +96,7 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm {
 						case ElementType.R4: newOpCode = OpCodes.Stelem_R4; break;
 						case ElementType.R8: newOpCode = OpCodes.Stelem_R8; break;
 						default: newOpCode = OpCodes.Stelem_Ref; break;
-						//TODO: Stelem
+							//TODO: Stelem
 						}
 					}
 					break;

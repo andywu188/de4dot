@@ -21,10 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	// Since v1.8 r75367

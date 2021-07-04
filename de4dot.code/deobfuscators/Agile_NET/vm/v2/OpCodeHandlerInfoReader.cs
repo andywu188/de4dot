@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using dnlib.DotNet.Emit;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.Agile_NET.vm.v2 {
 	class OpCodeHandlerInfoReader {
@@ -33,84 +33,84 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v2 {
 			this.resolver = resolver;
 			this.gpContext = gpContext;
 			readHandlers = new Dictionary<HandlerTypeCode, Func<BinaryReader, Instruction>> {
-				{ HandlerTypeCode.Add,			Handler_Add },
-				{ HandlerTypeCode.Add_Ovf,		Handler_Add_Ovf },
-				{ HandlerTypeCode.Add_Ovf_Un,	Handler_Add_Ovf_Un },
-				{ HandlerTypeCode.And,			Handler_And },
-				{ HandlerTypeCode.Beq,			Handler_Beq },
-				{ HandlerTypeCode.Bge,			Handler_Bge },
-				{ HandlerTypeCode.Bge_Un,		Handler_Bge_Un },
-				{ HandlerTypeCode.Bgt,			Handler_Bgt },
-				{ HandlerTypeCode.Bgt_Un,		Handler_Bgt_Un },
-				{ HandlerTypeCode.Ble,			Handler_Ble },
-				{ HandlerTypeCode.Ble_Un,		Handler_Ble_Un },
-				{ HandlerTypeCode.Blt,			Handler_Blt },
-				{ HandlerTypeCode.Blt_Un,		Handler_Blt_Un },
-				{ HandlerTypeCode.Bne_Un,		Handler_Bne_Un },
-				{ HandlerTypeCode.Box,			Handler_Box },
-				{ HandlerTypeCode.Br,			Handler_Br },
-				{ HandlerTypeCode.Brfalse,		Handler_Brfalse },
-				{ HandlerTypeCode.Brtrue,		Handler_Brtrue },
-				{ HandlerTypeCode.Call,			Handler_Call },
-				{ HandlerTypeCode.Callvirt,		Handler_Callvirt },
-				{ HandlerTypeCode.Castclass,	Handler_Castclass },
-				{ HandlerTypeCode.Ceq,			Handler_Ceq },
-				{ HandlerTypeCode.Cgt,			Handler_Cgt },
-				{ HandlerTypeCode.Cgt_Un,		Handler_Cgt_Un },
-				{ HandlerTypeCode.Clt,			Handler_Clt },
-				{ HandlerTypeCode.Clt_Un,		Handler_Clt_Un },
-				{ HandlerTypeCode.Conv,			Handler_Conv },
-				{ HandlerTypeCode.Div,			Handler_Div },
-				{ HandlerTypeCode.Div_Un,		Handler_Div_Un },
-				{ HandlerTypeCode.Dup,			Handler_Dup },
-				{ HandlerTypeCode.Endfinally,	Handler_Endfinally },
-				{ HandlerTypeCode.Initobj,		Handler_Initobj },
-				{ HandlerTypeCode.Isinst,		Handler_Isinst },
-				{ HandlerTypeCode.Ldarg,		Handler_Ldarg },
-				{ HandlerTypeCode.Ldarga,		Handler_Ldarga },
-				{ HandlerTypeCode.Ldc,			Handler_Ldc },
-				{ HandlerTypeCode.Ldelem,		Handler_Ldelem },
-				{ HandlerTypeCode.Ldelema,		Handler_Ldelema },
-				{ HandlerTypeCode.Ldfld_Ldsfld,	Handler_Ldfld_Ldsfld },
+				{ HandlerTypeCode.Add,          Handler_Add },
+				{ HandlerTypeCode.Add_Ovf,      Handler_Add_Ovf },
+				{ HandlerTypeCode.Add_Ovf_Un,   Handler_Add_Ovf_Un },
+				{ HandlerTypeCode.And,          Handler_And },
+				{ HandlerTypeCode.Beq,          Handler_Beq },
+				{ HandlerTypeCode.Bge,          Handler_Bge },
+				{ HandlerTypeCode.Bge_Un,       Handler_Bge_Un },
+				{ HandlerTypeCode.Bgt,          Handler_Bgt },
+				{ HandlerTypeCode.Bgt_Un,       Handler_Bgt_Un },
+				{ HandlerTypeCode.Ble,          Handler_Ble },
+				{ HandlerTypeCode.Ble_Un,       Handler_Ble_Un },
+				{ HandlerTypeCode.Blt,          Handler_Blt },
+				{ HandlerTypeCode.Blt_Un,       Handler_Blt_Un },
+				{ HandlerTypeCode.Bne_Un,       Handler_Bne_Un },
+				{ HandlerTypeCode.Box,          Handler_Box },
+				{ HandlerTypeCode.Br,           Handler_Br },
+				{ HandlerTypeCode.Brfalse,      Handler_Brfalse },
+				{ HandlerTypeCode.Brtrue,       Handler_Brtrue },
+				{ HandlerTypeCode.Call,         Handler_Call },
+				{ HandlerTypeCode.Callvirt,     Handler_Callvirt },
+				{ HandlerTypeCode.Castclass,    Handler_Castclass },
+				{ HandlerTypeCode.Ceq,          Handler_Ceq },
+				{ HandlerTypeCode.Cgt,          Handler_Cgt },
+				{ HandlerTypeCode.Cgt_Un,       Handler_Cgt_Un },
+				{ HandlerTypeCode.Clt,          Handler_Clt },
+				{ HandlerTypeCode.Clt_Un,       Handler_Clt_Un },
+				{ HandlerTypeCode.Conv,         Handler_Conv },
+				{ HandlerTypeCode.Div,          Handler_Div },
+				{ HandlerTypeCode.Div_Un,       Handler_Div_Un },
+				{ HandlerTypeCode.Dup,          Handler_Dup },
+				{ HandlerTypeCode.Endfinally,   Handler_Endfinally },
+				{ HandlerTypeCode.Initobj,      Handler_Initobj },
+				{ HandlerTypeCode.Isinst,       Handler_Isinst },
+				{ HandlerTypeCode.Ldarg,        Handler_Ldarg },
+				{ HandlerTypeCode.Ldarga,       Handler_Ldarga },
+				{ HandlerTypeCode.Ldc,          Handler_Ldc },
+				{ HandlerTypeCode.Ldelem,       Handler_Ldelem },
+				{ HandlerTypeCode.Ldelema,      Handler_Ldelema },
+				{ HandlerTypeCode.Ldfld_Ldsfld, Handler_Ldfld_Ldsfld },
 				{ HandlerTypeCode.Ldflda_Ldsflda, Handler_Ldflda_Ldsflda },
-				{ HandlerTypeCode.Ldftn,		Handler_Ldftn },
-				{ HandlerTypeCode.Ldlen,		Handler_Ldlen },
-				{ HandlerTypeCode.Ldloc,		Handler_Ldloc },
-				{ HandlerTypeCode.Ldloca,		Handler_Ldloca },
-				{ HandlerTypeCode.Ldobj,		Handler_Ldobj },
-				{ HandlerTypeCode.Ldstr,		Handler_Ldstr },
-				{ HandlerTypeCode.Ldtoken,		Handler_Ldtoken },
-				{ HandlerTypeCode.Ldvirtftn,	Handler_Ldvirtftn },
-				{ HandlerTypeCode.Leave,		Handler_Leave },
-				{ HandlerTypeCode.Mul,			Handler_Mul },
-				{ HandlerTypeCode.Mul_Ovf,		Handler_Mul_Ovf },
-				{ HandlerTypeCode.Mul_Ovf_Un,	Handler_Mul_Ovf_Un },
-				{ HandlerTypeCode.Neg,			Handler_Neg },
-				{ HandlerTypeCode.Newarr,		Handler_Newarr },
-				{ HandlerTypeCode.Newobj,		Handler_Newobj },
-				{ HandlerTypeCode.Nop,			Handler_Nop },
-				{ HandlerTypeCode.Not,			Handler_Not },
-				{ HandlerTypeCode.Or,			Handler_Or },
-				{ HandlerTypeCode.Pop,			Handler_Pop },
-				{ HandlerTypeCode.Rem,			Handler_Rem },
-				{ HandlerTypeCode.Rem_Un,		Handler_Rem_Un },
-				{ HandlerTypeCode.Ret,			Handler_Ret },
-				{ HandlerTypeCode.Rethrow,		Handler_Rethrow },
-				{ HandlerTypeCode.Shl,			Handler_Shl },
-				{ HandlerTypeCode.Shr,			Handler_Shr },
-				{ HandlerTypeCode.Shr_Un,		Handler_Shr_Un },
-				{ HandlerTypeCode.Starg,		Handler_Starg },
-				{ HandlerTypeCode.Stelem,		Handler_Stelem },
-				{ HandlerTypeCode.Stfld_Stsfld,	Handler_Stfld_Stsfld },
-				{ HandlerTypeCode.Stloc,		Handler_Stloc },
-				{ HandlerTypeCode.Stobj,		Handler_Stobj },
-				{ HandlerTypeCode.Sub,			Handler_Sub },
-				{ HandlerTypeCode.Sub_Ovf,		Handler_Sub_Ovf },
-				{ HandlerTypeCode.Sub_Ovf_Un,	Handler_Sub_Ovf_Un },
-				{ HandlerTypeCode.Switch,		Handler_Switch },
-				{ HandlerTypeCode.Throw,		Handler_Throw },
-				{ HandlerTypeCode.Unbox_Any,	Handler_Unbox_Any },
-				{ HandlerTypeCode.Xor,			Handler_Xor },
+				{ HandlerTypeCode.Ldftn,        Handler_Ldftn },
+				{ HandlerTypeCode.Ldlen,        Handler_Ldlen },
+				{ HandlerTypeCode.Ldloc,        Handler_Ldloc },
+				{ HandlerTypeCode.Ldloca,       Handler_Ldloca },
+				{ HandlerTypeCode.Ldobj,        Handler_Ldobj },
+				{ HandlerTypeCode.Ldstr,        Handler_Ldstr },
+				{ HandlerTypeCode.Ldtoken,      Handler_Ldtoken },
+				{ HandlerTypeCode.Ldvirtftn,    Handler_Ldvirtftn },
+				{ HandlerTypeCode.Leave,        Handler_Leave },
+				{ HandlerTypeCode.Mul,          Handler_Mul },
+				{ HandlerTypeCode.Mul_Ovf,      Handler_Mul_Ovf },
+				{ HandlerTypeCode.Mul_Ovf_Un,   Handler_Mul_Ovf_Un },
+				{ HandlerTypeCode.Neg,          Handler_Neg },
+				{ HandlerTypeCode.Newarr,       Handler_Newarr },
+				{ HandlerTypeCode.Newobj,       Handler_Newobj },
+				{ HandlerTypeCode.Nop,          Handler_Nop },
+				{ HandlerTypeCode.Not,          Handler_Not },
+				{ HandlerTypeCode.Or,           Handler_Or },
+				{ HandlerTypeCode.Pop,          Handler_Pop },
+				{ HandlerTypeCode.Rem,          Handler_Rem },
+				{ HandlerTypeCode.Rem_Un,       Handler_Rem_Un },
+				{ HandlerTypeCode.Ret,          Handler_Ret },
+				{ HandlerTypeCode.Rethrow,      Handler_Rethrow },
+				{ HandlerTypeCode.Shl,          Handler_Shl },
+				{ HandlerTypeCode.Shr,          Handler_Shr },
+				{ HandlerTypeCode.Shr_Un,       Handler_Shr_Un },
+				{ HandlerTypeCode.Starg,        Handler_Starg },
+				{ HandlerTypeCode.Stelem,       Handler_Stelem },
+				{ HandlerTypeCode.Stfld_Stsfld, Handler_Stfld_Stsfld },
+				{ HandlerTypeCode.Stloc,        Handler_Stloc },
+				{ HandlerTypeCode.Stobj,        Handler_Stobj },
+				{ HandlerTypeCode.Sub,          Handler_Sub },
+				{ HandlerTypeCode.Sub_Ovf,      Handler_Sub_Ovf },
+				{ HandlerTypeCode.Sub_Ovf_Un,   Handler_Sub_Ovf_Un },
+				{ HandlerTypeCode.Switch,       Handler_Switch },
+				{ HandlerTypeCode.Throw,        Handler_Throw },
+				{ HandlerTypeCode.Unbox_Any,    Handler_Unbox_Any },
+				{ HandlerTypeCode.Xor,          Handler_Xor },
 			};
 		}
 
@@ -226,11 +226,11 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v2 {
 
 		Instruction Handler_Ldc(BinaryReader reader) {
 			switch ((ElementType)reader.ReadByte()) {
-			case ElementType.I4:		return Instruction.CreateLdcI4(reader.ReadInt32());
-			case ElementType.I8:		return OpCodes.Ldc_I8.ToInstruction(reader.ReadInt64());
-			case ElementType.R4:		return OpCodes.Ldc_R4.ToInstruction(reader.ReadSingle());
-			case ElementType.R8:		return OpCodes.Ldc_R8.ToInstruction(reader.ReadDouble());
-			case ElementType.Object:	return OpCodes.Ldnull.ToInstruction();
+			case ElementType.I4: return Instruction.CreateLdcI4(reader.ReadInt32());
+			case ElementType.I8: return OpCodes.Ldc_I8.ToInstruction(reader.ReadInt64());
+			case ElementType.R4: return OpCodes.Ldc_R4.ToInstruction(reader.ReadSingle());
+			case ElementType.R8: return OpCodes.Ldc_R8.ToInstruction(reader.ReadDouble());
+			case ElementType.Object: return OpCodes.Ldnull.ToInstruction();
 			default: throw new ApplicationException("Invalid instruction");
 			}
 		}
@@ -277,7 +277,8 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v2 {
 		Instruction Handler_Rem_Un(BinaryReader reader) => OpCodes.Rem_Un.ToInstruction();
 
 		Instruction Handler_Ret(BinaryReader reader) {
-			/*var method =*/ resolver.ResolveToken(reader.ReadUInt32(), gpContext) /*as IMethod*/;
+			/*var method =*/
+			resolver.ResolveToken(reader.ReadUInt32(), gpContext) /*as IMethod*/;
 			return OpCodes.Ret.ToInstruction();
 		}
 
@@ -295,7 +296,8 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v2 {
 
 		Instruction Handler_Stloc(BinaryReader reader) {
 			ushort loc = reader.ReadUInt16();
-			/*var etype = (ElementType)*/reader.ReadInt32();
+			/*var etype = (ElementType)*/
+			reader.ReadInt32();
 			return new Instruction(OpCodes.Stloc, new LocalOperand(loc));
 		}
 

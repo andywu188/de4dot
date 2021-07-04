@@ -26,7 +26,7 @@ namespace de4dot.blocks {
 		IList<Instruction> instructions;
 		IList<ExceptionHandler> exceptionHandlers;
 		Dictionary<Instruction, int> instrToIndex;
-		Dictionary<int, List<int>> branches;	// key = dest index, value = instrs branching to dest
+		Dictionary<int, List<int>> branches;    // key = dest index, value = instrs branching to dest
 
 		public InstructionListParser(IList<Instruction> instructions, IList<ExceptionHandler> exceptionHandlers) {
 			this.instructions = instructions;
@@ -56,7 +56,7 @@ namespace de4dot.blocks {
 				return;
 
 			int index = instrToIndex[instr];
-			GetBranchTargetList(index);	// Just create the list
+			GetBranchTargetList(index); // Just create the list
 		}
 
 		void CreateExceptionBranches() {

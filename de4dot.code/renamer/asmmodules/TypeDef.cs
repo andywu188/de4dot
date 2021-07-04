@@ -19,8 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.renamer.asmmodules {
 	public class TypeInfo {
@@ -202,7 +202,7 @@ namespace de4dot.code.renamer.asmmodules {
 		TypeDefDict types = new TypeDefDict();
 		List<MGenericParamDef> genericParams;
 		internal TypeInfo baseType = null;
-		internal IList<TypeInfo> interfaces = new List<TypeInfo>();	// directly implemented interfaces
+		internal IList<TypeInfo> interfaces = new List<TypeInfo>(); // directly implemented interfaces
 		internal IList<MTypeDef> derivedTypes = new List<MTypeDef>();
 		Module module;
 
@@ -541,7 +541,7 @@ namespace de4dot.code.renamer.asmmodules {
 		bool? resolvedAllInterfacesResult;
 		bool ResolvedAllInterfaces() {
 			if (!resolvedAllInterfacesResult.HasValue) {
-				resolvedAllInterfacesResult = true;	// If we find a circular reference
+				resolvedAllInterfacesResult = true; // If we find a circular reference
 				resolvedAllInterfacesResult = ResolvedAllInterfacesInternal();
 			}
 			return resolvedAllInterfacesResult.Value;
@@ -560,7 +560,7 @@ namespace de4dot.code.renamer.asmmodules {
 		bool? resolvedBaseClassesResult;
 		bool ResolvedBaseClasses() {
 			if (!resolvedBaseClassesResult.HasValue) {
-				resolvedBaseClassesResult = true;	// If we find a circular reference
+				resolvedBaseClassesResult = true;   // If we find a circular reference
 				resolvedBaseClassesResult = ResolvedBaseClassesInternal();
 			}
 			return resolvedBaseClassesResult.Value;

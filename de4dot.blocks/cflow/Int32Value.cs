@@ -485,9 +485,9 @@ namespace de4dot.blocks.cflow {
 
 		public static Int32Value Create(Bool3 b) {
 			switch (b) {
-			case Bool3.False:	return Zero;
-			case Bool3.True:	return One;
-			default:			return CreateUnknownBool();
+			case Bool3.False: return Zero;
+			case Bool3.True: return One;
+			default: return CreateUnknownBool();
 			}
 		}
 
@@ -521,9 +521,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return a.Value > b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(int.MinValue))
-				return Bool3.False;	// min > x => false
+				return Bool3.False; // min > x => false
 			if (b.HasValue(int.MaxValue))
-				return Bool3.False;	// x > max => false
+				return Bool3.False; // x > max => false
 			return Bool3.Unknown;
 		}
 
@@ -531,9 +531,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return (uint)a.Value > (uint)b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(uint.MinValue))
-				return Bool3.False;	// min > x => false
+				return Bool3.False; // min > x => false
 			if (b.HasValue(uint.MaxValue))
-				return Bool3.False;	// x > max => false
+				return Bool3.False; // x > max => false
 			return Bool3.Unknown;
 		}
 
@@ -541,9 +541,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return a.Value >= b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(int.MaxValue))
-				return Bool3.True;	// max >= x => true
+				return Bool3.True;  // max >= x => true
 			if (b.HasValue(int.MinValue))
-				return Bool3.True;	// x >= min => true
+				return Bool3.True;  // x >= min => true
 			return Bool3.Unknown;
 		}
 
@@ -551,9 +551,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return (uint)a.Value >= (uint)b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(uint.MaxValue))
-				return Bool3.True;	// max >= x => true
+				return Bool3.True;  // max >= x => true
 			if (b.HasValue(uint.MinValue))
-				return Bool3.True;	// x >= min => true
+				return Bool3.True;  // x >= min => true
 			return Bool3.Unknown;
 		}
 
@@ -561,9 +561,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return a.Value <= b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(int.MinValue))
-				return Bool3.True;	// min <= x => true
+				return Bool3.True;  // min <= x => true
 			if (b.HasValue(int.MaxValue))
-				return Bool3.True;	// x <= max => true
+				return Bool3.True;  // x <= max => true
 			return Bool3.Unknown;
 		}
 
@@ -571,9 +571,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return (uint)a.Value <= (uint)b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(uint.MinValue))
-				return Bool3.True;	// min <= x => true
+				return Bool3.True;  // min <= x => true
 			if (b.HasValue(uint.MaxValue))
-				return Bool3.True;	// x <= max => true
+				return Bool3.True;  // x <= max => true
 			return Bool3.Unknown;
 		}
 
@@ -581,9 +581,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return a.Value < b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(int.MaxValue))
-				return Bool3.False;	// max < x => false
+				return Bool3.False; // max < x => false
 			if (b.HasValue(int.MinValue))
-				return Bool3.False;	// x < min => false
+				return Bool3.False; // x < min => false
 			return Bool3.Unknown;
 		}
 
@@ -591,9 +591,9 @@ namespace de4dot.blocks.cflow {
 			if (a.AllBitsValid() && b.AllBitsValid())
 				return (uint)a.Value < (uint)b.Value ? Bool3.True : Bool3.False;
 			if (a.HasValue(uint.MaxValue))
-				return Bool3.False;	// max < x => false
+				return Bool3.False; // max < x => false
 			if (b.HasValue(uint.MinValue))
-				return Bool3.False;	// x < min => false
+				return Bool3.False; // x < min => false
 			return Bool3.Unknown;
 		}
 

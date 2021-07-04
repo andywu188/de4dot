@@ -19,10 +19,10 @@
 
 using System;
 using System.IO;
-using ICSharpCode.SharpZipLib.Zip.Compression;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using ICSharpCode.SharpZipLib.Zip.Compression;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	class ResourceDecrypterCreator {
@@ -80,7 +80,7 @@ namespace de4dot.code.deobfuscators.Babel_NET {
 					Array.Copy(module.Assembly.PublicKey.Data, 0, key, 0, key.Length);
 				}
 
-				reader.ReadBytes(reader.ReadInt32());	// hash
+				reader.ReadBytes(reader.ReadInt32());   // hash
 				return true;
 			}
 		}
@@ -121,7 +121,8 @@ namespace de4dot.code.deobfuscators.Babel_NET {
 
 				// 3.0 - 3.5 don't have this field
 				if (headerData[(int)reader.BaseStream.Position] != 8) {
-					/*var license =*/ reader.ReadString();
+					/*var license =*/
+					reader.ReadString();
 				}
 
 				// 4.2 (and earlier?) always compress the data
@@ -180,10 +181,12 @@ namespace de4dot.code.deobfuscators.Babel_NET {
 			bool GetKeyIv(byte[] headerData, out byte[] key, out byte[] iv) {
 				var reader = new BinaryReader(new MemoryStream(headerData));
 
-				/*var license =*/ reader.ReadString();
+				/*var license =*/
+				reader.ReadString();
 				bool isCompressed = reader.ReadBoolean();
 
-				/*var unkData =*/ reader.ReadBytes(reader.ReadInt32());
+				/*var unkData =*/
+				reader.ReadBytes(reader.ReadInt32());
 
 				bool hasEmbeddedKey = reader.ReadBoolean();
 

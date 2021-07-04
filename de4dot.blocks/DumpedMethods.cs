@@ -19,8 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.DotNet.MD;
 using dnlib.DotNet;
+using dnlib.DotNet.MD;
 
 namespace de4dot.blocks {
 	[Serializable]

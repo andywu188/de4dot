@@ -21,9 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	class ProxyCallFixer : ProxyCallFixer2, IVersionProvider, IDisposable {
@@ -691,7 +691,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 				var ldci4 = instrs[i + 2];
 				if (!ldci4.IsLdcI4())
 					continue;
-				if (instrs[i+3].OpCode.Code != Code.Xor)
+				if (instrs[i + 3].OpCode.Code != Code.Xor)
 					continue;
 
 				magic = (uint)ldci4.GetLdcI4Value();

@@ -18,8 +18,8 @@
 */
 
 using System.Text;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Xenocode {
 	class StringDecrypter {

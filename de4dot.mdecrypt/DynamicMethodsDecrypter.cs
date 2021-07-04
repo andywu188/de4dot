@@ -18,15 +18,15 @@
 */
 
 using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
-using System.Reflection;
 using System.Security;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.MD;
 using dnlib.PE;
-using de4dot.blocks;
 
 #if NET35
 namespace System.Runtime.ExceptionServices {
@@ -66,7 +66,7 @@ namespace de4dot.mdecrypt {
 			public uint Characteristics;
 		}
 
-		[StructLayout(LayoutKind.Sequential, Pack=1, Size=0x88)]
+		[StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x88)]
 		struct CORINFO_METHOD_INFO {
 			public IntPtr ftn;
 			public IntPtr scope;
@@ -204,7 +204,8 @@ namespace de4dot.mdecrypt {
 
 		public unsafe void InstallCompileMethod() {
 			var hJitterDll = GetJitterDllHandle();
-			/*jitterTextFreeMem =*/ GetEndOfText(hJitterDll);
+			/*jitterTextFreeMem =*/
+			GetEndOfText(hJitterDll);
 
 			var getJitPtr = GetProcAddress(hJitterDll, "getJit");
 			var getJit = (GetJit)Marshal.GetDelegateForFunctionPointer(getJitPtr, typeof(GetJit));
@@ -241,7 +242,7 @@ namespace de4dot.mdecrypt {
 
 		unsafe static IntPtr GetEndOfText(IntPtr hDll) {
 			byte* p = (byte*)hDll;
-			p += *(uint*)(p + 0x3C);	// add DOSHDR.e_lfanew
+			p += *(uint*)(p + 0x3C);    // add DOSHDR.e_lfanew
 			p += 4;
 			int numSections = *(ushort*)(p + 2);
 			int sizeOptionalHeader = *(ushort*)(p + 0x10);
@@ -288,34 +289,34 @@ namespace de4dot.mdecrypt {
 
 			int numPushedArgs = compileMethodIsThisCall ? 5 : 6;
 
-			code.WriteByte(0x51);			// push ecx
-			code.WriteByte(0x50);			// push eax
-			code.WriteByte(0x54);			// push esp
+			code.WriteByte(0x51);           // push ecx
+			code.WriteByte(0x50);           // push eax
+			code.WriteByte(0x54);           // push esp
 			for (int i = 0; i < 5; i++)
-				WritePushDwordPtrEspDispl(code, (sbyte)(0xC + numPushedArgs * 4));	// push dword ptr [esp+XXh]
+				WritePushDwordPtrEspDispl(code, (sbyte)(0xC + numPushedArgs * 4));  // push dword ptr [esp+XXh]
 			if (!compileMethodIsThisCall)
-				WritePushDwordPtrEspDispl(code, (sbyte)(0xC + numPushedArgs * 4));	// push dword ptr [esp+XXh]
+				WritePushDwordPtrEspDispl(code, (sbyte)(0xC + numPushedArgs * 4));  // push dword ptr [esp+XXh]
 			else
-				code.WriteByte(0x51);		// push ecx
+				code.WriteByte(0x51);       // push ecx
 			code.WriteCall(ourCompileMethodInfo.ptr);
-			code.WriteByte(0x5A);			// pop edx
-			code.WriteByte(0x59);			// pop ecx
-			code.WriteBytes(0x84, 0xD2);	// test dl, dl
-			code.WriteBytes(0x74, 0x03);	// jz $+5
+			code.WriteByte(0x5A);           // pop edx
+			code.WriteByte(0x59);           // pop ecx
+			code.WriteBytes(0x84, 0xD2);    // test dl, dl
+			code.WriteBytes(0x74, 0x03);    // jz $+5
 			code.WriteBytes(0xC2, (ushort)(numPushedArgs * 4)); // retn 14h/18h
 			for (int i = 0; i < numPushedArgs; i++)
-				WritePushDwordPtrEspDispl(code, (sbyte)(numPushedArgs * 4));	// push dword ptr [esp+XXh]
+				WritePushDwordPtrEspDispl(code, (sbyte)(numPushedArgs * 4));    // push dword ptr [esp+XXh]
 			code.WriteCall(origCompileMethod);
 			code.WriteBytes(0xC2, (ushort)(numPushedArgs * 4)); // retn 14h/18h
 
 			// Our callMethod() code. 1st arg is the method to call. stdcall calling convention.
 			int callMethodOffset = code.Size;
-			code.WriteByte(0x58);			// pop eax (ret addr)
-			code.WriteByte(0x5A);			// pop edx (method to call)
+			code.WriteByte(0x58);           // pop eax (ret addr)
+			code.WriteByte(0x5A);           // pop edx (method to call)
 			if (compileMethodIsThisCall)
-				code.WriteByte(0x59);		// pop ecx (this ptr)
-			code.WriteByte(0x50);			// push eax (ret addr)
-			code.WriteBytes(0xFF, 0xE2);	// jmp edx
+				code.WriteByte(0x59);       // pop ecx (this ptr)
+			code.WriteByte(0x50);           // push eax (ret addr)
+			code.WriteBytes(0xFF, 0xE2);    // jmp edx
 
 			// Returns token of method
 			int getMethodTokenOffset = code.Size;
@@ -549,8 +550,8 @@ namespace de4dot.mdecrypt {
 			mem[6] = new IntPtr(mem + 7);
 			mem[7] = returnNameOfMethodInfo.ptrInDll;
 			mem[8] = new IntPtr(mem);
-			mem[13] = returnMethodTokenInfo.ptrInDll;	// .NET 2.0
-			mem[14] = returnMethodTokenInfo.ptrInDll;	// .NET 4.0
+			mem[13] = returnMethodTokenInfo.ptrInDll;   // .NET 2.0
+			mem[14] = returnMethodTokenInfo.ptrInDll;   // .NET 4.0
 		}
 
 		bool hasInstalledCompileMethod2 = false;
@@ -604,7 +605,7 @@ namespace de4dot.mdecrypt {
 			return true;
 		}
 
-		[HandleProcessCorruptedStateExceptions, SecurityCritical]	// Req'd on .NET 4.0
+		[HandleProcessCorruptedStateExceptions, SecurityCritical]   // Req'd on .NET 4.0
 		static unsafe bool PatchRT(IntPtr baseAddr) {
 			foreach (var info in patches) {
 				try {
@@ -641,7 +642,7 @@ namespace de4dot.mdecrypt {
 			return true;
 		}
 
-		[HandleProcessCorruptedStateExceptions, SecurityCritical]	// Req'd on .NET 4.0
+		[HandleProcessCorruptedStateExceptions, SecurityCritical]   // Req'd on .NET 4.0
 		static unsafe IntPtr FindCMAddress(PEImage peImage, IntPtr baseAddr, IntPtr origValue) {
 			int offset = Environment.Version.Major == 2 ? 0x10 : 0x28;
 

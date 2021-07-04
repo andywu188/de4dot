@@ -19,12 +19,12 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.PE;
-using dnlib.DotNet;
-using dnlib.DotNet.Writer;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
 using de4dot.code.renamer;
+using dnlib.DotNet;
+using dnlib.DotNet.Writer;
+using dnlib.PE;
 
 namespace de4dot.code.deobfuscators {
 	public interface IDeobfuscatorOptions {

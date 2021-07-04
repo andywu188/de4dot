@@ -39,14 +39,12 @@ using System;
 
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 
-namespace ICSharpCode.SharpZipLib.Zip.Compression 
-{
-	
+namespace ICSharpCode.SharpZipLib.Zip.Compression {
+
 	/// <summary>
 	/// Huffman tree used for inflation
 	/// </summary>
-	public class InflaterHuffmanTree
-	{
+	public class InflaterHuffmanTree {
 		#region Constants
 		const int MAX_BITLEN = 15;
 
@@ -78,14 +76,13 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 		/// Literal length tree
 		/// </summary>
 		public static InflaterHuffmanTree defLitLenTree;
-		
+
 		/// <summary>
 		/// Distance tree
 		/// </summary>
 		public static InflaterHuffmanTree defDistTree;
-		
-		static InflaterHuffmanTree()
-		{
+
+		static InflaterHuffmanTree() {
 			try {
 				byte[] codeLengths = new byte[288];
 				int i = 0;
@@ -102,14 +99,15 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 					codeLengths[i++] = 8;
 				}
 				defLitLenTree = new InflaterHuffmanTree(codeLengths);
-				
+
 				codeLengths = new byte[32];
 				i = 0;
 				while (i < 32) {
 					codeLengths[i++] = 5;
 				}
 				defDistTree = new InflaterHuffmanTree(codeLengths);
-			} catch (Exception) {
+			}
+			catch (Exception) {
 				throw new SharpZipBaseException("InflaterHuffmanTree: static tree length illegal");
 			}
 		}
@@ -121,24 +119,22 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 		/// <param name = "codeLengths">
 		/// the array of code lengths
 		/// </param>
-		public InflaterHuffmanTree(byte[] codeLengths)
-		{
+		public InflaterHuffmanTree(byte[] codeLengths) {
 			BuildTree(codeLengths);
 		}
 		#endregion
 
-		void BuildTree(byte[] codeLengths)
-		{
-			int[] blCount  = new int[MAX_BITLEN + 1];
+		void BuildTree(byte[] codeLengths) {
+			int[] blCount = new int[MAX_BITLEN + 1];
 			int[] nextCode = new int[MAX_BITLEN + 1];
-			
+
 			for (int i = 0; i < codeLengths.Length; i++) {
 				int bits = codeLengths[i];
 				if (bits > 0) {
 					blCount[bits]++;
 				}
 			}
-			
+
 			int code = 0;
 			int treeSize = 512;
 			for (int bits = 1; bits <= MAX_BITLEN; bits++) {
@@ -147,32 +143,32 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 				if (bits >= 10) {
 					/* We need an extra table for bit lengths >= 10. */
 					int start = nextCode[bits] & 0x1ff80;
-					int end   = code & 0x1ff80;
+					int end = code & 0x1ff80;
 					treeSize += (end - start) >> (16 - bits);
 				}
 			}
-			
-/* -jr comment this out! doesnt work for dynamic trees and pkzip 2.04g
-			if (code != 65536) 
-			{
-				throw new SharpZipBaseException("Code lengths don't add up properly.");
-			}
-*/
+
+			/* -jr comment this out! doesnt work for dynamic trees and pkzip 2.04g
+						if (code != 65536) 
+						{
+							throw new SharpZipBaseException("Code lengths don't add up properly.");
+						}
+			*/
 			/* Now create and fill the extra tables from longest to shortest
 			* bit len.  This way the sub trees will be aligned.
 			*/
 			tree = new short[treeSize];
 			int treePtr = 512;
 			for (int bits = MAX_BITLEN; bits >= 10; bits--) {
-				int end   = code & 0x1ff80;
+				int end = code & 0x1ff80;
 				code -= blCount[bits] << (16 - bits);
 				int start = code & 0x1ff80;
 				for (int i = start; i < end; i += 1 << 7) {
-					tree[BitReverse(i)] = (short) ((-treePtr << 4) | bits);
-					treePtr += 1 << (bits-9);
+					tree[BitReverse(i)] = (short)((-treePtr << 4) | bits);
+					treePtr += 1 << (bits - 9);
 				}
 			}
-			
+
 			for (int i = 0; i < codeLengths.Length; i++) {
 				int bits = codeLengths[i];
 				if (bits == 0) {
@@ -182,21 +178,22 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 				int revcode = BitReverse(code);
 				if (bits <= 9) {
 					do {
-						tree[revcode] = (short) ((i << 4) | bits);
+						tree[revcode] = (short)((i << 4) | bits);
 						revcode += 1 << bits;
 					} while (revcode < 512);
-				} else {
+				}
+				else {
 					int subTree = tree[revcode & 511];
 					int treeLen = 1 << (subTree & 15);
 					subTree = -(subTree >> 4);
 					do {
-						tree[subTree | (revcode >> 9)] = (short) ((i << 4) | bits);
+						tree[subTree | (revcode >> 9)] = (short)((i << 4) | bits);
 						revcode += 1 << bits;
 					} while (revcode < treeLen);
 				}
 				nextCode[bits] = code + (1 << (16 - bits));
 			}
-			
+
 		}
 
 		/// <summary>
@@ -204,12 +201,11 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 		/// </summary>
 		/// <param name="toReverse">Value to reverse bits</param>
 		/// <returns>Value with bits reversed</returns>
-		public static short BitReverse(int toReverse) 
-		{
-			return (short) (bit4Reverse[toReverse & 0xF] << 12 | 
-			                bit4Reverse[(toReverse >> 4) & 0xF] << 8 | 
-			                bit4Reverse[(toReverse >> 8) & 0xF] << 4 |
-			                bit4Reverse[toReverse >> 12]);
+		public static short BitReverse(int toReverse) {
+			return (short)(bit4Reverse[toReverse & 0xF] << 12 |
+							bit4Reverse[(toReverse >> 4) & 0xF] << 8 |
+							bit4Reverse[(toReverse >> 8) & 0xF] << 4 |
+							bit4Reverse[toReverse >> 12]);
 		}
 
 		/// <summary>
@@ -222,8 +218,7 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 		/// <returns>
 		/// the next symbol, or -1 if not enough input is available.
 		/// </returns>
-		public int GetSymbol(StreamManipulator input)
-		{
+		public int GetSymbol(StreamManipulator input) {
 			int lookahead, symbol;
 			if ((lookahead = input.PeekBits(9)) >= 0) {
 				if ((symbol = tree[lookahead]) >= 0) {
@@ -236,25 +231,29 @@ namespace ICSharpCode.SharpZipLib.Zip.Compression
 					symbol = tree[subtree | (lookahead >> 9)];
 					input.DropBits(symbol & 15);
 					return symbol >> 4;
-				} else {
+				}
+				else {
 					int bits = input.AvailableBits;
 					lookahead = input.PeekBits(bits);
 					symbol = tree[subtree | (lookahead >> 9)];
 					if ((symbol & 15) <= bits) {
 						input.DropBits(symbol & 15);
 						return symbol >> 4;
-					} else {
+					}
+					else {
 						return -1;
 					}
 				}
-			} else {
+			}
+			else {
 				int bits = input.AvailableBits;
 				lookahead = input.PeekBits(bits);
 				symbol = tree[lookahead];
 				if (symbol >= 0 && (symbol & 15) <= bits) {
 					input.DropBits(symbol & 15);
 					return symbol >> 4;
-				} else {
+				}
+				else {
 					return -1;
 				}
 			}

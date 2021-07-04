@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.DotNet;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {
@@ -412,7 +412,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 
 		bool hasInitializedStringDecrypter = false;
 		void InitializeStringDecrypter() {
-			if (hasInitializedStringDecrypter || (stringDecrypter== null || !stringDecrypter.Detected))
+			if (hasInitializedStringDecrypter || (stringDecrypter == null || !stringDecrypter.Detected))
 				return;
 			hasInitializedStringDecrypter = true;
 

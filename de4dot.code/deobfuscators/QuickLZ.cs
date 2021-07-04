@@ -112,7 +112,7 @@ namespace de4dot.code.deobfuscators {
 	}
 
 	public class QuickLZ : QuickLZBase {
-		static int DEFAULT_QCLZ_SIG = 0x5A4C4351;	// "QCLZ"
+		static int DEFAULT_QCLZ_SIG = 0x5A4C4351;   // "QCLZ"
 
 		public static bool IsCompressed(byte[] data) {
 			if (data.Length < 4)
@@ -123,7 +123,8 @@ namespace de4dot.code.deobfuscators {
 		public static byte[] Decompress(byte[] inData) => Decompress(inData, DEFAULT_QCLZ_SIG);
 
 		public static byte[] Decompress(byte[] inData, int sig) {
-			/*int mode =*/ BitConverter.ToInt32(inData, 4);
+			/*int mode =*/
+			BitConverter.ToInt32(inData, 4);
 			int compressedLength = BitConverter.ToInt32(inData, 8);
 			int decompressedLength = BitConverter.ToInt32(inData, 12);
 			bool isDataCompressed = BitConverter.ToInt32(inData, 16) == 1;

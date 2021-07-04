@@ -18,8 +18,8 @@
 */
 
 using System.Collections.Generic;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v3 {
 	// Find the assembly resolver that's used in lib mode (3.8+)

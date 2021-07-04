@@ -46,7 +46,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 				throw new NotImplementedException("Not implemented yet since I haven't seen anyone use it.");
 
 			byte encryption = (byte)(headerMagic >> 24);
-			if ((headerMagic & 0x00FFFFFF) != 0x007D7A7B)	// Check if "{z}"
+			if ((headerMagic & 0x00FFFFFF) != 0x007D7A7B)   // Check if "{z}"
 				throw new ApplicationException($"Invalid SA header magic 0x{headerMagic:X8}");
 
 			switch (encryption) {
@@ -75,7 +75,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 					throw new ApplicationException("DES key / iv have not been set yet");
 				using (var provider = new DESCryptoServiceProvider()) {
 					provider.Key = resourceDecrypterInfo.DES_Key;
-					provider.IV  = resourceDecrypterInfo.DES_IV;
+					provider.IV = resourceDecrypterInfo.DES_IV;
 					using (var transform = provider.CreateDecryptor()) {
 						return Decrypt(transform.TransformFinalBlock(encryptedData, 4, encryptedData.Length - 4));
 					}
@@ -86,7 +86,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 					throw new ApplicationException("AES key / iv have not been set yet");
 				using (var provider = new RijndaelManaged()) {
 					provider.Key = resourceDecrypterInfo.AES_Key;
-					provider.IV  = resourceDecrypterInfo.AES_IV;
+					provider.IV = resourceDecrypterInfo.AES_IV;
 					using (var transform = provider.CreateDecryptor()) {
 						return Decrypt(transform.TransformFinalBlock(encryptedData, 4, encryptedData.Length - 4));
 					}

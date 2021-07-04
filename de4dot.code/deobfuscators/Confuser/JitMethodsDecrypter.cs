@@ -21,10 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	class JitMethodsDecrypter : MethodsDecrypterBase, IStringDecrypter {
@@ -407,7 +407,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 				if (field == null || field.DeclaringType != methodDataType)
 					continue;
 
-				if (instrs[i+1].OpCode.Code != Code.Stfld)
+				if (instrs[i + 1].OpCode.Code != Code.Stfld)
 					continue;
 
 				codeSizeIndex = GetInstanceFieldIndex(field);
@@ -645,8 +645,8 @@ namespace de4dot.code.deobfuscators.Confuser {
 							dm.extraSections == null &&
 							dm.mhMaxStack == 8;
 				if (isTiny)
-					dm.mhFlags |= 0x10;	// Set 'init locals'
-				dm.mhFlags |= (ushort)(options & 0x10);	// copy 'init locals' bit
+					dm.mhFlags |= 0x10; // Set 'init locals'
+				dm.mhFlags |= (ushort)(options & 0x10); // copy 'init locals' bit
 
 				dumpedMethods.Add(dm);
 			}
@@ -672,12 +672,12 @@ namespace de4dot.code.deobfuscators.Confuser {
 				throw new ApplicationException("Too many exception handlers...");
 			writer.Write((uint)header64);
 			for (int i = 0; i < numExceptions; i++) {
-				writer.Write(reader.ReadUInt32());	// flags
-				writer.Write(reader.ReadUInt32());	// try offset
-				writer.Write(reader.ReadUInt32());	// try length
-				writer.Write(reader.ReadUInt32());	// handler offset
-				writer.Write(reader.ReadUInt32());	// handler length
-				writer.Write(reader.ReadUInt32());	// catch token or filter offset
+				writer.Write(reader.ReadUInt32());  // flags
+				writer.Write(reader.ReadUInt32());  // try offset
+				writer.Write(reader.ReadUInt32());  // try length
+				writer.Write(reader.ReadUInt32());  // handler offset
+				writer.Write(reader.ReadUInt32());  // handler length
+				writer.Write(reader.ReadUInt32());  // catch token or filter offset
 			}
 
 			return memStream.ToArray();

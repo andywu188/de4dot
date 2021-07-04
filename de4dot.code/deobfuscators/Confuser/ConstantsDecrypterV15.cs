@@ -19,10 +19,10 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	// From v1.5 r60785 to v1.7 r74637
@@ -80,7 +80,7 @@ namespace de4dot.code.deobfuscators.Confuser {
 				var info = new DecrypterInfo();
 				var localTypes = new LocalTypes(method);
 				if (localTypes.All(requiredLocals1)) {
-					if (localTypes.Exists("System.Collections.BitArray"))	// or System.Random
+					if (localTypes.Exists("System.Collections.BitArray"))   // or System.Random
 						version = ConfuserVersion.v15_r60785_normal;
 					else if (DeobUtils.HasInteger(method, 0x100) &&
 							DeobUtils.HasInteger(method, 0x10000) &&

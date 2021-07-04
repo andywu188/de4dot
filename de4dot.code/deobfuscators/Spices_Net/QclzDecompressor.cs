@@ -19,7 +19,7 @@
 
 namespace de4dot.code.deobfuscators.Spices_Net {
 	class QclzDecompressor : QuickLZBase {
-		static int SPICES_QCLZ_SIG = 0x3952534E;	// "9RSN"
+		static int SPICES_QCLZ_SIG = 0x3952534E;    // "9RSN"
 
 		public static byte[] Decompress(byte[] data) {
 			if (Read32(data, 0) == SPICES_QCLZ_SIG)
@@ -28,7 +28,8 @@ namespace de4dot.code.deobfuscators.Spices_Net {
 			int headerLength, decompressedLength/*, compressedLength*/;
 			if ((data[0] & 2) != 0) {
 				headerLength = 9;
-				/*compressedLength = (int)*/Read32(data, 1);
+				/*compressedLength = (int)*/
+				Read32(data, 1);
 				decompressedLength = (int)Read32(data, 5);
 			}
 			else {

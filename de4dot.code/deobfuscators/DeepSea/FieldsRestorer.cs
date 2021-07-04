@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.DeepSea {
 	// DS 4.x can move fields from a class to a struct. This class restores the fields.

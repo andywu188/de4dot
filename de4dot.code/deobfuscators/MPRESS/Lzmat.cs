@@ -63,132 +63,117 @@ namespace de4dot.code.deobfuscators.MPRESS {
 			pcbOut = 0;
 			uint cbIn = (uint)pbIn.Length;
 
-	uint  inPos, outPos;
-	uint  cbOutBuf = (uint)pbOut.Length;
-	byte  cur_nib;
-	pbOut[0] = pbIn[0];
-	for(inPos=1, outPos=1, cur_nib=0; inPos<(cbIn-cur_nib);)
-	{
-		int bc;
-		byte tag;
-		tag = LZMAT_GET_U8(pbIn,inPos,cur_nib);
-		inPos++;
-		for(bc=0; bc<8 && inPos<(cbIn-cur_nib) && outPos<cbOutBuf; bc++, tag<<=1)
-		{
-			if((tag&0x80)!=0) // gamma
-			{
-				uint r_pos, r_cnt, dist;
-//#define cflag	r_cnt
-				r_cnt = LZMAT_GET_LE16(pbIn,inPos,cur_nib);
+			uint inPos, outPos;
+			uint cbOutBuf = (uint)pbOut.Length;
+			byte cur_nib;
+			pbOut[0] = pbIn[0];
+			for (inPos = 1, outPos = 1, cur_nib = 0; inPos < (cbIn - cur_nib);) {
+				int bc;
+				byte tag;
+				tag = LZMAT_GET_U8(pbIn, inPos, cur_nib);
 				inPos++;
-				if(outPos>MAX_LZMAT_SHORT_DIST1)
-				{
-					dist = r_cnt>>2;
-					switch(r_cnt&3)
+				for (bc = 0; bc < 8 && inPos < (cbIn - cur_nib) && outPos < cbOutBuf; bc++, tag <<= 1) {
+					if ((tag & 0x80) != 0) // gamma
 					{
-					case 0:
-						dist=(dist&LZMAT_DIST_MSK0)+1;
-						break;
-					case 1:
-						inPos+=cur_nib;
-						dist = (dist&LZMAT_DIST_MSK1)+0x41;
-						cur_nib^=1;
-						break;
-					case 2:
+						uint r_pos, r_cnt, dist;
+						//#define cflag	r_cnt
+						r_cnt = LZMAT_GET_LE16(pbIn, inPos, cur_nib);
 						inPos++;
-						dist += 0x441;
-						break;
-					case 3:
-						if((inPos+2+cur_nib)>cbIn)
-							return LzmatStatus.INTEGRITY_FAILURE+1;
-						inPos++;
-						dist = (dist + 
-							((uint)LZMAT_GET_U4(pbIn,ref inPos,ref cur_nib)<<14))
-							+0x4441;
-						break;
-					}
-				}
-				else
-				{
-					dist = r_cnt>>1;
-					if((r_cnt&1)!=0)
-					{
-						inPos+=cur_nib;
-						dist = (dist&0x7FF)+0x81;
-						cur_nib^=1;
-					}
-					else
-						dist = (dist&0x7F)+1;
-				}
-//#undef cflag
-				r_cnt = LZMAT_GET_U4(pbIn,ref inPos,ref cur_nib);
-				if(r_cnt!=0xF)
-				{
-					r_cnt += 3;
-				}
-				else
-				{
-					if((inPos+1+cur_nib)>cbIn)
-						return LzmatStatus.INTEGRITY_FAILURE+2;
-					r_cnt = LZMAT_GET_U8(pbIn,inPos,cur_nib);
-					inPos++;
-					if(r_cnt!=0xFF)
-					{
-						r_cnt += LZMAT_DEFAULT_CNT;
-					}
-					else
-					{
-						if((inPos+2+cur_nib)>cbIn)
-							return LzmatStatus.INTEGRITY_FAILURE+3;
-						r_cnt = (uint)(LZMAT_GET_LE16(pbIn,inPos,cur_nib)+LZMAT_1BYTE_CNT);
-						inPos+=2;
-						if(r_cnt==LZMAT_2BYTE_CNT)
-						{
-							// copy chunk
-							if(cur_nib!=0)
-							{
-								r_cnt = ((uint)pbIn[inPos-4]&0xFC)<<5;
+						if (outPos > MAX_LZMAT_SHORT_DIST1) {
+							dist = r_cnt >> 2;
+							switch (r_cnt & 3) {
+							case 0:
+								dist = (dist & LZMAT_DIST_MSK0) + 1;
+								break;
+							case 1:
+								inPos += cur_nib;
+								dist = (dist & LZMAT_DIST_MSK1) + 0x41;
+								cur_nib ^= 1;
+								break;
+							case 2:
 								inPos++;
-								cur_nib = 0;
+								dist += 0x441;
+								break;
+							case 3:
+								if ((inPos + 2 + cur_nib) > cbIn)
+									return LzmatStatus.INTEGRITY_FAILURE + 1;
+								inPos++;
+								dist = (dist +
+									((uint)LZMAT_GET_U4(pbIn, ref inPos, ref cur_nib) << 14))
+									+ 0x4441;
+								break;
+							}
+						}
+						else {
+							dist = r_cnt >> 1;
+							if ((r_cnt & 1) != 0) {
+								inPos += cur_nib;
+								dist = (dist & 0x7FF) + 0x81;
+								cur_nib ^= 1;
 							}
 							else
-							{
-								r_cnt = (uint)((GET_LE16(pbIn,inPos-5)&0xFC0)<<1);
-							}
-							r_cnt+=(uint)((tag&0x7F)+4);
-							r_cnt<<=1;
-							if((outPos+(r_cnt<<2))>cbOutBuf)
-								return LzmatStatus.BUFFER_TOO_SMALL;
-							while(r_cnt--!=0 && outPos<cbOutBuf)
-							{
-								pbOut[outPos] = pbIn[inPos];
-								pbOut[outPos + 1] = pbIn[inPos + 1];
-								pbOut[outPos + 2] = pbIn[inPos + 2];
-								pbOut[outPos + 3] = pbIn[inPos + 3];
-								inPos+=4;
-								outPos+=4;
-							}
-							break;
+								dist = (dist & 0x7F) + 1;
 						}
+						//#undef cflag
+						r_cnt = LZMAT_GET_U4(pbIn, ref inPos, ref cur_nib);
+						if (r_cnt != 0xF) {
+							r_cnt += 3;
+						}
+						else {
+							if ((inPos + 1 + cur_nib) > cbIn)
+								return LzmatStatus.INTEGRITY_FAILURE + 2;
+							r_cnt = LZMAT_GET_U8(pbIn, inPos, cur_nib);
+							inPos++;
+							if (r_cnt != 0xFF) {
+								r_cnt += LZMAT_DEFAULT_CNT;
+							}
+							else {
+								if ((inPos + 2 + cur_nib) > cbIn)
+									return LzmatStatus.INTEGRITY_FAILURE + 3;
+								r_cnt = (uint)(LZMAT_GET_LE16(pbIn, inPos, cur_nib) + LZMAT_1BYTE_CNT);
+								inPos += 2;
+								if (r_cnt == LZMAT_2BYTE_CNT) {
+									// copy chunk
+									if (cur_nib != 0) {
+										r_cnt = ((uint)pbIn[inPos - 4] & 0xFC) << 5;
+										inPos++;
+										cur_nib = 0;
+									}
+									else {
+										r_cnt = (uint)((GET_LE16(pbIn, inPos - 5) & 0xFC0) << 1);
+									}
+									r_cnt += (uint)((tag & 0x7F) + 4);
+									r_cnt <<= 1;
+									if ((outPos + (r_cnt << 2)) > cbOutBuf)
+										return LzmatStatus.BUFFER_TOO_SMALL;
+									while (r_cnt-- != 0 && outPos < cbOutBuf) {
+										pbOut[outPos] = pbIn[inPos];
+										pbOut[outPos + 1] = pbIn[inPos + 1];
+										pbOut[outPos + 2] = pbIn[inPos + 2];
+										pbOut[outPos + 3] = pbIn[inPos + 3];
+										inPos += 4;
+										outPos += 4;
+									}
+									break;
+								}
+							}
+						}
+						if (outPos < dist)
+							return LzmatStatus.INTEGRITY_FAILURE + 4;
+						if ((outPos + r_cnt) > cbOutBuf)
+							return LzmatStatus.BUFFER_TOO_SMALL + 1;
+						r_pos = outPos - dist;
+						while (r_cnt-- != 0 && outPos < cbOutBuf)
+							pbOut[outPos++] = pbOut[r_pos++];
+					}
+					else {
+						pbOut[outPos++] = LZMAT_GET_U8(pbIn, inPos, cur_nib);
+						inPos++;
 					}
 				}
-				if(outPos<dist)
-					return LzmatStatus.INTEGRITY_FAILURE+4;
-				if((outPos+r_cnt)>cbOutBuf)
-					return LzmatStatus.BUFFER_TOO_SMALL+1;
-				r_pos = outPos-dist;
-				while(r_cnt--!=0 && outPos<cbOutBuf)
-					pbOut[outPos++]=pbOut[r_pos++];
 			}
-			else
-			{
-				pbOut[outPos++]=LZMAT_GET_U8(pbIn,inPos,cur_nib);
-				inPos++;
-			}
-		}
-	}
-	pcbOut = outPos;
-	return LzmatStatus.OK;
+			pcbOut = outPos;
+			return LzmatStatus.OK;
 		}
 
 		public static byte[] DecompressOld(byte[] compressed) {

@@ -18,14 +18,14 @@
 */
 
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using de4dot.code;
+using de4dot.code.AssemblyClient;
+using de4dot.code.deobfuscators;
+using de4dot.code.renamer;
 using dnlib.DotNet;
 using dnlib.DotNet.Writer;
-using de4dot.code;
-using de4dot.code.renamer;
-using de4dot.code.deobfuscators;
-using de4dot.code.AssemblyClient;
 
 namespace de4dot.cui {
 	class FilesDeobfuscator {
@@ -143,7 +143,7 @@ namespace de4dot.cui {
 		IEnumerable<IObfuscatedFile> LoadAllFiles(bool onlyScan) {
 			var loader = new DotNetFileLoader(new DotNetFileLoader.Options {
 				ModuleContext = options.ModuleContext,
-				PossibleFiles  = options.Files,
+				PossibleFiles = options.Files,
 				SearchDirs = options.SearchDirs,
 				CreateDeobfuscators = () => CreateDeobfuscators(),
 				DefaultStringDecrypterType = options.DefaultStringDecrypterType,
@@ -210,12 +210,12 @@ namespace de4dot.cui {
 					file.Load(options.CreateDeobfuscators());
 				}
 				catch (NotSupportedException) {
-					return false;	// Eg. unsupported architecture
+					return false;   // Eg. unsupported architecture
 				}
 				catch (BadImageFormatException) {
 					if (isFromPossibleFiles)
 						Logger.Instance.Log(false, null, LoggerEvent.Warning, "The file isn't a .NET PE file: {0}", file.Filename);
-					return false;	// Not a .NET file
+					return false;   // Not a .NET file
 				}
 				catch (EndOfStreamException) {
 					return false;
@@ -223,7 +223,7 @@ namespace de4dot.cui {
 				catch (IOException) {
 					if (isFromPossibleFiles)
 						Logger.Instance.Log(false, null, LoggerEvent.Warning, "The file isn't a .NET PE file: {0}", file.Filename);
-					return false;	// Not a .NET file
+					return false;   // Not a .NET file
 				}
 				catch (Exception ex) {
 					Logger.Instance.Log(false, null, LoggerEvent.Warning, "Could not load file ({0}): {1}", ex.GetType(), file.Filename);
@@ -264,7 +264,7 @@ namespace de4dot.cui {
 						var obfuscatedFile = CreateObfuscatedFile(searchDir, filename);
 						if (obfuscatedFile != null)
 							yield return obfuscatedFile;
-					}					
+					}
 				}
 			}
 

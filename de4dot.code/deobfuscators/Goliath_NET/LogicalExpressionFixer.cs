@@ -17,8 +17,8 @@
     along with de4dot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using dnlib.DotNet.Emit;
 using de4dot.blocks;
+using dnlib.DotNet.Emit;
 
 namespace de4dot.code.deobfuscators.Goliath_NET {
 	class LogicalExpressionFixer {

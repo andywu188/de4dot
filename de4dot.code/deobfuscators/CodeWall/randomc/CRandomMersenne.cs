@@ -37,8 +37,8 @@ namespace de4dot.code.deobfuscators.CodeWall.randomc {
 		const uint MERS_B = 0x9D2C5680;
 		const uint MERS_C = 0xEFC60000;
 
-		uint[] mt = new uint[MERS_N];	// State vector
-		int mti;						// Index into mt
+		uint[] mt = new uint[MERS_N];   // State vector
+		int mti;                        // Index into mt
 
 		public CRandomMersenne() {
 		}
@@ -69,8 +69,8 @@ namespace de4dot.code.deobfuscators.CodeWall.randomc {
 
 			if (mti >= MERS_N) {
 				// Generate MERS_N words at one time
-				const uint LOWER_MASK = (1U << MERS_R) - 1;		// Lower MERS_R bits
-				const uint UPPER_MASK = 0xFFFFFFFF << MERS_R;	// Upper (32 - MERS_R) bits
+				const uint LOWER_MASK = (1U << MERS_R) - 1;     // Lower MERS_R bits
+				const uint UPPER_MASK = 0xFFFFFFFF << MERS_R;   // Upper (32 - MERS_R) bits
 
 				int kk;
 				for (kk = 0; kk < MERS_N - MERS_M; kk++) {

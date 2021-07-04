@@ -19,12 +19,12 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
+using de4dot.blocks.cflow;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.DotNet.Writer;
 using dnlib.PE;
-using de4dot.blocks;
-using de4dot.blocks.cflow;
 
 namespace de4dot.code.deobfuscators {
 	public abstract class DeobfuscatorBase : IDeobfuscator, IModuleWriterListener {
@@ -699,7 +699,7 @@ namespace de4dot.code.deobfuscators {
 					if (method.Body == null)
 						continue;
 					if (decrypterMethods.Exists(method))
-						break;	// decrypter type / nested type method
+						break;  // decrypter type / nested type method
 					if (removedMethods.Exists(method))
 						continue;
 

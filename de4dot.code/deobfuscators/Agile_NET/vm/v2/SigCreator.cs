@@ -19,9 +19,9 @@
 
 using System.Collections.Generic;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Agile_NET.vm.v2 {
 	class MethodSigInfo {

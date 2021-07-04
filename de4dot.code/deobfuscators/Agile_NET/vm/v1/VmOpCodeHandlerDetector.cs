@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks.cflow;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks.cflow;
 
 namespace de4dot.code.deobfuscators.Agile_NET.vm.v1 {
 	class OpCodeHandlerSigInfo {
@@ -224,7 +224,7 @@ namespace de4dot.code.deobfuscators.Agile_NET.vm.v1 {
 				}
 				if (new List<OpCodeHandler>(Utils.Unique(opCodeHandlers)).Count == opCodeHandlers.Count)
 					return;
-next: ;
+next:;
 			}
 			throw new ApplicationException("Could not detect all VM opcode handlers");
 		}

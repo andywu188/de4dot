@@ -18,10 +18,10 @@
 */
 
 using System;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CodeVeil {
 	class StringDecrypter {
@@ -215,7 +215,8 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 
 			var inflated = DeobUtils.Inflate(decryptedData, 0, decryptedData.Length, true);
 			var reader = ByteArrayDataReaderFactory.CreateReader(inflated);
-			/*int deflatedLength = (int)*/reader.ReadCompressedUInt32();
+			/*int deflatedLength = (int)*/
+			reader.ReadCompressedUInt32();
 			int numStrings = (int)reader.ReadCompressedUInt32();
 			decryptedStrings = new string[numStrings];
 			var offsets = new int[numStrings];

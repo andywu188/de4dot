@@ -21,10 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using dnlib.PE;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.PE;
 
 namespace de4dot.code.deobfuscators.Confuser {
 	abstract class MethodsDecrypterBase : IVersionProvider {
@@ -312,8 +312,8 @@ namespace de4dot.code.deobfuscators.Confuser {
 			var reader = peImage.Reader;
 			reader.Position = encryptedHeaderOffset;
 			ulong checkSum = reader.ReadUInt64() ^ lkey0;
-			reader.ReadInt32();	// strong name RVA
-			reader.ReadInt32();	// strong name len
+			reader.ReadInt32(); // strong name RVA
+			reader.ReadInt32(); // strong name len
 			var iv = reader.ReadBytes(reader.ReadInt32() ^ (int)key2);
 			var encrypted = reader.ReadBytes(reader.ReadInt32() ^ (int)key3);
 			var streamsBuffer = GetStreamsBuffer(peImage);

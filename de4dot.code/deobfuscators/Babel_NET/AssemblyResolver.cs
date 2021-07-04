@@ -19,8 +19,8 @@
 
 using System;
 using System.IO;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	class AssemblyResolver {

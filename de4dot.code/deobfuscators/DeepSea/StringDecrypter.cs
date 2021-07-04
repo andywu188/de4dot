@@ -20,9 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.DeepSea {
 	class StringDecrypter {
@@ -253,7 +253,7 @@ namespace de4dot.code.deobfuscators.DeepSea {
 					return DecryptType.Type2;
 				if (DeobUtils.HasInteger(method, 0xFFC0))
 					return DecryptType.Type3;
-				return DecryptType.Type1;	// trial
+				return DecryptType.Type1;   // trial
 			}
 
 			int FindKeyShift(MethodDef method) {

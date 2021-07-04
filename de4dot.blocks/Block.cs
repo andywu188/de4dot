@@ -233,7 +233,7 @@ namespace de4dot.blocks {
 			if (!CanAppend(other))
 				throw new ApplicationException("Can't append the block!");
 
-			RemoveLastBr();		// Get rid of last br/br.s if present
+			RemoveLastBr();     // Get rid of last br/br.s if present
 
 			var newInstructions = new List<Instr>(instructions.Count + other.instructions.Count);
 			AddInstructions(newInstructions, instructions, false);

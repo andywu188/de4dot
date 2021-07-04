@@ -19,10 +19,10 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {
 	class MethodsDecrypter {

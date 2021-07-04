@@ -21,16 +21,16 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using AssemblyData;
+using de4dot.blocks;
+using de4dot.blocks.cflow;
+using de4dot.code.AssemblyClient;
+using de4dot.code.deobfuscators;
+using de4dot.code.renamer;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.DotNet.Writer;
 using dnlib.PE;
-using AssemblyData;
-using de4dot.code.deobfuscators;
-using de4dot.blocks;
-using de4dot.blocks.cflow;
-using de4dot.code.AssemblyClient;
-using de4dot.code.renamer;
 
 namespace de4dot.code {
 	public class ObfuscatedFile : IObfuscatedFile, IDeobfuscatedFile {
@@ -261,7 +261,7 @@ namespace de4dot.code {
 			IDeobfuscator detected = null;
 			int detectVal = 0;
 			foreach (var deob in deobfuscators) {
-				this.deob = deob;	// So we can call deob.CanInlineMethods in deobfuscate()
+				this.deob = deob;   // So we can call deob.CanInlineMethods in deobfuscate()
 				int val;
 				try {
 					val = deob.Detect();
@@ -559,7 +559,7 @@ namespace de4dot.code {
 						method.Body = new CilBody();
 					}
 					else {
-						Logger.w("Could not deobfuscate method {0:X8}. Hello, E.T.: {1}",	// E.T. = exception type
+						Logger.w("Could not deobfuscate method {0:X8}. Hello, E.T.: {1}",   // E.T. = exception type
 								method.MDToken.ToInt32(),
 								ex.GetType());
 					}

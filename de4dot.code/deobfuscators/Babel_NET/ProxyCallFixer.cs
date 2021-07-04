@@ -18,9 +18,9 @@
 */
 
 using System;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.Babel_NET {
 	class ProxyCallFixer : ProxyCallFixer2 {

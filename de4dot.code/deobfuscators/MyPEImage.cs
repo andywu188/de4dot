@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
+using dnlib.DotNet.MD;
 using dnlib.IO;
 using dnlib.PE;
-using dnlib.DotNet.MD;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators {
 	public sealed class MyPEImage : IDisposable {

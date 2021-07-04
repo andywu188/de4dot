@@ -18,9 +18,9 @@
 */
 
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v3 {
 	class AntiStrongName {
