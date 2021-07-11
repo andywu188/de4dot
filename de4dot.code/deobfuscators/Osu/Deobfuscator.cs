@@ -39,14 +39,15 @@ namespace de4dot.code.deobfuscators.Osu {
 		protected override int DetectInternal() {
 			foreach (var type in module.Types) {
 				var fn = type.DefinitionAssembly.FullName;
-				if (fn == "osu!, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null")
+				if (fn == "osu!, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null") {
+					Logger.n("[Osu Code Clean] [Steesha]第一次拖入请勿使用delegate解密字符串，第一次cleaned后的程序才能deleage解密字符串，否则将会解密失败。");
 					return 999;
+				}
 			}
 			return 0;
 		}
 
 		protected override void ScanForObfuscator() {
-			Logger.n("[Osu Code Clean] [Steesha]第一次拖入请勿使用delegate解密字符串，第一次cleaned后的程序才能deleage解密字符串，否则将会解密失败。");
 		}
 
 		public override void DeobfuscateBegin() {
