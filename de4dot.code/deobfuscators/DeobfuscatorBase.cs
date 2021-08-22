@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using de4dot.blocks;
 using de4dot.blocks.cflow;
+using de4dot.code.deobfuscators.PCL;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.DotNet.Writer;
@@ -143,6 +144,22 @@ namespace de4dot.code.deobfuscators {
 
 		public virtual void DeobfuscateEnd() {
 			// Make sure the TypeDefCache isn't enabled while we modify types or remove stuff
+
+			//PCL Fucker
+			bool fuckPCLMode = false;
+			foreach (var type in module.Types) {
+				var fn = type.DefinitionAssembly.FullName;
+				if (fn.Contains("Plain Craft Launcher 2")) {
+					fuckPCLMode = true;
+				}
+			}
+
+			if (fuckPCLMode) {
+				Fucker fucker = new Fucker(module);
+				Logger.n("Detected PCL2, Try Cracking...");
+				fucker.startFuck();
+			}
+
 			bool cacheState = module.EnableTypeDefFindCache;
 			module.EnableTypeDefFindCache = false;
 

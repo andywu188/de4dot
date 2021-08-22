@@ -11,11 +11,11 @@ namespace de4dot.code.deobfuscators.Osu {
 
 		public void doantiantide4() {
 			foreach (var type in module.GetTypes()) {
-				FindEveyTypes(type);
+				FindEveryTypes(type);
 			}
 		}
 
-		void FindEveyTypes(TypeDef type) {
+		void FindEveryTypes(TypeDef type) {
 			var foundResult_1 = DotNetUtils.FindMethods(type.Methods, "System.Boolean", new string[] { "System.Diagnostics.StackTrace", "System.Int32" }, true);
 			var foundResult_2 = DotNetUtils.FindMethods(type.Methods, "System.Void", new string[] { "System.Int64" }, false);
 			var foundResult_3 = DotNetUtils.FindMethods(type.Methods, "System.Int64", new string[] { }, true);
