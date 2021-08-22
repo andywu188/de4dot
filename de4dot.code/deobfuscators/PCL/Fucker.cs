@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using de4dot.blocks;
 using dnlib.DotNet;
@@ -41,17 +42,12 @@ namespace de4dot.code.deobfuscators.PCL {
 			foreach (var method in foundResult_2) {
 				if (!method.HasBody)
 					continue;
-				var instructions = method.Body.Instructions;
-				for (int i = 0; i < instructions.Count; i++) { 
-					if(instructions[i].OpCode == OpCodes.Callvirt) {
-						MethodDef trand = (MethodDef)instructions[i].Operand;
-						//TODO replace object::toString to string::toString
-						if (trand.FullName == "System.String System.Object::ToString()") {
-							Logger.n("[2]found deobf bug, fixing..... {0} [{1}]", method.Name, method.MDToken.ToString());
-						}
-					}
+				if (method.MethodSig.Params.Count == 6) {
+					Logger.n("[2]found deobf bug, fixing..... {0} [{1}]", method.Name, method.MDToken.ToString());
+					method.MethodSig.Params[2] = method.MethodSig.Params[0];
 				}
 			}
+
 		}
 	}
 }
