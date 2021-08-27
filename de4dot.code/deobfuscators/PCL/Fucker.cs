@@ -13,6 +13,24 @@ namespace de4dot.code.deobfuscators.PCL {
 			foreach (var type in module.GetTypes()) {
 				FindEveryTypes(type);
 			}
+
+			Logger.n("[*]Removing PCL2 Information");
+			var result = module.Assembly.CustomAttributes.Find("System.Reflection.AssemblyDescriptionAttribute");
+			if (result != null) {
+				module.Assembly.CustomAttributes.Remove(result);
+			}
+			result = module.Assembly.CustomAttributes.Find("System.Reflection.AssemblyTitleAttribute");
+			if (result != null) {
+				module.Assembly.CustomAttributes.Remove(result);
+			}
+			result = module.Assembly.CustomAttributes.Find("System.Reflection.AssemblyCopyrightAttribute");
+			if (result != null) {
+				module.Assembly.CustomAttributes.Remove(result);
+			}
+			result = module.Assembly.CustomAttributes.Find("System.Reflection.AssemblyConfigurationAttribute");
+			if (result != null) {
+				module.Assembly.CustomAttributes.Remove(result);
+			}
 		}
 
 		void FindEveryTypes(TypeDef type) {
@@ -177,7 +195,6 @@ namespace de4dot.code.deobfuscators.PCL {
 					}
 				}
 			}
-
 		}
 	}
 }
