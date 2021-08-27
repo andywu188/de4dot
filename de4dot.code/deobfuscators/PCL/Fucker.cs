@@ -11,7 +11,7 @@ namespace de4dot.code.deobfuscators.PCL {
 
 		public void startFuck() {
 			foreach (var type in module.GetTypes()) {
-				FindEveryTypes(type);
+				crackMethods(type);
 			}
 
 			Logger.n("[*]Removing PCL2 Information");
@@ -33,7 +33,7 @@ namespace de4dot.code.deobfuscators.PCL {
 			}
 		}
 
-		void FindEveryTypes(TypeDef type) {
+		void crackMethods(TypeDef type) {
 			var foundResult_1 = DotNetUtils.FindMethods(type.Methods, "System.Void", new string[] { "System.Object", "System.Windows.StartupEventArgs" }, false);
 			var foundResult_2 = DotNetUtils.FindMethods(type.Methods, "System.String", new string[] { "System.String", "System.String", "System.Byte[]", "System.String", "System.Int32", "System.Collections.Generic.Dictionary`2<System.String,System.String>" }, true);
 			var foundResult_3 = DotNetUtils.FindMethods(type.Methods, "System.Boolean", new string[] { "System.Int32", "System.Boolean", "System.String" }, true);
