@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
@@ -230,6 +231,24 @@ namespace de4dot.code.deobfuscators.PCL {
 								}
 							} //end of fullname if
 						} //end of newobj if
+						//Logger.n("dbg: {0}", met.FullName);
+						if (ins[i].OpCode == OpCodes.Call) {
+							continue;
+							var oper = ins[i].Operand as MemberRef;
+							if (oper == null)
+								continue;
+							if(ins[i + 1].OpCode == OpCodes.Ldarg_0 && ins[i + 2].OpCode == OpCodes.Ldarg_1 && ins[i + 3].OpCode == OpCodes.Call)
+								Debugger.Break();
+							var split = oper.FullName.Split('.');
+							
+							if (split.Length != 2)
+								continue;
+							if (split[0].Length != 2 || split[1].Length != 6)
+								continue;
+							//Logger.n("dbg: {0}", oper.FullName);
+							//ins.RemoveAt(i);
+							continue;
+						}
 					} //end of for(body.instructions)
 				} //end of foreach type.Methods
 			}//end of foreach module.GetType()
