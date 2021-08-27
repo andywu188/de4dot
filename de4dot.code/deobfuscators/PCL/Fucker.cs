@@ -31,6 +31,8 @@ namespace de4dot.code.deobfuscators.PCL {
 			if (result != null) {
 				module.Assembly.CustomAttributes.Remove(result);
 			}
+
+			renamePCL(module);
 		}
 
 		void crackMethods(TypeDef type) {
@@ -195,6 +197,57 @@ namespace de4dot.code.deobfuscators.PCL {
 					}
 				}
 			}
+		}
+
+		void renamePCL(ModuleDefMD pcl) {
+			string renaming = "PCL2";
+			string rawname = pcl.Assembly.Name;
+			Logger.n("--->Start Renaming to " + renaming);
+			int count = 0;
+			//to start Renaming the whole program, we need to modify the type used in sources.
+			foreach (var type in module.GetTypes()) {
+				foreach (var met in type.Methods) {
+					if (!met.HasBody) continue;
+					for (int i = 0; i < met.Body.Instructions.Count; i++) {
+						//patch Uri(string'uri',int[0,2]);
+						//push from left to right.
+						var ins = met.Body.Instructions;
+						if (ins[i].OpCode == OpCodes.Newobj) {
+							var oper = ins[i].Operand as MemberRef;
+							if (oper == null)
+								continue;
+							if (oper.FullName.Equals("System.Void System.Uri::.ctor(System.String,System.UriKind)")) {
+								if (i - 2 >= 0) { //there are more than 2 instructs before this.
+									if (ins[i - 2].OpCode != OpCodes.Ldstr)
+										continue;
+									var str = ins[i - 2].Operand as string;
+									if (!str.Contains(rawname))
+										continue;
+									//todo fix
+									//str = str.Replace(rawname, renaming);
+									ins[i - 2] = OpCodes.Ldstr.ToInstruction(str);
+									++count;
+								}
+							} //end of fullname if
+						} //end of newobj if
+					} //end of for(body.instructions)
+				} //end of foreach type.Methods
+			}//end of foreach module.GetType()
+
+			Logger.n("[*]type renamed {0} types", count);
+
+			//rename assembly's name & resource name.
+			for(int i=0;i< pcl.Resources.Count; i++) {
+				if (pcl.Resources[i].Name.Contains(rawname)) {
+					Logger.n("[*]resource renamed {0}", pcl.Resources[i].Name.String);
+					//todo fix
+					//pcl.Resources[i].Name.Replace(rawname, renaming);
+				}
+			}
+			//todo fix
+			//pcl.Assembly.Name = new UTF8String(renaming);
+			//pcl.Name = new UTF8String(renaming);
+			Logger.n("[*]assembly renamed");
 		}
 	}
 }
