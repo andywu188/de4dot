@@ -41,7 +41,7 @@ namespace de4dot.code.AssemblyClient {
 				try {
 #if NET35
 					appDomain.ExecuteAssembly(filename, null, new string[] {
-#elif NET45
+#elif NET48
 					appDomain.ExecuteAssembly(filename, new string[] {
 #else
 #error Unknown tfm
