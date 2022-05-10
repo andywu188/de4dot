@@ -19,12 +19,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using dnlib.DotNet;
-using de4dot.code;
-using de4dot.code.deobfuscators;
 using System.IO;
 using System.Reflection;
+using System.Text;
+using de4dot.code;
+using de4dot.code.deobfuscators;
+using dnlib.DotNet;
 
 namespace de4dot.cui {
 	class ExitException : Exception {
@@ -50,6 +50,7 @@ namespace de4dot.cui {
 		}
 
 		public static void GetPlugins(string directory, ref Dictionary<string, IDeobfuscatorInfo> result) {
+			if (!File.Exists(directory)) return;
 			var plugins = new List<IDeobfuscatorInfo>();
 			try {
 				var files = Directory.GetFiles(directory, "deobfuscator.*.dll", SearchOption.TopDirectoryOnly);
@@ -58,13 +59,14 @@ namespace de4dot.cui {
 			}
 			catch {
 			}
-			foreach(var p in plugins)
+			foreach (var p in plugins)
 				result[p.Type] = p;
 		}
 
 		static IList<IDeobfuscatorInfo> CreateDeobfuscatorInfos() {
 			var local = new List<IDeobfuscatorInfo> {
 				new de4dot.code.deobfuscators.Unknown.DeobfuscatorInfo(),
+				new de4dot.code.deobfuscators.Osu.DeobfuscatorInfo(),
 				new de4dot.code.deobfuscators.Agile_NET.DeobfuscatorInfo(),
 				new de4dot.code.deobfuscators.Babel_NET.DeobfuscatorInfo(),
 				new de4dot.code.deobfuscators.CodeFort.DeobfuscatorInfo(),
