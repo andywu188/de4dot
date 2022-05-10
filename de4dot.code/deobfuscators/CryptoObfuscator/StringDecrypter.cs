@@ -19,8 +19,8 @@
 
 using System;
 using System.Text;
-using dnlib.DotNet;
 using de4dot.blocks;
+using dnlib.DotNet;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {
 	class StringDecrypter {
@@ -95,11 +95,11 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 			foreach (var type in module.Types) {
 				if (type.IsPublic)
 					continue;
-				if (type.Fields.Count != 1)
+				if (type.Fields.Count != 1 && type.Fields.Count != 2)
 					continue;
 				if (DotNetUtils.FindFieldType(type, "System.Byte[]", true) == null)
 					continue;
-				if (type.Methods.Count != 2 && type.Methods.Count != 3)
+				if (type.Methods.Count != 1 && type.Methods.Count != 2 && type.Methods.Count != 3)
 					continue;
 				if (type.NestedTypes.Count > 0)
 					continue;

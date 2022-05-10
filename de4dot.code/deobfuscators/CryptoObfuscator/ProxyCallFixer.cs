@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {
 	class ProxyCallFixer : ProxyCallFixer2 {
@@ -109,7 +109,7 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 		MethodDef GetProxyCreateMethod(TypeDef type) {
 			if (DotNetUtils.FindFieldType(type, "System.ModuleHandle", true) == null)
 				return null;
-			if (type.Fields.Count < 1 || type.Fields.Count > 22)
+			if (type.Fields.Count < 1 || type.Fields.Count > 23)
 				return null;
 
 			MethodDef createMethod = null;

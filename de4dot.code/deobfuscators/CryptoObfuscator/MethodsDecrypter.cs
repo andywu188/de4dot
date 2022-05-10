@@ -19,10 +19,10 @@
 
 using System;
 using System.Collections.Generic;
-using dnlib.IO;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
+using dnlib.IO;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {
 	class MethodsDecrypter {
@@ -54,8 +54,8 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 		bool Check(TypeDef type) {
 			if (type.NestedTypes.Count != 1)
 				return false;
-			if (type.Fields.Count != 3)
-				return false;
+			//if (type.Fields.Count != 3)
+			//	return false;
 			if (!new FieldTypes(type).All(requiredFields))
 				return false;
 

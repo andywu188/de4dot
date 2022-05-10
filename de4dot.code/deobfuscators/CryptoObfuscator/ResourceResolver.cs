@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {
 	class ResourceResolver {
@@ -85,6 +85,7 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 			case ResolverVersion.V2:
 				names.Add($"{module.Assembly.Name.String}{module.Assembly.Name.String}{module.Assembly.Name.String}");
 				names.Add($"{module.Assembly.Name.String}&");
+				names.Add($"{module.Assembly.Name.String}&&");
 				break;
 
 			default:

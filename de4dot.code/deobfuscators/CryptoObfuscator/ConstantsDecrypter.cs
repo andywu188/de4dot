@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.CryptoObfuscator {
 	class ConstantsDecrypter {
@@ -63,9 +63,9 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 			"System.Byte[]",
 		};
 		bool CheckType(TypeDef type) {
-			if (type.Methods.Count != 7)
+			if (type.Methods.Count != 5 && type.Methods.Count != 7)
 				return false;
-			if (type.Fields.Count < 1 || type.Fields.Count > 2)
+			if (type.Fields.Count < 1 || type.Fields.Count > 3)
 				return false;
 			if (!new FieldTypes(type).All(requiredTypes))
 				return false;
