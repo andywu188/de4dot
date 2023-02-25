@@ -238,7 +238,10 @@ namespace de4dot.code.deobfuscators.Babel_NET {
 
 		byte[] DecryptArray(byte[] encryptedData, int elemSize) {
 			var decrypted = resourceDecrypter.Decrypt(encryptedData);
+			#pragma warning disable SYSLIB0011
+			#warning "Insecure! Rewrite with custom parser https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide"
 			var ary = (Array)new BinaryFormatter().Deserialize(new MemoryStream(decrypted));
+			#pragma warning restore SYSLIB0011
 			if (ary is byte[])
 				return (byte[])ary;
 			var newAry = new byte[ary.Length * elemSize];

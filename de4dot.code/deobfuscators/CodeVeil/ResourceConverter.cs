@@ -164,7 +164,10 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 		public static readonly string ReflectionTypeName = "System.Char[],mscorlib";
 		char[] data;
 		public CharArrayResourceData(UserResourceType type, char[] data) : base(type) => this.data = data;
+		#pragma warning disable SYSLIB0011
+		#warning "Insecure! Rewrite with custom parser https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide"
 		public override void WriteData(BinaryWriter writer, IFormatter formatter) => formatter.Serialize(writer.BaseStream, data);
+		#pragma warning restore SYSLIB0011
 		public override string ToString() => $"char[]: Length: {data.Length}";
 	}
 
@@ -172,7 +175,10 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 		public static readonly string ReflectionTypeName = "System.Drawing.Icon,System.Drawing";
 		Icon icon;
 		public IconResourceData(UserResourceType type, byte[] data) : base(type) => icon = new Icon(new MemoryStream(data));
+		#pragma warning disable SYSLIB0011
+		#warning "Insecure! Rewrite with custom parser https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide"
 		public override void WriteData(BinaryWriter writer, IFormatter formatter) => formatter.Serialize(writer.BaseStream, icon);
+		#pragma warning restore SYSLIB0011
 		public override string ToString() => $"Icon: {icon}";
 	}
 
@@ -180,7 +186,10 @@ namespace de4dot.code.deobfuscators.CodeVeil {
 		public static readonly string ReflectionTypeName = "System.Drawing.Bitmap,System.Drawing";
 		Bitmap bitmap;
 		public ImageResourceData(UserResourceType type, byte[] data) : base(type) => bitmap = new Bitmap(Image.FromStream(new MemoryStream(data)));
+		#pragma warning disable SYSLIB0011
+		#warning "Insecure! Rewrite with custom parser https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide"
 		public override void WriteData(BinaryWriter writer, IFormatter formatter) => formatter.Serialize(writer.BaseStream, bitmap);
+		#pragma warning restore SYSLIB0011
 		public override string ToString() => "Bitmap";
 	}
 }
