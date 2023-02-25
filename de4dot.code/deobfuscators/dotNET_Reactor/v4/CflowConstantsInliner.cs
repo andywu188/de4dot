@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
-namespace de4dot.code.deobfuscators.dotNET_Reactor.v4
-{
+namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 	class CflowConstantsInliner {
 		public TypeDef Type;
 
 		ModuleDefMD module;
 		ISimpleDeobfuscator simpleDeobfuscator;
-		Dictionary<IField, int> dictionary = new Dictionary<IField, int>();
+		Dictionary<FieldDef, int> dictionary = new Dictionary<FieldDef, int>();
 
 		public CflowConstantsInliner(ModuleDefMD module, ISimpleDeobfuscator simpleDeobfuscator) {
 			this.module = module;
@@ -31,18 +30,29 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4
 						simpleDeobfuscator.Deobfuscate(method);
 
 						var instrs = method.Body.Instructions;
+						for (var i = 0; i < instrs.Count; i++) {
+							var ldcI4 = instrs[i];
+							if (!ldcI4.IsLdcI4())
+								continue;
+							if (i + 1 >= instrs.Count)
+								continue;
+							var stsfld = instrs[i + 1];
+							if (stsfld.OpCode.Code != Code.Stsfld)
+								continue;
+							var key = stsfld.Operand as FieldDef;
+							if (key == null)
+								continue;
 
-						for (var i = 0; i < instrs.Count; i += 2) {
-							var intValue = instrs[i];
-							var fieldValue = i + 1 < instrs.Count ? instrs[i + 1] : null;
-							if (intValue.IsLdcI4() && fieldValue?.OpCode == OpCodes.Stsfld) {
-								var key = (IField)fieldValue.Operand;
-								var value = intValue.GetLdcI4Value();
-								if (!dictionary.ContainsKey(key))
-									dictionary.Add(key, value);
-								else
-									dictionary[key] = value;
-							}
+							var value = ldcI4.GetLdcI4Value();
+							if (!dictionary.ContainsKey(key))
+								dictionary.Add(key, value);
+							else
+								dictionary[key] = value;
+						}
+
+						if (dictionary.Count < 100) {
+							dictionary.Clear();
+							continue;
 						}
 
 						Type = type;
@@ -58,20 +68,16 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4
 
 			foreach (var type in module.GetTypes()) {
 				foreach (var method in type.Methods) {
-					if (!method.HasBody) continue;
+					if (!method.HasBody)
+						continue;
 
 					var instrs = method.Body.Instructions;
 
 					for (var i = 0; i < instrs.Count; i++) {
 						var ldsfld = instrs[i];
-						if (ldsfld.OpCode != OpCodes.Ldsfld)
+						if (ldsfld.OpCode.Code != Code.Ldsfld)
 							continue;
-						if (!instrs[i + 1].IsConditionalBranch())
-							continue;
-						var popOrBr = instrs[i + 2];
-						if (popOrBr.OpCode != OpCodes.Pop && !popOrBr.IsBr())
-							continue;
-						var ldsfldValue = ldsfld.Operand as IField;
+						var ldsfldValue = ldsfld.Operand as FieldDef;
 						if (ldsfldValue == null)
 							continue;
 						if (dictionary.TryGetValue(ldsfldValue, out var value))

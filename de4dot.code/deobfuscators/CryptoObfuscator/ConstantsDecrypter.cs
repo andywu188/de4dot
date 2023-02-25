@@ -60,7 +60,7 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 		}
 
 		static readonly string[] requiredTypes = new string[] {
-			"System.Byte[]",
+			"System.Byte[]", "System.Int32", "System.Int32",
 		};
 		bool CheckType(TypeDef type) {
 			if (type.Methods.Count != 5 && type.Methods.Count != 7)

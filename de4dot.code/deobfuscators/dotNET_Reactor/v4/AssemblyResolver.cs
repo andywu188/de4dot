@@ -123,13 +123,13 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 		}
 
 		static bool CheckFields(IList<FieldDef> fields) {
-			if (fields.Count != 2 && fields.Count != 3)
+			if (fields.Count != 2 && fields.Count != 3 && fields.Count != 4)
 				return false;
 
 			var fieldTypes = new FieldTypes(fields);
-			if (fieldTypes.Count("System.Boolean") != 1)
+			if (fieldTypes.Count("System.Boolean") != 1 && fieldTypes.Count("System.Boolean") != 2)
 				return false;
-			if (fields.Count == 3)
+			if (fields.Count >= 3)
 				return fieldTypes.Count("System.Collections.Hashtable") == 2 || fieldTypes.Count("System.Object") == 2;
 			if (fields.Count == 2)
 				return fieldTypes.Count("System.Collections.Hashtable") == 1 || fieldTypes.Count("System.Object") == 1;

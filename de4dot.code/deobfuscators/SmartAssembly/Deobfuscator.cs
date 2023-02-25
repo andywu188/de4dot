@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using dnlib.DotNet;
 using de4dot.blocks;
 
@@ -79,6 +80,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 		ProxyCallFixer proxyCallFixer;
 		AutomatedErrorReportingFinder automatedErrorReportingFinder;
 		TamperProtectionRemover tamperProtectionRemover;
+		PointerToLocalFixer pointerToLocalFixer;
 
 		internal class Options : OptionsBase {
 			public bool RemoveAutomatedErrorReporting { get; set; }
@@ -269,6 +271,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 		public override void DeobfuscateBegin() {
 			base.DeobfuscateBegin();
 
+			pointerToLocalFixer = new PointerToLocalFixer(module);
 			tamperProtectionRemover = new TamperProtectionRemover(module);
 			automatedErrorReportingFinder = new AutomatedErrorReportingFinder(module);
 			automatedErrorReportingFinder.Find();
@@ -312,7 +315,11 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 		void DumpEmbeddedAssemblies() {
 			assemblyResolver.ResolveResources();
 			foreach (var tuple in assemblyResolver.GetDecryptedResources()) {
-				DeobfuscatedFile.CreateAssemblyFile(tuple.Item2, tuple.Item1.simpleName, null);
+				try {
+					DeobfuscatedFile.CreateAssemblyFile(tuple.Item2, tuple.Item1.simpleName, null);
+				}
+				catch (IOException) {
+				}
 				AddResourceToBeRemoved(tuple.Item1.resource, $"Embedded assembly: {tuple.Item1.assemblyName}");
 			}
 		}
@@ -406,8 +413,12 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 			DeobfuscatedFile.StringDecryptersAdded();
 		}
 
-		public override void DeobfuscateMethodEnd(Blocks blocks) {
+		public override bool DeobfuscateOther(Blocks blocks) {
 			proxyCallFixer.Deobfuscate(blocks);
+			return pointerToLocalFixer.Deobfuscate(blocks);
+		}
+
+		public override void DeobfuscateMethodEnd(Blocks blocks) {
 			RemoveAutomatedErrorReportingCode(blocks);
 			RemoveTamperProtection(blocks);
 			RemoveStringsInitCode(blocks);

@@ -78,15 +78,16 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 				return false;
 			if (type.Methods.Count < 3 || type.Methods.Count > 31)
 				return false;
-			if (DotNetUtils.GetPInvokeMethod(type, "mscoree", "StrongNameSignatureVerificationEx") != null) {
-			}
-			else if (DotNetUtils.GetPInvokeMethod(type, "mscoree", "CLRCreateInstance") != null) {
-				if (type.NestedTypes.Count != 3)
-					return false;
-				if (!type.NestedTypes[0].IsInterface || !type.NestedTypes[1].IsInterface || !type.NestedTypes[2].IsInterface)
-					return false;
-			}
-			else
+			if (DotNetUtils.GetPInvokeMethod(type, "mscoree", "StrongNameSignatureVerificationEx") != null
+			    || DotNetUtils.GetPInvokeMethod(type, "kernel32.dll", "SetLastError") != null
+			    && DotNetUtils.GetPInvokeMethod(type, "kernel32.dll", "CloseHandle") != null
+			    && DotNetUtils.GetPInvokeMethod(type, "kernel32.dll", "OpenProcess") != null)
+				return true;
+			if (DotNetUtils.GetPInvokeMethod(type, "mscoree", "CLRCreateInstance") == null)
+				return false;
+			if (type.NestedTypes.Count != 3)
+				return false;
+			if (!type.NestedTypes[0].IsInterface || !type.NestedTypes[1].IsInterface || !type.NestedTypes[2].IsInterface)
 				return false;
 
 			return true;

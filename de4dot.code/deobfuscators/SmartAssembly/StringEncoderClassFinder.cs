@@ -141,7 +141,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 				var type = GetType(typeToken);
 				if (type == null || DotNetUtils.DerivesFromDelegate(type))
 					continue;
-				if (!CouldBeStringDecrypterClass(type))
+				if (!CouldBeStringDecrypterClass(ref type))
 					continue;
 
 				return type;
@@ -155,12 +155,11 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 			foreach (var info in stringsEncoderInfos)
 				foundClasses[info.StringDecrypterClass] = true;
 
-			foreach (var type in module.Types) {
-				if (!foundClasses.ContainsKey(type) && CouldBeStringDecrypterClass(type)) {
+			for (var i = 0; i < module.Types.Count; i++) {
+				var type = module.Types[i];
+				if (!foundClasses.ContainsKey(type) && CouldBeStringDecrypterClass(ref type)) {
 					stringsEncoderInfos.Add(new StringsEncoderInfo {
-						StringsType = null,
-						GetStringDelegate = null,
-						StringDecrypterClass = type,
+						StringsType = null, GetStringDelegate = null, StringDecrypterClass = type,
 					});
 				}
 			}
@@ -177,7 +176,10 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 			"System.Byte[]",
 			"System.Int32",
 		};
-		bool CouldBeStringDecrypterClass(TypeDef type) {
+		bool CouldBeStringDecrypterClass(ref TypeDef type) {
+			if (type.DeclaringType != null && type.DeclaringType.HasNestedTypes)
+				type = type.DeclaringType;
+
 			var fields = new FieldTypes(type);
 			if (fields.Exists("System.Collections.Hashtable") ||
 				fields.Exists("System.Collections.Generic.Dictionary`2<System.Int32,System.String>") ||
@@ -191,7 +193,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 				return false;
 
 			var methods = new List<MethodDef>(DotNetUtils.GetNormalMethods(type));
-			if (methods.Count != 1)
+			if (methods.Count == 0)
 				return false;
 			var method = methods[0];
 			if (!DotNetUtils.IsMethod(method, "System.String", "(System.Int32)"))

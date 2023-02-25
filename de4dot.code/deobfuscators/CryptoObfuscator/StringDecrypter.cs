@@ -95,7 +95,9 @@ namespace de4dot.code.deobfuscators.CryptoObfuscator {
 			foreach (var type in module.Types) {
 				if (type.IsPublic)
 					continue;
-				if (type.Fields.Count != 1 && type.Fields.Count != 2)
+				if (!type.HasFields)
+					continue;
+				if (type.Fields.Count > 2)
 					continue;
 				if (DotNetUtils.FindFieldType(type, "System.Byte[]", true) == null)
 					continue;

@@ -17,18 +17,16 @@
     along with de4dot.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using de4dot.blocks;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using de4dot.blocks;
 
 namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 	class ProxyCallFixer : ProxyCallFixer1 {
 		EncryptedResource encryptedResource;
-		Dictionary<int, int> dictionary;
+		Dictionary<int, int> dictionary = new Dictionary<int, int>();
 
 		ISimpleDeobfuscator simpleDeobfuscator;
 
@@ -44,9 +42,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 		}
 
 		public void Initialize() {
-			if (delegateCreatorMethods.Count == 0) {
+			if (delegateCreatorMethods.Count == 0)
 				return;
-			}
 
 			encryptedResource = new EncryptedResource(module);
 			encryptedResource.Method = delegateCreatorMethods[0];
@@ -102,8 +99,8 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 				if (cctor == null)
 					continue;
 				foreach (var method in DotNetUtils.GetMethodCalls(cctor)) {
-					if (method.MethodSig.GetParamCount() == 1 
-					    && method.GetParam(0).FullName == "System.RuntimeTypeHandle")
+					if (method.MethodSig.GetParamCount() == 1
+						&& method.GetParam(0).FullName == "System.RuntimeTypeHandle")
 						callCounter.Add(method);
 				}
 			}
@@ -148,6 +145,22 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 			return FixProxyCalls(blocks.Method, removeInfos);
 		}
 
+		public void DeobfuscateAll() {
+			foreach (var type in module.GetTypes()) {
+				foreach (var method in type.Methods) {
+					if (!method.HasBody)
+						continue;
+
+					var blocks = new Blocks(method);
+
+					Deobfuscate(blocks);
+
+					blocks.GetCode(out var allInstructions, out var allExceptionHandlers);
+					DotNetUtils.RestoreBody(method, allInstructions, allExceptionHandlers);
+				}
+			}
+		}
+
 		BlockInstr FindProxyCall(DelegateInfo di, Block block, int index, Dictionary<Block, bool> visited, int stack) {
 			if (visited.ContainsKey(block))
 				return null;
@@ -183,10 +196,11 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 		}
 
 		void GetDictionary() {
+			if (dictionary.Count != 0)
+				dictionary.Clear();
+
 			var resource = encryptedResource.Decrypt();
 			var length = resource.Length / 8;
-
-			dictionary = new Dictionary<int, int>();
 
 			var reader = new BinaryReader(new MemoryStream(resource));
 
@@ -200,5 +214,4 @@ namespace de4dot.code.deobfuscators.dotNET_Reactor.v4 {
 			reader.Close();
 		}
 	}
-
 }

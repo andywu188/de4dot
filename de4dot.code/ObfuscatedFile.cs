@@ -596,12 +596,6 @@ namespace de4dot.code {
 			if (!HasNonEmptyBody(method))
 				return;
 
-			var flag = ContainsSwitch(method);
-
-			if (flag) {
-				ExecuteArithmetic(method);
-			}
-
 			var blocks = new Blocks(method);
 
 			int numRemovedLocals = 0;
@@ -737,12 +731,6 @@ namespace de4dot.code {
 
 			if (HasNonEmptyBody(method)) {
 				try {
-					var flag = ContainsSwitch(method);
-
-					if (flag) {
-						ExecuteArithmetic(method);
-					}
-
 					var blocks = new Blocks(method);
 
 					handler(blocks);
@@ -771,59 +759,9 @@ namespace de4dot.code {
 				var cflowDeobfuscator = new BlocksCflowDeobfuscator(deob.BlocksDeobfuscators, disableNewCFCode);
 				cflowDeobfuscator.Initialize(blocks);
 				cflowDeobfuscator.Deobfuscate();
+				blocks.RepartitionBlocks();
 			});
 		}
-
-		void ExecuteArithmetic(MethodDef method) {
-			var instr = method.Body.Instructions;
-
-			for (int i = 0; i < instr.Count; i++) {
-				if (instr[i].IsBrtrue() && instr[i + 1].OpCode == OpCodes.Pop && instr[i - 1].OpCode == OpCodes.Call) {
-					var methodDef = instr[i - 1].Operand as MethodDef;
-					if (methodDef == null) continue;
-
-					var methodDefInstr = methodDef.Body.Instructions;
-
-					if (methodDef.ReturnType.FullName == "System.Boolean") {
-						if (methodDefInstr[methodDefInstr.Count - 2].OpCode == OpCodes.Ldc_I4_0) {
-							instr[i - 1].OpCode = OpCodes.Nop;
-							instr[i].OpCode = OpCodes.Nop;
-						}
-						else {
-							instr[i - 1].OpCode = OpCodes.Nop;
-							instr[i].OpCode = OpCodes.Br_S;
-						}
-					}
-					else {
-						instr[i - 1].OpCode = OpCodes.Nop;
-						instr[i].OpCode = OpCodes.Nop;
-					}
-				}
-				else if (instr[i].IsBrfalse() && instr[i + 1].OpCode == OpCodes.Pop && instr[i - 1].OpCode == OpCodes.Call) {
-					var methodDef = instr[i - 1].Operand as MethodDef;
-					if (methodDef == null) continue;
-
-					var methodDefInstr = methodDef.Body.Instructions;
-
-					if (methodDef.ReturnType.FullName == "System.Boolean") {
-						if (methodDefInstr[methodDefInstr.Count - 2].OpCode == OpCodes.Ldc_I4_0) {
-							instr[i - 1].OpCode = OpCodes.Nop;
-							instr[i].OpCode = OpCodes.Br_S; 
-						}
-						else {
-							instr[i - 1].OpCode = OpCodes.Nop;
-							instr[i].OpCode = OpCodes.Nop;
-						}
-					}
-					else {
-						instr[i - 1].OpCode = OpCodes.Nop;
-						instr[i].OpCode = OpCodes.Br_S;
-					}
-				}
-			}
-		}
-
-		bool ContainsSwitch(MethodDef method) => deob.Type == "dr4" && method.Body.Instructions.Any(instr => instr.OpCode == OpCodes.Switch);
 
 		void ISimpleDeobfuscator.DecryptStrings(MethodDef method, IDeobfuscator theDeob) =>
 			Deobfuscate(method, "Static string decryption", (blocks) => theDeob.DeobfuscateStrings(blocks));

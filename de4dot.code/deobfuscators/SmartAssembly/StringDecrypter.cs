@@ -23,6 +23,7 @@ using System.Text;
 namespace de4dot.code.deobfuscators.SmartAssembly {
 	class StringDecrypter {
 		int stringOffset;
+		int xorValue;
 		byte[] decryptedData;
 
 		public bool CanDecrypt => decryptedData != null;
@@ -34,10 +35,12 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 			if (stringDecrypterInfo != null) {
 				if (!stringDecrypterInfo.StringsEncrypted) {
 					stringOffset = stringDecrypterInfo.StringOffset;
+					xorValue = stringDecrypterInfo.XorValue;
 					decryptedData = stringDecrypterInfo.StringsResource.CreateReader().ToArray();
 				}
 				else if (stringDecrypterInfo.CanDecrypt) {
 					stringOffset = stringDecrypterInfo.StringOffset;
+					xorValue = stringDecrypterInfo.XorValue;
 					decryptedData = stringDecrypterInfo.Decrypt();
 				}
 			}
@@ -47,7 +50,14 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 			if (!CanDecrypt)
 				throw new ApplicationException("Can't decrypt strings since decryptedData is null");
 
-			int index = id - (token & 0x00FFFFFF) - stringOffset;
+			int index;
+			if (StringDecrypterInfo.DecrypterVersion == StringDecrypterVersion.V5) {
+				index = ((id - (token & 0x00FFFFFF)) ^ xorValue) - stringOffset;
+			}
+			else {
+				index = id - (token & 0x00FFFFFF) - stringOffset;
+			}
+
 			int len = DeobUtils.ReadVariableLengthInt32(decryptedData, ref index);
 
 			switch (StringDecrypterInfo.DecrypterVersion) {

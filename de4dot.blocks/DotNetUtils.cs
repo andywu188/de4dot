@@ -714,5 +714,48 @@ namespace de4dot.blocks {
 			args.Reverse();
 			return args;
 		}
+
+		public static IList<Instr> GetArgPushes(IList<Instr> instrs, int index) =>
+			GetArgPushes(instrs, ref index);
+
+		public static IList<Instr> GetArgPushes(IList<Instr> instrs, ref int index) {
+			if (index < 0 || index >= instrs.Count)
+				return null;
+			var startInstr = instrs[index];
+			startInstr.Instruction.CalculateStackUsage(false, out int pushes, out int pops);
+
+			index--;
+			int numArgs = pops;
+			var args = new List<Instr>(numArgs);
+			int stackSize = numArgs;
+			while (index >= 0 && args.Count != numArgs) {
+				var instr = instrs[index--];
+				instr.Instruction.CalculateStackUsage(false, out pushes, out pops);
+				if (instr.OpCode.Code == Code.Dup) {
+					args.Add(instr);
+					stackSize--;
+				}
+				else {
+					if (pushes == 1)
+						args.Add(instr);
+					else if (pushes > 1)
+						throw new NotImplementedException();
+					stackSize -= pushes;
+
+					if (pops != 0) {
+						index++;
+						if (GetArgPushes(instrs, ref index) == null)
+							return null;
+					}
+				}
+
+				if (stackSize < 0)
+					return null;
+			}
+			if (args.Count != numArgs)
+				return null;
+			args.Reverse();
+			return args;
+		}
 	}
 }

@@ -29,6 +29,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 		V2,
 		V3,
 		V4,
+		V5,
 		Unknown,
 	}
 
@@ -38,6 +39,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 		TypeDef stringsEncodingClass;
 		EmbeddedResource stringsResource;
 		int stringOffset;
+		int xorValue;
 		MethodDef simpleZipTypeMethod;
 		MethodDef stringDecrypterMethod;
 		StringDecrypterVersion decrypterVersion;
@@ -51,6 +53,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 		public MethodDef SimpleZipTypeMethod => simpleZipTypeMethod;
 		public EmbeddedResource StringsResource => stringsResource;
 		public int StringOffset => stringOffset;
+		public int XorValue => xorValue;
 		public bool StringsEncrypted => simpleZipTypeMethod != null;
 		public MethodDef StringDecrypterMethod => stringDecrypterMethod;
 
@@ -121,7 +124,14 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 				if (offsetVal == null)
 					throw new ApplicationException("Could not find string offset");
 				stringOffset = offsetVal.Value;
-				decrypterVersion = StringDecrypterVersion.V4;
+
+				var xorVal = FindXorValue(stringDecrypterMethod, stringsEncodingClass.HasNestedTypes, simpleDeobfuscator);
+				if (xorVal != null) {
+					decrypterVersion = StringDecrypterVersion.V5;
+					xorValue = (int)xorVal;
+				}
+				else
+					decrypterVersion = StringDecrypterVersion.V4;
 			}
 
 			simpleZipTypeMethod = FindSimpleZipTypeMethod(cctor) ?? FindSimpleZipTypeMethod(stringDecrypterMethod);
@@ -203,6 +213,37 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 			return FindOffsetValue(method, (FieldDef)fieldDict.Find(offsetField), fieldDict);
 		}
 
+		// Find the string decrypter xor value or null if none found
+		int? FindXorValue(MethodDef method, bool hasNested, ISimpleDeobfuscator simpleDeobfuscator) {
+			if (hasNested) {
+				var calls = DotNetUtils.GetMethodCalls(method);
+				foreach (var call in calls) {
+					if (DotNetUtils.IsMethod(method, "System.String", "(System.Int32)")) {
+						method = call as MethodDef;
+						break;
+					}
+				}
+			}
+
+			simpleDeobfuscator.Deobfuscate(method);
+
+			if (method == null || method.Body == null)
+				return null;
+			var instructions = method.Body.Instructions;
+			for (int i = 0; i < instructions.Count; i++) {
+				var ldci4 = instructions[i];
+				if (ldci4.OpCode != OpCodes.Ldc_I4)
+					continue;
+				var xor = instructions[i + 1];
+				if (xor.OpCode != OpCodes.Xor)
+					continue;
+
+				return ldci4.GetLdcI4Value();
+			}
+
+			return null;
+		}
+
 		IField FindOffsetField(MethodDef method) {
 			var instructions = method.Body.Instructions;
 			for (int i = 0; i <= instructions.Count - 2; i++) {
@@ -259,7 +300,7 @@ namespace de4dot.code.deobfuscators.SmartAssembly {
 				return true;
 
 			var methods = new List<MethodDef>(DotNetUtils.FindMethods(stringsEncodingClass.Methods, "System.String", new string[] { "System.Int32" }));
-			if (methods.Count != 1)
+			if (methods.Count == 0)
 				return false;
 
 			stringDecrypterMethod = methods[0];

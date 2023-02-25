@@ -21,39 +21,70 @@ using System;
 using System.Collections.Generic;
 using dnlib.DotNet;
 using de4dot.blocks;
+using de4dot.blocks.cflow;
 
 namespace de4dot.code.deobfuscators.Dotfuscator {
 	public class DeobfuscatorInfo : DeobfuscatorInfoBase {
 		public const string THE_NAME = "Dotfuscator";
 		public const string THE_TYPE = "df";
 		const string DEFAULT_REGEX = @"!^(?:eval_)?[a-z][a-z0-9]{0,2}$&!^A_[0-9]+$&" + @"^[\u2E80-\u8FFFa-zA-Z_<{$][\u2E80-\u8FFFa-zA-Z_0-9<>{}$.`-]*$";
+	
+		BoolOption inlineMethods;
+		BoolOption removeInlinedMethods;
+
 		public DeobfuscatorInfo()
 			: base(DEFAULT_REGEX) {
+			inlineMethods = new BoolOption(null, MakeArgName("inline"), "Inline short methods", true);
+			removeInlinedMethods = new BoolOption(null, MakeArgName("remove-inlined"), "Remove inlined methods", true);
 		}
 
 		public override string Name => THE_NAME;
 		public override string Type => THE_TYPE;
-
+	
 		public override IDeobfuscator CreateDeobfuscator() =>
 			new Deobfuscator(new Deobfuscator.Options {
 				RenameResourcesInCode = false,
 				ValidNameRegex = validNameRegex.Get(),
+				InlineMethods = inlineMethods.Get(),
+				RemoveInlinedMethods = removeInlinedMethods.Get(),
 			});
+
+		protected override IEnumerable<Option> GetOptionsInternal() =>
+			new List<Option>() {
+				inlineMethods,
+				removeInlinedMethods,
+			};
 	}
 
 	class Deobfuscator : DeobfuscatorBase {
+		Options options;
+
 		string obfuscatorName = "Dotfuscator";
 
 		StringDecrypter stringDecrypter;
 		bool foundDotfuscatorAttribute = false;
+		bool startedDeobfuscating = false;
 
 		internal class Options : OptionsBase {
+			public bool InlineMethods { get; set; }
+			public bool RemoveInlinedMethods { get; set; }
 		}
 
 		public override string Type => DeobfuscatorInfo.THE_TYPE;
 		public override string TypeLong => DeobfuscatorInfo.THE_NAME;
 		public override string Name => obfuscatorName;
-		public Deobfuscator(Options options) : base(options) { }
+		protected override bool CanInlineMethods => startedDeobfuscating ? options.InlineMethods : true;
+
+		public override IEnumerable<IBlocksDeobfuscator> BlocksDeobfuscators {
+			get {
+				var list = new List<IBlocksDeobfuscator>();
+				if (CanInlineMethods)
+					list.Add(new DfMethodCallInliner());
+				return list;
+			}
+		}
+
+		public Deobfuscator(Options options) : base(options) => this.options = options;
 
 		protected override int DetectInternal() {
 			int val = 0;
@@ -94,6 +125,12 @@ namespace de4dot.code.deobfuscators.Dotfuscator {
 			obfuscatorName = "Dotfuscator " + val.Groups[1].ToString();
 		}
 
+		void RemoveInlinedMethods() {
+			if (!options.InlineMethods || !options.RemoveInlinedMethods)
+				return;
+			RemoveInlinedMethods(DfMethodCallInliner.Find(module, staticStringInliner.Methods));
+		}
+
 		public override void DeobfuscateBegin() {
 			base.DeobfuscateBegin();
 			DoCflowClean();
@@ -101,9 +138,13 @@ namespace de4dot.code.deobfuscators.Dotfuscator {
 			foreach (var info in stringDecrypter.StringDecrypterInfos)
 				staticStringInliner.Add(info.method, (method, gim, args) => stringDecrypter.Decrypt(method, (string)args[0], (int)args[1]));
 			DeobfuscatedFile.StringDecryptersAdded();
+
+			startedDeobfuscating = true;
 		}
 
 		public override void DeobfuscateEnd() {
+			RemoveInlinedMethods();
+
 			if (CanRemoveStringDecrypterType)
 				AddMethodsToBeRemoved(stringDecrypter.StringDecrypters, "String decrypter method");
 
