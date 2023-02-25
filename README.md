@@ -5,6 +5,8 @@ de4dot is an open source (GPLv3) .NET deobfuscator and unpacker written in C#. I
 
 It uses [dnlib](https://github.com/0xd4d/dnlib/) to read and write assemblies so make sure you get it or it won't compile.
 
+***WARNING***: `de4dot` uses `BinaryFormatter` in some backends (`BabelNET` and `CodeVeil`). Code obfuscated with these deobfuscators (or the one, that tricks `de4dot` to detect so) will cause execution of arbitrary code during deobfuscation. For example it may be possible to write code tracking attempts of applying `de4dot`. A more proper solution is needed for deobfuscating such binaries, such as a completely own parser doing the deserialization safely. Read https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide for more info.
+
 Binaries
 ========
 
