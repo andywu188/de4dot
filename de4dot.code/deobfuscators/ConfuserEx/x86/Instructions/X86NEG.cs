@@ -8,7 +8,7 @@ namespace ConfuserDeobfuscator.Engine.Routines.Ex.x86.Instructions
         public X86NEG(Disasm rawInstruction) : base()
         {
             Operands = new IX86Operand[1];
-            Operands[0] = GetOperand(rawInstruction.Argument1);
+            Operands[0] = GetOperand(rawInstruction.Operand﻿1);
         }
 
         public override X86OpCode OpCode { get { return X86OpCode.NEG; } }

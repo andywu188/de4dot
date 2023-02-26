@@ -8,9 +8,9 @@ namespace ConfuserDeobfuscator.Engine.Routines.Ex.x86.Instructions
         public X86IMUL(Disasm rawInstruction) : base()
         {
             Operands = new IX86Operand[3];
-            Operands[0] = GetOperand(rawInstruction.Argument1);
-            Operands[1] =GetOperand( rawInstruction.Argument2);
-            Operands[2] = GetOperand(rawInstruction.Argument3);
+            Operands[0] = GetOperand(rawInstruction.Operand1);
+            Operands[1] =GetOperand( rawInstruction.Operand2);
+            Operands[2] = GetOperand(rawInstruction.Operand﻿3);
         }
 
         public override X86OpCode OpCode { get { return X86OpCode.IMUL; } }

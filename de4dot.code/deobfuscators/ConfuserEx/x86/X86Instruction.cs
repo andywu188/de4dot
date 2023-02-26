@@ -62,11 +62,11 @@ namespace ConfuserDeobfuscator.Engine.Routines.Ex.x86
 
         public static IX86Operand GetOperand(ArgumentType argument)
         {
-            if (argument.ArgType == -2013265920)
+            if (argument.OpType == -2013265920)
                 return
-                    new X86ImmediateOperand(int.Parse(argument.ArgMnemonic.TrimEnd('h'),
+                    new X86ImmediateOperand(int.Parse(argument.OpMnemonic﻿.TrimEnd('h'),
                         NumberStyles.HexNumber));
-            return new X86RegisterOperand((X86Register)argument.ArgType);
+            return new X86RegisterOperand((X86Register)argument.OpType﻿);
         }
     }
 }

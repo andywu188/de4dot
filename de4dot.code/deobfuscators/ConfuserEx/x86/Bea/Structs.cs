@@ -32,6 +32,8 @@ namespace de4dot.Bea
         public byte BranchTaken;
         public byte BranchNotTaken;
         public REX_Struct REX;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        public string alignment;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -52,6 +54,27 @@ namespace de4dot.Bea
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class RegisterType
+    {
+        public Int64 type;
+        public Int64 gpr;
+        public Int64 mmx;
+        public Int64 xmm;
+        public Int64 ymm;
+        public Int64 zmm;
+        public Int64 special;
+        public Int64 cr;
+        public Int64 dr;
+        public Int64 mem_management;
+        public Int64 mpx;
+        public Int64 opmask;
+        public Int64 segment;
+        public Int64 fpu;
+        public Int64 tmm;
+    }
+
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class MemoryType
     {
         public Int32 BaseRegister;
@@ -65,24 +88,27 @@ namespace de4dot.Bea
     {
         public Int32 Category;
         public Int32 Opcode;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
         public string Mnemonic;
         public Int32 BranchType;
         public EFLStruct Flags;
         public UInt64 AddrValue;
         public Int64 Immediat;
-        public UInt32 ImplicitModifiedRegs;
+        public RegisterType ImplicitModifiedRegs;
+        public RegisterType ImplicitUsedRegs;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class ArgumentType
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string ArgMnemonic;
-        public Int32 ArgType;
-        public Int32 ArgSize;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
+        public string OpMnemonic;
+        public Int32 OpType;
+        public Int32 OpSize;
+        public Int32 OpPosition;
         public UInt32 AccessMode;
         public MemoryType Memory;
+        public RegisterType Registers;
         public UInt32 SegmentReg;
     }
 
@@ -97,11 +123,18 @@ namespace de4dot.Bea
         public UInt32 Archi;
         public UInt64 Options;
         public InstructionType Instruction;
-        public ArgumentType Argument1;
-        public ArgumentType Argument2;
-        public ArgumentType Argument3;
+        public ArgumentType Operand1;
+        public ArgumentType Operand2;
+        public ArgumentType Operand3;
+        public ArgumentType Operand4;
+        public ArgumentType Operand5;
+        public ArgumentType Operand6;
+        public ArgumentType Operand7;
+        public ArgumentType Operand8;
+        public ArgumentType Operand9;
         public PrefixInfo Prefix;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40, ArraySubType = UnmanagedType.U4)]
+        public Int32 Error;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 48, ArraySubType = UnmanagedType.U4)]
         UInt32[] Reserved_;
     }
 }

@@ -8,8 +8,8 @@ namespace ConfuserDeobfuscator.Engine.Routines.Ex.x86.Instructions
         public X86MOV(Disasm rawInstruction) : base()
         {
             Operands = new IX86Operand[2];
-            Operands[0] = GetOperand(rawInstruction.Argument1);
-            Operands[1] = GetOperand(rawInstruction.Argument2);
+            Operands[0] = GetOperand(rawInstruction.Operand1);
+            Operands[1] = GetOperand(rawInstruction.Operand﻿2);
         }
 
         public override X86OpCode OpCode

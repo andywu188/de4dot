@@ -3,16 +3,16 @@ namespace de4dot.Bea
 {
     public class BeaConstants
     {
-        public static int INSTRUCT_LENGTH = 64;
+        public static int INSTRUCT_LENGTH = 80;
         
         public enum SegmentRegister : byte
         {
-            ESReg = 1,
-            DSReg = 2,
-            FSReg = 3,
-            GSReg = 4,
-            CSReg = 5,
-            SSReg = 6
+            ESReg = 0x1,
+            DSReg = 0x2,
+            FSReg = 0x4,
+            GSReg = 0x8,
+            CSReg = 0x10,
+            SSReg = 0x20
         }
 
         public enum PrefixType : byte
@@ -28,20 +28,39 @@ namespace de4dot.Bea
         {
             GENERAL_PURPOSE_INSTRUCTION = 0x10000,
             FPU_INSTRUCTION = 0x20000,
-            MMX_INSTRUCTION = 0x40000,
-            SSE_INSTRUCTION = 0x80000,
-            SSE2_INSTRUCTION = 0x100000,
-            SSE3_INSTRUCTION = 0x200000,
-            SSSE3_INSTRUCTION = 0x400000,
-            SSE41_INSTRUCTION = 0x800000,
-            SSE42_INSTRUCTION = 0x1000000,
-            SYSTEM_INSTRUCTION = 0x2000000,
-            VM_INSTRUCTION = 0x4000000,
-            UNDOCUMENTED_INSTRUCTION = 0x8000000,
-            AMD_INSTRUCTION = 0x10000000,
-            ILLEGAL_INSTRUCTION = 0x20000000,
-            AES_INSTRUCTION = 0x40000000,
-            CLMUL_INSTRUCTION = 0x80000000,
+            MMX_INSTRUCTION = 0x30000,
+            SSE_INSTRUCTION = 0x40000,
+            SSE2_INSTRUCTION = 0x50000,
+            SSE3_INSTRUCTION = 0x60000,
+            SSSE3_INSTRUCTION = 0x70000,
+            SSE41_INSTRUCTION = 0x80000,
+            SSE42_INSTRUCTION = 0x90000,
+            SYSTEM_INSTRUCTION = 0xa0000,
+            VM_INSTRUCTION = 0xb0000,
+            UNDOCUMENTED_INSTRUCTION = 0xc0000,
+            AMD_INSTRUCTION = 0xd0000,
+            ILLEGAL_INSTRUCTION = 0xe0000,
+            AES_INSTRUCTION = 0xf0000,
+            CLMUL_INSTRUCTION = 0x100000,
+            AVX_INSTRUCTION = 0x110000,
+            AVX2_INSTRUCTION = 0x120000,
+            MPX_INSTRUCTION = 0x130000,
+            AVX512_INSTRUCTION = 0x140000,
+            SHA_INSTRUCTION = 0x150000,
+            BMI2_INSTRUCTION = 0x160000,
+            CET_INSTRUCTION = 0x170000,
+            BMI1_INSTRUCTION = 0x180000,
+            XSAVEOPT_INSTRUCTION = 0x190000,
+            FSGSBASE_INSTRUCTION = 0x1a0000,
+            CLWB_INSTRUCTION = 0x1b0000,
+            CLFLUSHOPT_INSTRUCTION = 0x1c0000,
+            FXSR_INSTRUCTION = 0x1d0000,
+            XSAVE_INSTRUCTION = 0x1e0000,
+            SGX_INSTRUCTION = 0x1f0000,
+            PCONFIG_INSTRUCTION = 0x200000,
+            UINTR_INSTRUCTION = 0x210000,
+            KL_INSTRUCTION = 0x220000,
+            AMX_INSTRUCTION = 0x230000,
 
             DATA_TRANSFER = 0x1,
             ARITHMETIC_INSTRUCTION,
@@ -126,20 +145,25 @@ namespace de4dot.Bea
 
         public enum ArgumentType : uint
         {
-            NO_ARGUMENT = 0x10000000,
-            REGISTER_TYPE = 0x20000000,
-            MEMORY_TYPE = 0x40000000,
-            CONSTANT_TYPE = 0x80000000,
+            NO_ARGUMENT = 0x10000,
+            REGISTER_TYPE = 0x20000,
+            MEMORY_TYPE = 0x30000,
+            CONSTANT_TYPE = 0x40000,
 
-            MMX_REG = 0x10000,
-            GENERAL_REG = 0x20000,
-            FPU_REG = 0x40000,
-            SSE_REG = 0x80000,
-            CR_REG = 0x100000,
-            DR_REG = 0x200000,
-            SPECIAL_REG = 0x400000,
-            MEMORY_MANAGEMENT_REG = 0x800000,
-            SEGMENT_REG = 0x1000000,
+            GENERAL_REG = 0x1,
+            MMX_REG = 0x2,
+            SSE_REG = 0x4,
+            AVX_REG = 0x8,
+            AVX512_REG = 0x10,
+            SPECIAL_REG = 0x20,
+            CR_REG = 0x40,
+            DR_REG = 0x80,
+            MEMORY_MANAGEMENT_REG = 0x100,
+            MPX_REG = 0x200,
+            OPMASK_REG = 0x400,
+            SEGMENT_REG = 0x800,
+            FPU_REG = 0x1000,
+            TMM_REG = 0x2000,
 
             RELATIVE_ = 0x4000000,
             ABSOLUTE_ = 0x8000000,
@@ -162,13 +186,29 @@ namespace de4dot.Bea
             REG12 = 0x1000,
             REG13 = 0x2000,
             REG14 = 0x4000,
-            REG15 = 0x8000
+            REG15 = 0x8000,
+            REG16 = 0x10000,
+            REG17 = 0x20000,
+            REG18 = 0x40000,
+            REG19 = 0x80000,
+            REG20 = 0x100000,
+            REG21 = 0x200000,
+            REG22 = 0x400000,
+            REG23 = 0x800000,
+            REG24 = 0x1000000,
+            REG25 = 0x2000000,
+            REG26 = 0x4000000,
+            REG27 = 0x8000000,
+            REG28 = 0x10000000,
+            REG29 = 0x20000000,
+            REG30 = 0x40000000,
+            REG31 = 0x80000000
         }
 
         public enum SpecialInfo : int
         {
             UNKNOWN_OPCODE = -1,
-            OUT_OF_BLOCK = 0,
+            OUT_OF_BLOCK = -2,
 
             /* === mask = 0xff */
             NoTabulation = 0x00000000,
@@ -179,13 +219,18 @@ namespace de4dot.Bea
             GoAsmSyntax = 0x00000100,
             NasmSyntax = 0x00000200,
             ATSyntax = 0x00000400,
+            IntrinsicMemSyntax= 0x00000800,
 
             /* === mask = 0xff0000 */
             PrefixedNumeral = 0x00010000,
             SuffixedNumeral = 0x00000000,
 
             /* === mask = 0xff000000 */
-            ShowSegmentRegs = 0x01000000
+            ShowSegmentRegs = 0x01000000,
+            ShowEVEXMasking = 0x02000000,
+
+            LowPosition = 0,
+            HighPosition = 1
         }
     }
 }

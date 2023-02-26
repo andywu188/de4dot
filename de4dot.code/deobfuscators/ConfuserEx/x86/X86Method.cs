@@ -142,9 +142,9 @@ namespace de4dot.code.deobfuscators.ConfuserEx.x86
             return new Disasm
             {
                 Archi = disasm.Archi,
-                Argument1 = disasm.Argument1,
-                Argument2 = disasm.Argument2,
-                Argument3 = disasm.Argument3,
+                Operand1 = disasm.Operand1,
+                Operand2 = disasm.Operand2,
+                Operand3 = disasm.Operand3,
                 CompleteInstr = disasm.CompleteInstr,
                 EIP = disasm.EIP,
                 Instruction = disasm.Instruction,
