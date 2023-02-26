@@ -63,6 +63,12 @@ Supported obfuscators/packers
 * Spices.Net
 * Xenocode
 
+There are some other obfuscators/packers that are not in supported list explicitly, so their status is unclear:
+
+* Confuser
+* Osu
+* PCL
+
 Some of the above obfuscators are rarely used (eg. Goliath.NET), so they have had much less testing. Help me out by reporting bugs or problems you find.
 
 Warning
