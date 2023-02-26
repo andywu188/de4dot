@@ -49,7 +49,7 @@ namespace de4dot.code.deobfuscators.ConfuserEx.x86
                 disasm.EIP = new IntPtr(buff.Ptr.ToInt32());
 
                 var instruction = BeaEngine.Disasm(disasm);
-                _readOffset -= 8 - instruction; // revert offset back for each byte that was not a part of this instruction
+                //_readOffset -= 8 - instruction; // revert offset back for each byte that was not a part of this instruction
                 var mnemonic = disasm.Instruction.Mnemonic.Trim();
 
                 if (mnemonic == "ret") //TODO: Check if this is the only return in function, e.g. check for jumps that go beyond this address
